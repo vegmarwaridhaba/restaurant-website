@@ -2,236 +2,174 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Marwari Dhaba | Premium Veg Restaurant</title>
+<title>Marwari Dhaba — Premium Vegetarian Dining</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ================== DESIGN SYSTEM ================== */
 :root{
-  --dark:#0b1f17;
-  --green:#2fa36b;
-  --light:#f6f8f7;
-  --text:#222;
+  --bg:#0b1210;
+  --panel:#111b18;
+  --card:#13231f;
+  --glass:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.12);
+  --accent:#39d98a;
+  --accent-2:#8ef0c8;
+  --text:#e7efe9;
+  --muted:#b8c9c0;
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:22px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
-  font-family: 'Segoe UI',sans-serif;
-  background:var(--light);
-  color:var(--text);
-  scroll-behavior:smooth;
-}
-
-/* NAVBAR */
-nav{
-  position:fixed;
-  top:0;left:0;
-  width:100%;
-  background:rgba(11,31,23,.95);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 60px;
-  z-index:999;
-}
-.logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  color:#fff;
-  font-size:22px;
-  font-weight:600;
-}
-.logo img{width:38px}
-nav ul{
-  display:flex;
-  gap:35px;
-  list-style:none;
-}
-nav ul li a{
-  color:#ddd;
-  text-decoration:none;
-  position:relative;
-  padding-bottom:5px;
-}
-nav ul li a::after{
-  content:'';
-  width:0;
-  height:2px;
-  background:var(--green);
-  position:absolute;
-  left:0;bottom:0;
-  transition:.3s;
-}
-nav ul li a:hover::after{width:100%}
-
-/* HERO */
-.hero{
-  height:100vh;
+  margin:0; color:var(--text);
   background:
-  linear-gradient(rgba(0,0,0,.65),rgba(0,0,0,.65)),
-  url("https://images.unsplash.com/photo-1552566626-52f8b828add9");
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
-}
-.hero h1{
-  color:#fff;
-  font-size:54px;
-  animation:fadeUp 1s ease;
-}
-.hero p{
-  color:#ddd;
-  font-size:20px;
-  margin:20px 0;
-  animation:fadeUp 1.5s ease;
-}
-.hero a{
-  display:inline-block;
-  padding:15px 40px;
-  border-radius:40px;
-  background:var(--green);
-  color:#fff;
-  text-decoration:none;
-  font-size:18px;
-  transition:.3s;
-}
-.hero a:hover{
-  background:#fff;
-  color:#000;
-  transform:scale(1.05);
+    radial-gradient(1200px 600px at 20% -10%, #163027 0%, transparent 60%),
+    radial-gradient(800px 500px at 100% 10%, #10261f 0%, transparent 55%),
+    var(--bg);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* SECTIONS */
-section{
-  padding:120px 60px;
+/* ================== UTIL ================== */
+.wrap{max-width:1200px;margin:auto;padding:0 22px}
+.spacer{height:120px}
+.btn{
+  position:relative; isolation:isolate;
+  display:inline-flex; gap:10px; align-items:center;
+  padding:16px 26px; border-radius:999px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#062317; font-weight:700; letter-spacing:.2px;
+  text-decoration:none; border:none; cursor:pointer;
+  box-shadow:0 12px 30px rgba(57,217,138,.35);
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
 }
-section h2{
-  font-size:40px;
-  margin-bottom:30px;
-  position:relative;
+.btn::after{
+  content:""; position:absolute; inset:-1px; border-radius:inherit;
+  background:linear-gradient(135deg,#fff,transparent 40%);
+  opacity:.25; z-index:-1;
 }
-section h2::after{
-  content:'';
-  width:90px;
-  height:4px;
-  background:var(--green);
-  position:absolute;
-  left:0;bottom:-12px;
+.btn:hover{transform:translateY(-2px); box-shadow:0 18px 44px rgba(57,217,138,.45)}
+.btn:active{transform:translateY(0); filter:saturate(1.1)}
+.btn.alt{
+  background:transparent; color:var(--text);
+  border:1px solid var(--line); box-shadow:none;
 }
+.chip{display:inline-flex; padding:8px 14px; border-radius:999px; background:var(--glass); border:1px solid var(--line); color:var(--muted)}
 
-/* ABOUT */
-.about p{
-  max-width:900px;
-  font-size:18px;
-  line-height:1.8;
+/* ================== NAV ================== */
+nav{
+  position:fixed; inset:0 0 auto 0; z-index:1000;
+  backdrop-filter: blur(14px);
+  background:linear-gradient(to bottom, rgba(11,18,16,.85), rgba(11,18,16,.55));
+  border-bottom:1px solid var(--line);
 }
+.nav{
+  display:flex; align-items:center; justify-content:space-between; height:74px;
+}
+.brand{display:flex; gap:12px; align-items:center}
+.brand img{width:38px}
+.brand strong{font-size:18px}
+.menu{display:flex; gap:26px}
+.menu a{color:var(--muted); text-decoration:none; position:relative}
+.menu a::after{content:""; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:var(--accent); transition:.25s var(--ease)}
+.menu a:hover{color:var(--text)}
+.menu a:hover::after{width:100%}
+.hamburger{display:none}
 
-/* FEATURES */
-.features{
-  margin-top:50px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
+/* ================== HERO ================== */
+.hero{
+  min-height:100vh; display:grid; place-items:center; position:relative;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.75)),
+    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1600&auto=format&fit=crop");
+  background-size:cover; background-position:center;
 }
-.feature{
-  background:#fff;
-  padding:30px;
-  border-radius:18px;
-  box-shadow:0 25px 60px rgba(0,0,0,.08);
-  transition:.4s;
+.hero .panel{
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:44px; text-align:center;
+  animation:rise .9s var(--ease) both;
 }
-.feature:hover{
-  transform:translateY(-12px);
-}
+.hero h1{font-size:clamp(34px,6vw,60px); margin:0 0 12px}
+.hero p{color:var(--muted); font-size:clamp(16px,2.2vw,20px)}
+.hero .cta{display:flex; gap:14px; justify-content:center; margin-top:22px}
 
-/* MENU PREVIEW */
-.menu-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
-}
-.menu-card{
-  background:#fff;
-  padding:30px;
-  border-radius:20px;
-  transition:.4s;
-}
-.menu-card:hover{
-  transform:scale(1.06);
-  box-shadow:0 30px 70px rgba(0,0,0,.12);
-}
+/* ================== SECTIONS ================== */
+section{padding:120px 0}
+h2{font-size:clamp(26px,4.5vw,40px); margin:0 0 18px}
+.lead{color:var(--muted); max-width:760px}
 
-/* FULL MENU */
-details{
-  margin-top:40px;
-  background:#fff;
-  padding:25px;
-  border-radius:20px;
+.grid{display:grid; gap:22px}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.grid.cols-4{grid-template-columns:repeat(4,1fr)}
+
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:28px; transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.card:hover{transform:translateY(-8px); box-shadow:0 50px 120px rgba(0,0,0,.6)}
+
+.icon{font-size:28px}
+
+/* ================== MENU ================== */
+.menu-grid{grid-template-columns:repeat(4,1fr)}
+.menu-item{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.menu-item span{color:var(--muted)}
+details.menu-full{
+  margin-top:26px; border:1px solid var(--line); border-radius:var(--radius);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
 }
 details summary{
-  font-size:22px;
-  cursor:pointer;
-  font-weight:600;
+  list-style:none; cursor:pointer; padding:22px 26px; font-weight:700;
 }
-details ul{
-  margin-top:20px;
-  line-height:2;
+details[open] summary{border-bottom:1px solid var(--line)}
+.menu-list{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:22px 26px}
+.menu-list div{display:flex; justify-content:space-between; color:var(--muted)}
+
+/* ================== GALLERY ================== */
+.gallery{grid-template-columns:repeat(3,1fr)}
+.ph{
+  height:220px; border-radius:18px; border:1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+    url("https://images.unsplash.com/photo-1541544741938-0af808871cc0?q=80&w=1200&auto=format&fit=crop");
+  background-size:cover; background-position:center;
+  transition:transform .4s var(--ease);
+}
+.ph:hover{transform:scale(1.04)}
+
+/* ================== CONTACT ================== */
+.contact{
+  display:grid; grid-template-columns:1.2fr .8fr; gap:22px
+}
+.map{
+  height:360px; border-radius:18px; border:1px solid var(--line);
+  background:#0f1a16
 }
 
-/* GALLERY */
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
-}
-.gallery div{
-  height:220px;
-  background:#ccc;
-  border-radius:20px;
-}
+/* ================== FOOTER ================== */
+footer{border-top:1px solid var(--line); padding:34px 0; color:var(--muted)}
 
-/* CONTACT */
-.contact a{
-  display:block;
-  width:300px;
-  margin:15px 0;
-  padding:15px;
-  border-radius:14px;
-  background:var(--green);
-  color:#fff;
-  text-decoration:none;
-  text-align:center;
-  transition:.3s;
-}
-.contact a:hover{
-  background:#000;
-  transform:translateX(10px);
-}
+/* ================== REVEAL ================== */
+.reveal{opacity:0; transform:translateY(24px)}
+.reveal.show{opacity:1; transform:none; transition:.8s var(--ease)}
 
-/* FOOTER */
-footer{
-  background:#0b1f17;
-  color:#aaa;
-  text-align:center;
-  padding:40px;
-}
+/* ================== ANIM ================== */
+@keyframes rise{from{opacity:0; transform:translateY(18px)}to{opacity:1; transform:none}}
 
-/* MOBILE */
-@media(max-width:768px){
-  nav{padding:15px 20px}
-  nav ul{display:none}
-  section{padding:90px 20px}
-  .hero h1{font-size:38px}
-}
-
-/* ANIMATION */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(40px)}
-  to{opacity:1;transform:translateY(0)}
+/* ================== MOBILE ================== */
+@media(max-width:900px){
+  .grid.cols-3,.grid.cols-4,.menu-grid,.gallery{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr}
+  .menu{display:none}
+  .hamburger{display:block; color:var(--text)}
+  .hero .panel{padding:26px}
 }
 </style>
 </head>
@@ -239,85 +177,114 @@ footer{
 <body>
 
 <nav>
-  <div class="logo">
-    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
-    Marwari Dhaba
+  <div class="wrap nav">
+    <div class="brand">
+      <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="">
+      <strong>Marwari Dhaba</strong>
+      <span class="chip">Pure Veg • Jain</span>
+    </div>
+    <div class="menu">
+      <a href="#story">Story</a>
+      <a href="#experience">Experience</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <div class="hamburger">☰</div>
   </div>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
 </nav>
 
-<div class="hero" id="home">
-  <div>
-    <h1>Pure Vegetarian Fine Dining</h1>
-    <p>Authentic Taste • Jain Food • Top Rated</p>
-    <a href="#menu">Explore Menu</a>
+<header class="hero">
+  <div class="wrap">
+    <div class="panel">
+      <h1>Vegetarian Dining, Elevated</h1>
+      <p>Authentic taste. Jain-friendly kitchen. Loved by thousands.</p>
+      <div class="cta">
+        <a class="btn" href="#menu">Explore Menu</a>
+        <a class="btn alt" href="#visit">Book / Contact</a>
+      </div>
+    </div>
   </div>
-</div>
+</header>
 
-<section class="about" id="about">
-  <h2>Our Story</h2>
-  <p>
-    Marwari Dhaba is a trusted name for authentic vegetarian food,
-    serving generations with consistency, hygiene, and uncompromising taste.
-    Known for Jain-friendly preparation and high customer satisfaction,
-    we are among the most reviewed restaurants in the area.
-  </p>
+<section id="story">
+  <div class="wrap reveal">
+    <h2>Our Story</h2>
+    <p class="lead">Decades of consistency, hygiene, and uncompromising vegetarian cuisine. Built for families, trusted by regulars.</p>
+  </div>
+</section>
 
-  <div class="features">
-    <div class="feature">🥬 100% Vegetarian Kitchen</div>
-    <div class="feature">🧄 Jain Food Options</div>
-    <div class="feature">⭐ 4.2+ Google Rating</div>
-    <div class="feature">🧼 Clean & Hygienic</div>
+<section id="experience">
+  <div class="wrap reveal">
+    <h2>The Experience</h2>
+    <div class="grid cols-4">
+      <div class="card"><div class="icon">🥬</div><h3>Pure Veg</h3><p class="lead">Dedicated vegetarian kitchen.</p></div>
+      <div class="card"><div class="icon">🧄</div><h3>Jain Options</h3><p class="lead">Prepared on request.</p></div>
+      <div class="card"><div class="icon">⭐</div><h3>Top Rated</h3><p class="lead">4.2+ on Google.</p></div>
+      <div class="card"><div class="icon">🧼</div><h3>Hygiene</h3><p class="lead">Clean, audited processes.</p></div>
+    </div>
   </div>
 </section>
 
 <section id="menu">
-  <h2>Signature Menu</h2>
+  <div class="wrap reveal">
+    <h2>Signature Menu</h2>
+    <div class="grid menu-grid">
+      <div class="card menu-item"><strong>Paneer Butter Masala</strong><span>₹—</span></div>
+      <div class="card menu-item"><strong>Veg Thali</strong><span>₹—</span></div>
+      <div class="card menu-item"><strong>Butter Naan</strong><span>₹—</span></div>
+      <div class="card menu-item"><strong>Dal Tadka</strong><span>₹—</span></div>
+    </div>
 
-  <div class="menu-grid">
-    <div class="menu-card">Paneer Butter Masala</div>
-    <div class="menu-card">Veg Thali</div>
-    <div class="menu-card">Butter Naan</div>
-    <div class="menu-card">Dal Fry</div>
+    <details class="menu-full">
+      <summary>📜 View Full Menu Card</summary>
+      <div class="menu-list">
+        <div><span>Shahi Paneer</span><span>₹—</span></div>
+        <div><span>Veg Kolhapuri</span><span>₹—</span></div>
+        <div><span>Jeera Rice</span><span>₹—</span></div>
+        <div><span>Butter / Plain Naan</span><span>₹—</span></div>
+        <div><span>Jain Special Items</span><span>₹—</span></div>
+        <div><span>Desserts</span><span>₹—</span></div>
+      </div>
+    </details>
   </div>
-
-  <details>
-    <summary>📜 View Full Menu Card</summary>
-    <ul>
-      <li>Paneer Butter Masala</li>
-      <li>Shahi Paneer</li>
-      <li>Veg Kolhapuri</li>
-      <li>Dal Fry / Dal Tadka</li>
-      <li>Butter / Plain Naan</li>
-      <li>Jain Special Items</li>
-    </ul>
-  </details>
 </section>
 
 <section id="gallery">
-  <h2>Gallery</h2>
-  <div class="gallery">
-    <div></div><div></div><div></div>
+  <div class="wrap reveal">
+    <h2>Gallery</h2>
+    <div class="grid gallery">
+      <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+    </div>
   </div>
 </section>
 
-<section class="contact" id="contact">
-  <h2>Visit & Contact</h2>
-  <p>📍 Main Road, Your Area, City</p>
-  <a href="tel:+91XXXXXXXXXX">📞 Call Now</a>
-  <a href="https://wa.me/91XXXXXXXXXX">💬 WhatsApp</a>
-  <a href="mailto:restaurant@email.com">📧 Email</a>
+<section id="visit">
+  <div class="wrap reveal contact">
+    <div class="card">
+      <h2>Visit & Contact</h2>
+      <p class="lead">Main Road, Your Area, City</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap">
+        <a class="btn" href="tel:+91XXXXXXXXXX">Call</a>
+        <a class="btn alt" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+        <a class="btn alt" href="mailto:restaurant@email.com">Email</a>
+      </div>
+    </div>
+    <div class="map"></div>
+  </div>
 </section>
 
 <footer>
-© 2025 Marwari Dhaba • Premium Restaurant Website
+  <div class="wrap">© 2025 Marwari Dhaba • Official Website</div>
 </footer>
+
+<script>
+/* Reveal on scroll */
+const io=new IntersectionObserver(e=>{
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add('show'))
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 
 </body>
 </html>
