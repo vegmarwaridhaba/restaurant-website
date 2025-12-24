@@ -2,168 +2,234 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Marwari Dhaba | Pure Veg Restaurant</title>
+<title>Marwari Dhaba | Premium Veg Restaurant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-:root {
-  --green:#2e7d32;
-  --dark:#1b1b1b;
-  --light:#f5f5f5;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family: 'Segoe UI',sans-serif;
+  background:#f4f6f5;
+  color:#222;
+  scroll-behavior:smooth;
 }
 
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:var(--light);
-  color:#333;
+/* NAVBAR */
+nav{
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  background:#0f1f17;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px 60px;
+  z-index:1000;
+}
+nav .logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#fff;
+  font-size:22px;
+  font-weight:600;
+}
+nav img{
+  width:40px;
+}
+nav ul{
+  list-style:none;
+  display:flex;
+  gap:30px;
+}
+nav ul li a{
+  text-decoration:none;
+  color:#ddd;
+  font-size:16px;
+  position:relative;
+}
+nav ul li a::after{
+  content:'';
+  width:0;
+  height:2px;
+  background:#3cb371;
+  position:absolute;
+  left:0;
+  bottom:-5px;
+  transition:.3s;
+}
+nav ul li a:hover::after{
+  width:100%;
 }
 
-header {
+/* HERO */
+.hero{
+  height:100vh;
   background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
   url("https://images.unsplash.com/photo-1552566626-52f8b828add9");
   background-size:cover;
   background-position:center;
-  color:#fff;
-  padding:80px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
+  padding:20px;
 }
-
-header img {
-  width:90px;
-  margin-bottom:10px;
+.hero h1{
+  color:#fff;
+  font-size:55px;
+  animation:fadeUp 1.2s;
 }
-
-header h1 {
-  font-size:42px;
-  margin:10px 0;
+.hero p{
+  color:#ddd;
+  margin:20px 0;
+  font-size:20px;
+  animation:fadeUp 1.6s;
 }
-
-header p {
+.hero a{
+  padding:15px 35px;
+  background:#3cb371;
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
   font-size:18px;
+  animation:fadeUp 2s;
 }
 
-.btn {
-  display:inline-block;
-  margin:10px;
-  padding:12px 20px;
-  background:var(--green);
+/* SECTION */
+section{
+  padding:100px 60px;
+}
+section h2{
+  font-size:38px;
+  margin-bottom:30px;
+  position:relative;
+}
+section h2::after{
+  content:'';
+  width:80px;
+  height:4px;
+  background:#3cb371;
+  position:absolute;
+  left:0;
+  bottom:-10px;
+}
+
+/* FEATURES */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+.box{
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.08);
+  transition:.4s;
+}
+.box:hover{
+  transform:translateY(-10px);
+}
+
+/* MENU */
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+}
+.menu-item{
+  background:#fff;
+  border-radius:18px;
+  padding:25px;
+  transition:.4s;
+}
+.menu-item:hover{
+  transform:scale(1.05);
+}
+
+/* CONTACT */
+.contact a{
+  display:block;
+  margin:15px 0;
+  padding:15px;
+  border-radius:12px;
+  background:#3cb371;
   color:#fff;
   text-decoration:none;
-  border-radius:6px;
-  font-weight:bold;
+  width:280px;
 }
 
-section {
-  background:#fff;
-  margin:25px auto;
-  padding:25px;
-  max-width:1000px;
-  border-radius:10px;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-}
-
-h2 {
-  color:var(--green);
-  margin-bottom:15px;
-}
-
-.features {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
-}
-
-.feature-box {
-  background:#f9f9f9;
-  padding:15px;
-  border-radius:8px;
+/* FOOTER */
+footer{
+  background:#0f1f17;
+  color:#aaa;
   text-align:center;
+  padding:30px;
 }
 
-.contact-buttons a {
-  display:block;
-  margin:10px 0;
-  padding:12px;
-  background:var(--green);
-  color:white;
-  text-decoration:none;
-  border-radius:6px;
-  text-align:center;
-}
-
-iframe {
-  width:100%;
-  height:350px;
-  border:none;
-  border-radius:10px;
-}
-
-footer {
-  background:#111;
-  color:#bbb;
-  text-align:center;
-  padding:15px;
-  font-size:14px;
+/* ANIMATION */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
-  <h1>Marwari Dhaba</h1>
-  <p>Authentic Pure Vegetarian Restaurant</p>
-  <p>⭐ 4.2 Google Rating • Jain Food Available</p>
+<nav>
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+    Marwari Dhaba
+  </div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-  <a class="btn" href="#menu">View Menu</a>
-  <a class="btn" href="#contact">Contact Now</a>
-</header>
-
-<section>
-<h2>Why Customers Love Us</h2>
-<div class="features">
-  <div class="feature-box">🥬 100% Pure Vegetarian</div>
-  <div class="feature-box">🧄 Jain Food Available</div>
-  <div class="feature-box">🧼 Clean & Hygienic</div>
-  <div class="feature-box">⭐ Top Rated in Area</div>
+<div class="hero" id="home">
+  <div>
+    <h1>Experience Pure Vegetarian Luxury</h1>
+    <p>Top Rated Veg Restaurant • Jain Food Available</p>
+    <a href="#menu">Explore Menu</a>
+  </div>
 </div>
+
+<section id="about">
+  <h2>Why Choose Us</h2>
+  <div class="features">
+    <div class="box">🥬 100% Pure Vegetarian</div>
+    <div class="box">🧄 Jain Food Available</div>
+    <div class="box">⭐ 4.2+ Google Rating</div>
+    <div class="box">🧼 Hygiene & Quality</div>
+  </div>
 </section>
 
 <section id="menu">
-<h2>Popular Menu</h2>
-<ul>
-  <li>Paneer Butter Masala</li>
-  <li>Butter Naan</li>
-  <li>Veg Thali</li>
-  <li>Dal Fry</li>
-  <li>Jain Special Items</li>
-</ul>
+  <h2>Signature Dishes</h2>
+  <div class="menu-grid">
+    <div class="menu-item">Paneer Butter Masala</div>
+    <div class="menu-item">Veg Thali</div>
+    <div class="menu-item">Butter Naan</div>
+    <div class="menu-item">Dal Fry</div>
+    <div class="menu-item">Jain Special Items</div>
+  </div>
 </section>
 
-<section id="contact">
-<h2>Visit & Contact</h2>
-
-<p><strong>Address:</strong><br>
-Marwari Dhaba, Main Road, Your Area, City</p>
-
-<div class="contact-buttons">
-  <a href="tel:+91XXXXXXXXXX">📞 Call Restaurant</a>
-  <a href="https://wa.me/91XXXXXXXXXX">💬 WhatsApp Order</a>
-  <a href="mailto:restaurant@email.com">📧 Send Email</a>
-  <a href="https://www.google.com/maps" target="_blank">📍 Open in Google Maps</a>
-</div>
-
-<br>
-<iframe 
-src="https://www.google.com/maps?q=Marwari+Dhaba&output=embed">
-</iframe>
-
+<section id="contact" class="contact">
+  <h2>Visit Us</h2>
+  <p>📍 Main Road, Your Area, City</p>
+  <a href="tel:+91XXXXXXXXXX">📞 Call Now</a>
+  <a href="https://wa.me/91XXXXXXXXXX">💬 WhatsApp</a>
+  <a href="mailto:restaurant@email.com">📧 Email</a>
 </section>
 
 <footer>
-© 2025 Marwari Dhaba • Official Website
+© 2025 Marwari Dhaba • Premium Restaurant Website
 </footer>
 
 </body>
