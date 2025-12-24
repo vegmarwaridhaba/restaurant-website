@@ -2,21 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Surojit Marwari Dhaba | Premium Vegetarian Restaurant</title>
+<title>Marwari Dhaba | Cinematic Vegetarian Restaurant</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box}
 
+/* ================= BASE ================= */
 :root{
   --bg:#0b1512;
-  --glass:rgba(255,255,255,.06);
-  --line:rgba(255,255,255,.12);
+  --glass:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.15);
   --accent:#2fffad;
   --text:#eaf6f1;
   --muted:#b9e6d6;
 }
-
 html{scroll-behavior:smooth}
 body{
   font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
@@ -24,7 +25,7 @@ body{
   color:var(--text);
 }
 
-/* NAVBAR */
+/* ================= NAV ================= */
 nav{
   position:fixed;
   top:0;left:0;width:100%;
@@ -53,11 +54,11 @@ nav a::after{
 }
 nav a:hover::after{width:100%}
 
-/* HERO */
+/* ================= HERO ================= */
 .hero{
   height:100vh;
   background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    linear-gradient(rgba(0,0,0,.75),rgba(0,0,0,.75)),
     url("https://images.unsplash.com/photo-1552566626-52f8b828add9");
   background-size:cover;
   background-position:center;
@@ -78,7 +79,7 @@ nav a:hover::after{width:100%}
   animation:fadeUp 1.4s ease;
 }
 .hero button{
-  padding:14px 34px;
+  padding:14px 36px;
   border-radius:30px;
   border:none;
   background:var(--accent);
@@ -91,7 +92,7 @@ nav a:hover::after{width:100%}
   transform:translateY(-2px);
 }
 
-/* SECTION */
+/* ================= SECTIONS ================= */
 section{
   padding:120px 10%;
 }
@@ -106,46 +107,42 @@ section p{
   color:var(--muted);
 }
 
-/* IMAGE BLOCK */
+/* ================= IMAGE BLOCK ================= */
 .image{
   width:100%;
   height:420px;
-  margin:50px 0;
-  border-radius:22px;
+  margin:60px 0;
+  border-radius:24px;
   background-size:cover;
   background-position:center;
   transition:.6s;
 }
-.image:hover{transform:scale(1.03)}
+.image:hover{transform:scale(1.04)}
 
-/* REVEAL */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s ease;
-}
-.reveal.show{
-  opacity:1;
-  transform:none;
+/* ================= VIDEO ================= */
+video{
+  width:100%;
+  margin:60px 0;
+  border-radius:24px;
 }
 
-/* MENU */
+/* ================= MENU ================= */
 .menu{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:26px;
+  gap:28px;
 }
 .card{
   background:var(--glass);
   backdrop-filter:blur(14px);
-  border-radius:22px;
+  border-radius:24px;
   padding:20px;
   transition:.4s;
 }
-.card:hover{transform:translateY(-10px)}
+.card:hover{transform:translateY(-12px)}
 .card img{
   width:100%;
-  border-radius:16px;
+  border-radius:18px;
 }
 .card h3{margin:14px 0 6px}
 .card span{
@@ -153,12 +150,23 @@ section p{
   font-size:18px;
 }
 
-/* CONTACT */
+/* ================= REVEAL ================= */
+.reveal{
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s ease;
+}
+.reveal.show{
+  opacity:1;
+  transform:none;
+}
+
+/* ================= CONTACT ================= */
 .contact a{
   display:inline-block;
-  margin:12px 12px 0 0;
-  padding:14px 28px;
-  border-radius:28px;
+  margin:14px 14px 0 0;
+  padding:14px 30px;
+  border-radius:30px;
   border:1px solid var(--accent);
   color:var(--accent);
   text-decoration:none;
@@ -169,7 +177,7 @@ section p{
   color:#000;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 footer{
   background:#000;
   padding:40px 20px;
@@ -177,13 +185,13 @@ footer{
   color:#888;
 }
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 @media(max-width:768px){
   section{padding:90px 6%}
   .image{height:260px}
 }
 
-/* ANIM */
+/* ================= ANIMATION ================= */
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(30px)}
   to{opacity:1;transform:none}
@@ -204,20 +212,24 @@ footer{
 
 <div class="hero">
   <div>
-    <h1>Pure Vegetarian Dining, Reimagined</h1>
-    <p>Luxury • Trust • Jain Friendly • Loved by Generations</p>
+    <h1>Pure Vegetarian Dining, Built on Trust</h1>
+    <p>Luxury • Discipline • Jain Friendly • Loved by Generations</p>
     <button onclick="location.href='#menu'">Explore Menu</button>
   </div>
 </div>
 
-<!-- STORY BLOCKS (15+ SCROLL FEEL) -->
+<!-- ===== LONG STORYTELLING ===== -->
 <section id="story" class="reveal">
-<h2>Our Journey</h2>
+<h2>Where It All Began</h2>
 <p>
-Marwari Dhaba began as a disciplined family kitchen focused on purity and consistency.
-Over time, this commitment transformed it into a trusted destination for families,
-travelers, and working professionals. Every recipe is refined through years of experience,
-ensuring the same taste today as yesterday.
+Marwari Dhaba did not begin as a business idea.  
+It began as a responsibility.  
+In a small kitchen, with limited resources,  
+the focus was never speed or profit.  
+It was purity, discipline, and consistency.  
+Over time, customers returned not for variety,  
+but for trust.  
+That trust became our foundation.
 </p>
 <div class="image" style="background-image:url('https://images.unsplash.com/photo-1541544741938-0af808871cc0')"></div>
 </section>
@@ -225,44 +237,51 @@ ensuring the same taste today as yesterday.
 <section class="reveal">
 <h2>Food With Integrity</h2>
 <p>
-We believe food should never feel rushed or artificial.
-Ingredients are selected carefully, processes are respected,
-and preparation follows strict discipline. This philosophy ensures
-every meal feels safe, familiar, and satisfying.
+We believe food should never feel rushed.  
+Each ingredient is chosen carefully.  
+Each recipe follows a structured process.  
+When food is prepared with patience,  
+the result is consistency — not surprises.
 </p>
 </section>
 
 <section class="reveal">
-<h2>Kitchen & Hygiene</h2>
+<h2>Kitchen Discipline & Hygiene</h2>
 <p>
-Cleanliness is non-negotiable. Jain food is prepared separately on request,
-honoring belief systems and trust. Transparency and hygiene define
-how our kitchen operates every day.
+Cleanliness is non-negotiable.  
+Every morning begins with inspection.  
+Jain food is prepared separately on request,  
+honoring belief systems and customer trust.
 </p>
 <div class="image" style="background-image:url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092')"></div>
 </section>
 
 <section class="reveal">
-<h2>Dining Experience</h2>
+<h2>The Dining Experience</h2>
 <p>
-Our space is designed to feel calm and welcoming.
-From lighting to seating, every detail supports a relaxed
-and respectful dining atmosphere.
+Our space is designed to feel calm and welcoming.  
+Guests are never rushed.  
+Because food deserves time.  
+And so do people.
 </p>
+<video muted autoplay loop>
+  <source src="sample-video.mp4" type="video/mp4">
+</video>
 </section>
 
 <section class="reveal">
 <h2>Why Customers Return</h2>
 <p>
-Consistency is our identity. Customers return because expectations
-are always met — honest food, stable quality, and respectful service.
+Consistency is our identity.  
+Customers know what to expect —  
+honest food, stable quality, respectful service.  
 Trust built over years cannot be replaced.
 </p>
 </section>
 
-<!-- MENU -->
+<!-- ===== MENU ===== -->
 <section id="menu" class="reveal">
-<h2>Signature Menu</h2>
+<h2>Signature Dishes</h2>
 <div class="menu">
   <div class="card">
     <img src="https://images.unsplash.com/photo-1604908177225-6d3a5d44c3c3">
@@ -282,7 +301,7 @@ Trust built over years cannot be replaced.
 </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ===== CONTACT ===== -->
 <section id="contact" class="contact reveal">
 <h2>Visit Us</h2>
 <p>Main Road, Your Area, City</p>
