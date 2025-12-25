@@ -2,191 +2,174 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Surojit Marwari Dhaba | Premium Vegetarian Restaurant</title>
+<title>Marwari Dhaba — Premium Vegetarian Dining</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
+/* ================== DESIGN SYSTEM ================== */
 :root{
-  --bg:#0b1512;
-  --glass:rgba(255,255,255,.06);
+  --bg:#0b1210;
+  --panel:#111b18;
+  --card:#13231f;
+  --glass:rgba(255,255,255,.08);
   --line:rgba(255,255,255,.12);
-  --accent:#2fffad;
-  --text:#eaf6f1;
-  --muted:#b9e6d6;
+  --accent:#39d98a;
+  --accent-2:#8ef0c8;
+  --text:#e7efe9;
+  --muted:#b8c9c0;
+  --shadow:0 30px 80px rgba(0,0,0,.45);
+  --radius:22px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 }
 
+*{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* NAVBAR */
-nav{
-  position:fixed;
-  top:0;left:0;width:100%;
-  padding:14px 18px;
-  background:rgba(0,0,0,.65);
-  backdrop-filter:blur(14px);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:100;
-}
-nav strong{font-size:18px}
-nav a{
-  color:var(--muted);
-  margin-left:18px;
-  text-decoration:none;
-  position:relative;
-}
-nav a::after{
-  content:'';
-  position:absolute;
-  left:0;bottom:-6px;
-  width:0;height:2px;
-  background:var(--accent);
-  transition:.3s;
-}
-nav a:hover::after{width:100%}
-
-/* HERO */
-.hero{
-  height:100vh;
+  margin:0; color:var(--text);
   background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
-    url("https://images.unsplash.com/photo-1552566626-52f8b828add9");
-  background-size:cover;
-  background-position:center;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:20px;
-}
-.hero h1{
-  font-size:clamp(34px,6vw,56px);
-  animation:fadeUp 1s ease;
-}
-.hero p{
-  margin:18px 0;
-  font-size:clamp(16px,2.5vw,20px);
-  color:var(--muted);
-  animation:fadeUp 1.4s ease;
-}
-.hero button{
-  padding:14px 34px;
-  border-radius:30px;
-  border:none;
-  background:var(--accent);
-  font-size:17px;
-  cursor:pointer;
-  transition:.3s;
-}
-.hero button:hover{
-  background:#fff;
-  transform:translateY(-2px);
+    radial-gradient(1200px 600px at 20% -10%, #163027 0%, transparent 60%),
+    radial-gradient(800px 500px at 100% 10%, #10261f 0%, transparent 55%),
+    var(--bg);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
-/* SECTION */
-section{
-  padding:120px 10%;
+/* ================== UTIL ================== */
+.wrap{max-width:1200px;margin:auto;padding:0 22px}
+.spacer{height:120px}
+.btn{
+  position:relative; isolation:isolate;
+  display:inline-flex; gap:10px; align-items:center;
+  padding:16px 26px; border-radius:999px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#062317; font-weight:700; letter-spacing:.2px;
+  text-decoration:none; border:none; cursor:pointer;
+  box-shadow:0 12px 30px rgba(57,217,138,.35);
+  transition:transform .25s var(--ease), box-shadow .25s var(--ease), filter .25s var(--ease);
 }
-section h2{
-  font-size:clamp(26px,4vw,38px);
-  margin-bottom:22px;
+.btn::after{
+  content:""; position:absolute; inset:-1px; border-radius:inherit;
+  background:linear-gradient(135deg,#fff,transparent 40%);
+  opacity:.25; z-index:-1;
 }
-section p{
-  font-size:17px;
-  line-height:1.9;
-  max-width:960px;
-  color:var(--muted);
+.btn:hover{transform:translateY(-2px); box-shadow:0 18px 44px rgba(57,217,138,.45)}
+.btn:active{transform:translateY(0); filter:saturate(1.1)}
+.btn.alt{
+  background:transparent; color:var(--text);
+  border:1px solid var(--line); box-shadow:none;
 }
+.chip{display:inline-flex; padding:8px 14px; border-radius:999px; background:var(--glass); border:1px solid var(--line); color:var(--muted)}
 
-/* IMAGE BLOCK */
-.image{
-  width:100%;
-  height:420px;
-  margin:50px 0;
-  border-radius:22px;
-  background-size:cover;
-  background-position:center;
-  transition:.6s;
+/* ================== NAV ================== */
+nav{
+  position:fixed; inset:0 0 auto 0; z-index:1000;
+  backdrop-filter: blur(14px);
+  background:linear-gradient(to bottom, rgba(11,18,16,.85), rgba(11,18,16,.55));
+  border-bottom:1px solid var(--line);
 }
-.image:hover{transform:scale(1.03)}
+.nav{
+  display:flex; align-items:center; justify-content:space-between; height:74px;
+}
+.brand{display:flex; gap:12px; align-items:center}
+.brand img{width:38px}
+.brand strong{font-size:18px}
+.menu{display:flex; gap:26px}
+.menu a{color:var(--muted); text-decoration:none; position:relative}
+.menu a::after{content:""; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:var(--accent); transition:.25s var(--ease)}
+.menu a:hover{color:var(--text)}
+.menu a:hover::after{width:100%}
+.hamburger{display:none}
 
-/* REVEAL */
-.reveal{
-  opacity:0;
-  transform:translateY(40px);
-  transition:1s ease;
+/* ================== HERO ================== */
+.hero{
+  min-height:100vh; display:grid; place-items:center; position:relative;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.75)),
+    url("https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1600&auto=format&fit=crop");
+  background-size:cover; background-position:center;
 }
-.reveal.show{
-  opacity:1;
-  transform:none;
+.hero .panel{
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:44px; text-align:center;
+  animation:rise .9s var(--ease) both;
 }
+.hero h1{font-size:clamp(34px,6vw,60px); margin:0 0 12px}
+.hero p{color:var(--muted); font-size:clamp(16px,2.2vw,20px)}
+.hero .cta{display:flex; gap:14px; justify-content:center; margin-top:22px}
 
-/* MENU */
-.menu{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:26px;
-}
+/* ================== SECTIONS ================== */
+section{padding:120px 0}
+h2{font-size:clamp(26px,4.5vw,40px); margin:0 0 18px}
+.lead{color:var(--muted); max-width:760px}
+
+.grid{display:grid; gap:22px}
+.grid.cols-3{grid-template-columns:repeat(3,1fr)}
+.grid.cols-4{grid-template-columns:repeat(4,1fr)}
+
 .card{
-  background:var(--glass);
-  backdrop-filter:blur(14px);
-  border-radius:22px;
-  padding:20px;
-  transition:.4s;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border:1px solid var(--line); border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:28px; transition:transform .35s var(--ease), box-shadow .35s var(--ease);
 }
-.card:hover{transform:translateY(-10px)}
-.card img{
-  width:100%;
-  border-radius:16px;
+.card:hover{transform:translateY(-8px); box-shadow:0 50px 120px rgba(0,0,0,.6)}
+
+.icon{font-size:28px}
+
+/* ================== MENU ================== */
+.menu-grid{grid-template-columns:repeat(4,1fr)}
+.menu-item{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.menu-item span{color:var(--muted)}
+details.menu-full{
+  margin-top:26px; border:1px solid var(--line); border-radius:var(--radius);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
 }
-.card h3{margin:14px 0 6px}
-.card span{
-  color:var(--accent);
-  font-size:18px;
+details summary{
+  list-style:none; cursor:pointer; padding:22px 26px; font-weight:700;
+}
+details[open] summary{border-bottom:1px solid var(--line)}
+.menu-list{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:22px 26px}
+.menu-list div{display:flex; justify-content:space-between; color:var(--muted)}
+
+/* ================== GALLERY ================== */
+.gallery{grid-template-columns:repeat(3,1fr)}
+.ph{
+  height:220px; border-radius:18px; border:1px solid var(--line);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
+    url("https://images.unsplash.com/photo-1541544741938-0af808871cc0?q=80&w=1200&auto=format&fit=crop");
+  background-size:cover; background-position:center;
+  transition:transform .4s var(--ease);
+}
+.ph:hover{transform:scale(1.04)}
+
+/* ================== CONTACT ================== */
+.contact{
+  display:grid; grid-template-columns:1.2fr .8fr; gap:22px
+}
+.map{
+  height:360px; border-radius:18px; border:1px solid var(--line);
+  background:#0f1a16
 }
 
-/* CONTACT */
-.contact a{
-  display:inline-block;
-  margin:12px 12px 0 0;
-  padding:14px 28px;
-  border-radius:28px;
-  border:1px solid var(--accent);
-  color:var(--accent);
-  text-decoration:none;
-  transition:.3s;
-}
-.contact a:hover{
-  background:var(--accent);
-  color:#000;
-}
+/* ================== FOOTER ================== */
+footer{border-top:1px solid var(--line); padding:34px 0; color:var(--muted)}
 
-/* FOOTER */
-footer{
-  background:#000;
-  padding:40px 20px;
-  text-align:center;
-  color:#888;
-}
+/* ================== REVEAL ================== */
+.reveal{opacity:0; transform:translateY(24px)}
+.reveal.show{opacity:1; transform:none; transition:.8s var(--ease)}
 
-/* MOBILE */
-@media(max-width:768px){
-  section{padding:90px 6%}
-  .image{height:260px}
-}
+/* ================== ANIM ================== */
+@keyframes rise{from{opacity:0; transform:translateY(18px)}to{opacity:1; transform:none}}
 
-/* ANIM */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:none}
+/* ================== MOBILE ================== */
+@media(max-width:900px){
+  .grid.cols-3,.grid.cols-4,.menu-grid,.gallery{grid-template-columns:1fr}
+  .contact{grid-template-columns:1fr}
+  .menu{display:none}
+  .hamburger{display:block; color:var(--text)}
+  .hero .panel{padding:26px}
 }
 </style>
 </head>
@@ -194,113 +177,113 @@ footer{
 <body>
 
 <nav>
-  <strong>Marwari Dhaba</strong>
-  <div>
-    <a href="#story">Story</a>
-    <a href="#menu">Menu</a>
-    <a href="#contact">Contact</a>
+  <div class="wrap nav">
+    <div class="brand">
+      <img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png" alt="">
+      <strong>Marwari Dhaba</strong>
+      <span class="chip">Pure Veg • Jain</span>
+    </div>
+    <div class="menu">
+      <a href="#story">Story</a>
+      <a href="#experience">Experience</a>
+      <a href="#menu">Menu</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <div class="hamburger">☰</div>
   </div>
 </nav>
 
-<div class="hero">
-  <div>
-    <h1>Pure Vegetarian Dining, Reimagined</h1>
-    <p>Luxury • Trust • Jain Friendly • Loved by Generations</p>
-    <button onclick="location.href='#menu'">Explore Menu</button>
+<header class="hero">
+  <div class="wrap">
+    <div class="panel">
+      <h1>Vegetarian Dining, Elevated</h1>
+      <p>Authentic taste. Jain-friendly kitchen. Loved by thousands.</p>
+      <div class="cta">
+        <a class="btn" href="#menu">Explore Menu</a>
+        <a class="btn alt" href="#visit">Book / Contact</a>
+      </div>
+    </div>
   </div>
-</div>
+</header>
 
-<!-- STORY BLOCKS (15+ SCROLL FEEL) -->
-<section id="story" class="reveal">
-<h2>Our Journey</h2>
-<p>
-Marwari Dhaba began as a disciplined family kitchen focused on purity and consistency.
-Over time, this commitment transformed it into a trusted destination for families,
-travelers, and working professionals. Every recipe is refined through years of experience,
-ensuring the same taste today as yesterday.
-</p>
-<div class="image" style="background-image:url('https://images.unsplash.com/photo-1541544741938-0af808871cc0')"></div>
-</section>
-
-<section class="reveal">
-<h2>Food With Integrity</h2>
-<p>
-We believe food should never feel rushed or artificial.
-Ingredients are selected carefully, processes are respected,
-and preparation follows strict discipline. This philosophy ensures
-every meal feels safe, familiar, and satisfying.
-</p>
-</section>
-
-<section class="reveal">
-<h2>Kitchen & Hygiene</h2>
-<p>
-Cleanliness is non-negotiable. Jain food is prepared separately on request,
-honoring belief systems and trust. Transparency and hygiene define
-how our kitchen operates every day.
-</p>
-<div class="image" style="background-image:url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092')"></div>
-</section>
-
-<section class="reveal">
-<h2>Dining Experience</h2>
-<p>
-Our space is designed to feel calm and welcoming.
-From lighting to seating, every detail supports a relaxed
-and respectful dining atmosphere.
-</p>
-</section>
-
-<section class="reveal">
-<h2>Why Customers Return</h2>
-<p>
-Consistency is our identity. Customers return because expectations
-are always met — honest food, stable quality, and respectful service.
-Trust built over years cannot be replaced.
-</p>
-</section>
-
-<!-- MENU -->
-<section id="menu" class="reveal">
-<h2>Signature Menu</h2>
-<div class="menu">
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1604908177225-6d3a5d44c3c3">
-    <h3>Paneer Butter Masala</h3>
-    <span>₹240</span>
+<section id="story">
+  <div class="wrap reveal">
+    <h2>Our Story</h2>
+    <p class="lead">Decades of consistency, hygiene, and uncompromising vegetarian cuisine. Built for families, trusted by regulars.</p>
   </div>
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1626078298069-47c1a4d6d9aa">
-    <h3>Veg Thali</h3>
-    <span>₹180</span>
-  </div>
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0">
-    <h3>Dal Tadka</h3>
-    <span>₹160</span>
-  </div>
-</div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="contact reveal">
-<h2>Visit Us</h2>
-<p>Main Road, Your Area, City</p>
-<p>🕒 10:00 AM – 10:30 PM</p>
-<a href="tel:+91XXXXXXXXXX">Call</a>
-<a href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+<section id="experience">
+  <div class="wrap reveal">
+    <h2>The Experience</h2>
+    <div class="grid cols-4">
+      <div class="card"><div class="icon">🥬</div><h3>Pure Veg</h3><p class="lead">Dedicated vegetarian kitchen.</p></div>
+      <div class="card"><div class="icon">🧄</div><h3>Jain Options</h3><p class="lead">Prepared on request.</p></div>
+      <div class="card"><div class="icon">⭐</div><h3>Top Rated</h3><p class="lead">4.2+ on Google.</p></div>
+      <div class="card"><div class="icon">🧼</div><h3>Hygiene</h3><p class="lead">Clean, audited processes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="wrap reveal">
+    <h2>Signature Menu</h2>
+    <div class="grid menu-grid">
+      <div class="card menu-item"><strong>Paneer Butter Masala</strong><span>₹—</span></div>
+      <div class="card menu-item"><strong>Veg Thali</strong><span>₹—</span></div>
+      <div class="card menu-item"><strong>Butter Naan</strong><span>₹—</span></div>
+      <div class="card menu-item"><strong>Dal Tadka</strong><span>₹—</span></div>
+    </div>
+
+    <details class="menu-full">
+      <summary>📜 View Full Menu Card</summary>
+      <div class="menu-list">
+        <div><span>Shahi Paneer</span><span>₹—</span></div>
+        <div><span>Veg Kolhapuri</span><span>₹—</span></div>
+        <div><span>Jeera Rice</span><span>₹—</span></div>
+        <div><span>Butter / Plain Naan</span><span>₹—</span></div>
+        <div><span>Jain Special Items</span><span>₹—</span></div>
+        <div><span>Desserts</span><span>₹—</span></div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap reveal">
+    <h2>Gallery</h2>
+    <div class="grid gallery">
+      <div class="ph"></div><div class="ph"></div><div class="ph"></div>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap reveal contact">
+    <div class="card">
+      <h2>Visit & Contact</h2>
+      <p class="lead">Main Road, Your Area, City</p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap">
+        <a class="btn" href="tel:+91XXXXXXXXXX">Call</a>
+        <a class="btn alt" href="https://wa.me/91XXXXXXXXXX">WhatsApp</a>
+        <a class="btn alt" href="mailto:restaurant@email.com">Email</a>
+      </div>
+    </div>
+    <div class="map"></div>
+  </div>
 </section>
 
 <footer>
-© 2025 Marwari Dhaba • Official Website
+  <div class="wrap">© 2025 Marwari Dhaba • Official Website</div>
 </footer>
 
 <script>
-const items=document.querySelectorAll('.reveal');
+/* Reveal on scroll */
 const io=new IntersectionObserver(e=>{
-  e.forEach(x=>x.isIntersecting&&x.target.classList.add('show'));
+  e.forEach(x=>x.isIntersecting&&x.target.classList.add('show'))
 },{threshold:.15});
-items.forEach(i=>io.observe(i));
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 
 </body>
