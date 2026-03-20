@@ -1,37 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Age Calculator</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-body{font-family:sans-serif;text-align:center;padding:40px}
-input,button{padding:10px;margin:10px}
-</style>
-</head>
-
-<body>
-
-<h2>Age Calculator</h2>
-
 <input type="date" id="dob">
-<br>
-<button onclick="calc()">Calculate Age</button>
-
-<h3 id="res"></h3>
+<button onclick="calc()">Calculate</button>
+<div id="result"></div>
 
 <script>
 function calc(){
-let dob=new Date(document.getElementById("dob").value);
-let now=new Date();
+let dob = new Date(document.getElementById("dob").value);
+let now = new Date();
 
-let diff=now-dob;
-let days=Math.floor(diff/86400000);
-let years=Math.floor(days/365);
+let diff = now - dob;
+let days = Math.floor(diff / (1000*60*60*24));
+let years = Math.floor(days/365);
 
-document.getElementById("res").innerHTML=
-"Your Age: "+years+" Years <br> Days lived: "+days;
+document.getElementById("result").innerHTML =
+"Years: " + years + "<br>Days lived: " + days;
 }
 </script>
-
-</body>
-</html>
