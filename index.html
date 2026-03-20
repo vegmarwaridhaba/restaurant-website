@@ -1,17 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Age Calculator</title>
+
+<style>
+body{
+font-family:Arial, sans-serif;
+background:#f4f6f8;
+text-align:center;
+padding:20px;
+transition:.4s;
+}
+
+.container{
+max-width:420px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,.1);
+}
+
+h1{margin-bottom:20px}
+
+input,button{
+padding:12px;
+margin:8px;
+width:90%;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+background:#4CAF50;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+.result{
+text-align:left;
+margin-top:15px;
+line-height:1.6;
+}
+
+.dark{
+background:#121212;
+color:white;
+}
+
+.dark .container{
+background:#1e1e1e;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>Age Calculator</h1>
+
 <input type="date" id="dob">
+
 <button onclick="calc()">Calculate</button>
-<div id="result"></div>
+
+<button onclick="darkMode()">🌙 Toggle Dark Mode</button>
+
+<div class="result" id="res"></div>
+</div>
 
 <script>
 function calc(){
-let dob = new Date(document.getElementById("dob").value);
-let now = new Date();
 
-let diff = now - dob;
-let days = Math.floor(diff / (1000*60*60*24));
-let years = Math.floor(days/365);
+let dob=new Date(document.getElementById("dob").value);
+let now=new Date();
 
-document.getElementById("result").innerHTML =
-"Years: " + years + "<br>Days lived: " + days;
+if(!dob.getTime()){
+alert("Enter valid date");
+return;
+}
+
+let diff=now-dob;
+
+let seconds=Math.floor(diff/1000);
+let minutes=Math.floor(seconds/60);
+let hours=Math.floor(minutes/60);
+let days=Math.floor(hours/24);
+let weeks=Math.floor(days/7);
+let months=Math.floor(days/30.437);
+let years=Math.floor(days/365.25);
+
+let weekday=dob.toLocaleString('default',{weekday:'long'});
+
+let nextBirthday=new Date(now.getFullYear(),
+dob.getMonth(),
+dob.getDate());
+
+if(nextBirthday<now){
+nextBirthday.setFullYear(now.getFullYear()+1);
+}
+
+let birthdayDiff=nextBirthday-now;
+let bdays=Math.floor(birthdayDiff/86400000);
+
+let mercuryAge=(years/0.24).toFixed(1);
+let venusAge=(years/0.62).toFixed(1);
+let marsAge=(years/1.88).toFixed(1);
+let jupiterAge=(years/11.86).toFixed(2);
+
+document.getElementById("res").innerHTML=
+
+`
+<b>Exact Age:</b> ${years} years<br>
+<b>Months:</b> ${months}<br>
+<b>Weeks:</b> ${weeks}<br>
+<b>Days lived:</b> ${days}<br>
+<b>Hours lived:</b> ${hours}<br>
+<b>Minutes:</b> ${minutes}<br>
+
+<hr>
+
+<b>Born on:</b> ${weekday}<br>
+<b>Next Birthday in:</b> ${bdays} days<br>
+
+<hr>
+
+<b>Age on Mercury:</b> ${mercuryAge} years<br>
+<b>Age on Venus:</b> ${venusAge} years<br>
+<b>Age on Mars:</b> ${marsAge} years<br>
+<b>Age on Jupiter:</b> ${jupiterAge} years
+`;
+
+}
+
+function darkMode(){
+document.body.classList.toggle("dark");
 }
 </script>
+
+</body>
+</html>
