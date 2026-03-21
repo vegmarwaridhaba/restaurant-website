@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgeTool</title>
+<title>ToolsZy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,151 +13,153 @@
 
 body{
 background:
-radial-gradient(circle at 20% 30%,#5eead433,transparent),
-radial-gradient(circle at 80% 70%,#60a5fa33,transparent),
+radial-gradient(circle at 20% 30%,#22d3ee22,transparent),
+radial-gradient(circle at 80% 70%,#6366f122,transparent),
 #050816;
 color:white;
 min-height:100vh;
+}
+
+/* HEADER */
+
+.header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:70px;
 display:flex;
 align-items:center;
 justify-content:center;
-padding:30px;
-overflow:hidden;
+backdrop-filter:blur(18px);
+background:rgba(0,0,0,.25);
+z-index:10;
 }
 
-/* ambient floating lights */
+/* hamburger */
 
-body::before,body::after{
-content:"";
+.menuBtn{
 position:absolute;
-width:500px;
-height:500px;
-border-radius:50%;
-filter:blur(140px);
-opacity:.5;
-animation:float 18s infinite alternate;
+left:20px;
+font-size:26px;
+cursor:pointer;
 }
 
-body::before{background:#22d3ee;top:-150px;left:-150px}
-body::after{background:#6366f1;bottom:-150px;right:-150px}
+/* brand */
 
-@keyframes float{
-to{transform:translateY(60px) translateX(40px)}
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:26px;
+font-weight:800;
+letter-spacing:.5px;
 }
 
-/* main container */
+.logo{
+width:34px;
+height:34px;
+border-radius:10px;
+background:linear-gradient(135deg,#22d3ee,#6366f1);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+}
 
-.app{
-width:100%;
-max-width:920px;
-padding:50px;
-border-radius:32px;
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(30px) saturate(140%);
-box-shadow:0 40px 100px rgba(0,0,0,.7);
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#020617;
+padding-top:80px;
+transition:.35s;
+z-index:12;
+}
+
+.sidebar a{
+display:block;
+padding:14px 24px;
+color:#cbd5e1;
+text-decoration:none;
+font-size:15px;
+border-bottom:1px solid #111827;
+}
+
+.sidebar a:hover{
+background:#111827;
+color:white;
+}
+
+/* MAIN */
+
+.main{
+padding-top:100px;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 text-align:center;
 }
 
-/* hero */
+/* tool card */
+
+.card{
+width:92%;
+max-width:520px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(25px);
+padding:40px;
+border-radius:28px;
+box-shadow:0 30px 80px #000;
+}
 
 h1{
-font-size:clamp(36px,5vw,64px);
-font-weight:800;
-letter-spacing:-1px;
-background:linear-gradient(90deg,#fff,#7dd3fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+font-size:32px;
+margin-bottom:10px;
 }
 
 .sub{
-margin-top:10px;
-opacity:.65;
-}
-
-/* form */
-
-.form{
-margin-top:40px;
-display:flex;
-gap:15px;
-justify-content:center;
-flex-wrap:wrap;
-}
-
-input{
-padding:18px 20px;
-border-radius:14px;
-border:none;
-font-size:16px;
-background:#ffffffee;
-min-width:220px;
-}
-
-button{
-padding:18px 26px;
-border-radius:14px;
-border:none;
-font-weight:600;
-background:linear-gradient(90deg,#22d3ee,#60a5fa);
-cursor:pointer;
-transition:.25s;
-}
-
-button:hover{
-transform:translateY(-2px);
-box-shadow:0 15px 35px #22d3ee44;
-}
-
-/* loader */
-
-.loader{
-margin-top:30px;
-display:none;
-opacity:.7;
-animation:pulse 1.2s infinite;
-}
-
-@keyframes pulse{
-50%{opacity:.2}
-}
-
-/* countdown */
-
-.count{
-margin-top:40px;
-display:none;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-}
-
-.box{
-width:120px;
-height:130px;
-border-radius:20px;
-background:linear-gradient(180deg,#0f172a,#020617);
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-box-shadow:0 20px 40px #000;
-}
-
-.num{
-font-size:46px;
-font-weight:700;
-}
-
-.lab{
-font-size:12px;
 opacity:.6;
-margin-top:6px;
+margin-bottom:30px;
+}
+
+/* grid tools preview */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+gap:15px;
+}
+
+.toolBox{
+background:#020617;
+padding:20px;
+border-radius:16px;
+font-size:14px;
+opacity:.85;
+transition:.25s;
+cursor:pointer;
+}
+
+.toolBox:hover{
+transform:translateY(-4px);
+background:#111827;
+opacity:1;
 }
 
 @media(max-width:600px){
-.app{padding:30px}
-.box{width:80px;height:100px}
-.num{font-size:30px}
+
+.header{height:60px}
+.brand{font-size:22px}
+.logo{width:30px;height:30px}
+
+.card{padding:25px}
+
 }
 
 </style>
@@ -165,24 +167,57 @@ margin-top:6px;
 
 <body>
 
-<div class="app">
+<!-- HEADER -->
 
-<h1>Know Your Time</h1>
-<div class="sub">Real-time birthday countdown experience</div>
+<div class="header">
 
-<div class="form">
-<input type="date" id="dob" min="1900-01-01" max="2030-01-01">
-<button onclick="start()">Reveal</button>
+<div class="menuBtn" onclick="toggleMenu()">☰</div>
+
+<div class="brand">
+<div class="logo">TZ</div>
+ToolsZy
 </div>
 
-<div class="loader" id="loader">Calculating timeline…</div>
+</div>
 
-<div class="count" id="count">
+<!-- SIDEBAR -->
 
-<div class="box"><div class="num" id="d">00</div><div class="lab">DAYS</div></div>
-<div class="box"><div class="num" id="h">00</div><div class="lab">HOURS</div></div>
-<div class="box"><div class="num" id="m">00</div><div class="lab">MIN</div></div>
-<div class="box"><div class="num" id="s">00</div><div class="lab">SEC</div></div>
+<div class="sidebar" id="menu">
+
+<a href="#">Age Calculator</a>
+<a href="#">Birthday Countdown</a>
+<a href="#">Age On Planets</a>
+<a href="#">EMI Calculator</a>
+<a href="#">FD Calculator</a>
+<a href="#">RD Calculator</a>
+<a href="#">Discount Calculator</a>
+<a href="#">Percentage Calculator</a>
+<a href="#">Loan Interest</a>
+<a href="#">Savings Interest</a>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="card">
+
+<h1>All-in-One Smart Tools</h1>
+<div class="sub">Fast modern calculators to simplify your daily decisions</div>
+
+<div class="grid">
+
+<div class="toolBox">Age</div>
+<div class="toolBox">Countdown</div>
+<div class="toolBox">EMI</div>
+<div class="toolBox">FD</div>
+<div class="toolBox">RD</div>
+<div class="toolBox">Discount</div>
+<div class="toolBox">Interest</div>
+<div class="toolBox">Percentage</div>
+
+</div>
 
 </div>
 
@@ -190,50 +225,9 @@ margin-top:6px;
 
 <script>
 
-let timer;
-
-function start(){
-
-let val=dob.value;
-if(!val){
-alert("Enter birth date");
-return;
-}
-
-loader.style.display="block";
-count.style.display="none";
-
-setTimeout(()=>{
-
-loader.style.display="none";
-count.style.display="flex";
-
-run(new Date(val));
-
-},1200);
-
-}
-
-function run(dobDate){
-
-clearInterval(timer);
-
-timer=setInterval(()=>{
-
-let now=new Date();
-
-let next=new Date(now.getFullYear(),dobDate.getMonth(),dobDate.getDate());
-if(next<now) next.setFullYear(now.getFullYear()+1);
-
-let diff=next-now;
-
-d.innerHTML=Math.floor(diff/86400000);
-h.innerHTML=Math.floor(diff/3600000)%24;
-m.innerHTML=Math.floor(diff/60000)%60;
-s.innerHTML=Math.floor(diff/1000)%60;
-
-},1000);
-
+function toggleMenu(){
+let m=document.getElementById("menu");
+m.style.left = (m.style.left=="0px") ? "-260px" : "0px";
 }
 
 </script>
