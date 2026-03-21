@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ToolsZy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -13,11 +13,17 @@
 
 body{
 background:
-radial-gradient(circle at 20% 30%,#22d3ee22,transparent),
+radial-gradient(circle at 20% 20%,#22d3ee22,transparent),
 radial-gradient(circle at 80% 70%,#6366f122,transparent),
 #050816;
 color:white;
-min-height:100vh;
+overflow-x:hidden;
+animation:fadePage .7s ease;
+}
+
+@keyframes fadePage{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1}
 }
 
 /* HEADER */
@@ -32,11 +38,9 @@ display:flex;
 align-items:center;
 justify-content:center;
 backdrop-filter:blur(18px);
-background:rgba(0,0,0,.25);
-z-index:10;
+background:rgba(0,0,0,.35);
+z-index:20;
 }
-
-/* hamburger */
 
 .menuBtn{
 position:absolute;
@@ -45,15 +49,12 @@ font-size:26px;
 cursor:pointer;
 }
 
-/* brand */
-
 .brand{
 display:flex;
 align-items:center;
 gap:10px;
 font-size:26px;
 font-weight:800;
-letter-spacing:.5px;
 }
 
 .logo{
@@ -72,94 +73,122 @@ font-weight:900;
 .sidebar{
 position:fixed;
 top:0;
-left:-260px;
-width:260px;
+left:-270px;
+width:270px;
 height:100%;
 background:#020617;
 padding-top:80px;
-transition:.35s;
-z-index:12;
+transition:.4s;
+z-index:25;
+}
+
+.closeBtn{
+position:absolute;
+top:20px;
+right:20px;
+font-size:24px;
+cursor:pointer;
 }
 
 .sidebar a{
 display:block;
-padding:14px 24px;
+padding:15px 24px;
 color:#cbd5e1;
 text-decoration:none;
-font-size:15px;
 border-bottom:1px solid #111827;
 }
 
-.sidebar a:hover{
-background:#111827;
-color:white;
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#0008;
+display:none;
+z-index:22;
 }
 
-/* MAIN */
+/* HERO */
 
-.main{
-padding-top:100px;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
+.hero{
+padding-top:140px;
+text-align:center;
+padding-bottom:100px;
+}
+
+.hero h1{
+font-size:56px;
+font-weight:800;
+background:linear-gradient(90deg,#fff,#7dd3fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+opacity:.7;
+max-width:700px;
+margin:20px auto;
+}
+
+/* STORY SECTIONS */
+
+.section{
+padding:120px 20px;
+max-width:900px;
+margin:auto;
+text-align:center;
+animation:fadeUp 1s ease;
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1}
+}
+
+.section h2{
+font-size:40px;
+margin-bottom:20px;
+}
+
+.section p{
+opacity:.7;
+line-height:1.7;
+}
+
+/* TOOLS GRID */
+
+.tools{
+padding:120px 20px;
 text-align:center;
 }
 
-/* tool card */
-
-.card{
-width:92%;
-max-width:520px;
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(25px);
-padding:40px;
-border-radius:28px;
-box-shadow:0 30px 80px #000;
-}
-
-h1{
-font-size:32px;
-margin-bottom:10px;
-}
-
-.sub{
-opacity:.6;
-margin-bottom:30px;
-}
-
-/* grid tools preview */
-
 .grid{
+margin-top:40px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:20px;
+max-width:800px;
+margin-left:auto;
+margin-right:auto;
 }
 
-.toolBox{
+.tool{
 background:#020617;
-padding:20px;
-border-radius:16px;
-font-size:14px;
-opacity:.85;
+padding:25px;
+border-radius:18px;
 transition:.25s;
 cursor:pointer;
 }
 
-.toolBox:hover{
-transform:translateY(-4px);
+.tool:hover{
+transform:translateY(-6px);
 background:#111827;
-opacity:1;
 }
 
 @media(max-width:600px){
-
-.header{height:60px}
-.brand{font-size:22px}
-.logo{width:30px;height:30px}
-
-.card{padding:25px}
-
+.hero h1{font-size:38px}
+.section h2{font-size:28px}
 }
 
 </style>
@@ -167,23 +196,18 @@ opacity:1;
 
 <body>
 
-<!-- HEADER -->
-
 <div class="header">
-
-<div class="menuBtn" onclick="toggleMenu()">☰</div>
+<div class="menuBtn" onclick="openMenu()">☰</div>
 
 <div class="brand">
 <div class="logo">TZ</div>
 ToolsZy
 </div>
-
 </div>
 
-<!-- SIDEBAR -->
-
 <div class="sidebar" id="menu">
-
+<div class="closeBtn" onclick="closeMenu()">✕</div>
+<a href="#">Home</a>
 <a href="#">Age Calculator</a>
 <a href="#">Birthday Countdown</a>
 <a href="#">Age On Planets</a>
@@ -192,32 +216,52 @@ ToolsZy
 <a href="#">RD Calculator</a>
 <a href="#">Discount Calculator</a>
 <a href="#">Percentage Calculator</a>
-<a href="#">Loan Interest</a>
-<a href="#">Savings Interest</a>
-
 </div>
 
-<!-- MAIN -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
-<div class="main">
+<!-- HERO -->
 
-<div class="card">
+<div class="hero">
+<h1>Your Smart Daily Tools Hub</h1>
+<p>A modern all-in-one platform built to simplify real life calculations — from age tracking to financial planning.</p>
+</div>
 
-<h1>All-in-One Smart Tools</h1>
-<div class="sub">Fast modern calculators to simplify your daily decisions</div>
+<!-- STORY -->
+
+<div class="section">
+<h2>Why ToolsZy Exists</h2>
+<p>
+ToolsZy was created with a simple belief — everyday calculations should be fast, beautiful and effortless.
+Each calculator on this platform is carefully designed with attention to detail, accuracy and user experience.
+Whether you are planning your future finances, tracking milestones or making daily decisions, ToolsZy helps you move forward with clarity.
+</p>
+</div>
+
+<div class="section">
+<h2>Designed With Care</h2>
+<p>
+Every tool here is crafted with dedication and continuous improvement.
+We focus on speed, minimal design and meaningful features that truly solve problems.
+No clutter. No confusion. Just smart utilities that respect your time.
+</p>
+</div>
+
+<!-- TOOLS -->
+
+<div class="tools">
+<h2>Explore All Tools</h2>
 
 <div class="grid">
 
-<div class="toolBox">Age</div>
-<div class="toolBox">Countdown</div>
-<div class="toolBox">EMI</div>
-<div class="toolBox">FD</div>
-<div class="toolBox">RD</div>
-<div class="toolBox">Discount</div>
-<div class="toolBox">Interest</div>
-<div class="toolBox">Percentage</div>
-
-</div>
+<div class="tool">Age Calculator</div>
+<div class="tool">Birthday Countdown</div>
+<div class="tool">Age On Planets</div>
+<div class="tool">EMI Calculator</div>
+<div class="tool">FD Calculator</div>
+<div class="tool">RD Calculator</div>
+<div class="tool">Discount Calculator</div>
+<div class="tool">Percentage</div>
 
 </div>
 
@@ -225,9 +269,14 @@ ToolsZy
 
 <script>
 
-function toggleMenu(){
-let m=document.getElementById("menu");
-m.style.left = (m.style.left=="0px") ? "-260px" : "0px";
+function openMenu(){
+menu.style.left="0";
+overlay.style.display="block";
+}
+
+function closeMenu(){
+menu.style.left="-270px";
+overlay.style.display="none";
 }
 
 </script>
