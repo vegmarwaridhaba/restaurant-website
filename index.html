@@ -3,161 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ToolsZy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
+<title>ToolsZy • Smart Calculators</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Plus Jakarta Sans",sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
 
 body{
-background:
-radial-gradient(circle at 20% 20%,#22d3ee22,transparent),
-radial-gradient(circle at 80% 70%,#6366f122,transparent),
-#050816;
+background:linear-gradient(120deg,#06142c,#0b1e3f,#081b33);
 color:white;
-overflow-x:hidden;
 }
 
-/* header */
+/* HEADER */
 
-.header{
+header{
 position:fixed;
 top:0;
+left:0;
 width:100%;
 height:70px;
 display:flex;
 align-items:center;
 justify-content:center;
-background:#0005;
-backdrop-filter:blur(20px);
-z-index:50;
+background:rgba(0,0,0,.25);
+backdrop-filter:blur(12px);
+z-index:999;
 }
 
-.menuBtn{
+.menu{
 position:absolute;
 left:20px;
 font-size:26px;
 cursor:pointer;
 }
 
-.brand{
+.logo{
 display:flex;
 align-items:center;
 gap:10px;
-font-size:26px;
-font-weight:800;
+font-weight:700;
+font-size:22px;
 }
 
-.logo{
-width:34px;
-height:34px;
-border-radius:10px;
-background:linear-gradient(135deg,#22d3ee,#6366f1);
+.circle{
+width:36px;
+height:36px;
+border-radius:50%;
+background:linear-gradient(90deg,#00eaff,#7c3aed);
 display:flex;
 align-items:center;
 justify-content:center;
-font-weight:900;
+font-size:14px;
 }
 
-/* sidebar */
-
-.sidebar{
-position:fixed;
-top:0;
-left:-270px;
-width:270px;
-height:100%;
-background:#020617;
-padding-top:80px;
-transition:.4s;
-z-index:60;
-}
-
-.closeBtn{
-position:absolute;
-top:20px;
-right:20px;
-font-size:24px;
-cursor:pointer;
-}
-
-.sidebar a{
-display:block;
-padding:15px 24px;
-color:#cbd5e1;
-text-decoration:none;
-border-bottom:1px solid #111827;
-}
-
-.overlay{
-position:fixed;
-top:0;
-width:100%;
-height:100%;
-background:#0008;
-display:none;
-z-index:55;
-}
-
-/* hero */
+/* HERO */
 
 .hero{
-padding-top:150px;
-padding-bottom:140px;
+padding-top:140px;
 text-align:center;
+padding-bottom:50px;
 }
 
 .hero h1{
-font-size:56px;
+font-size:46px;
 font-weight:800;
-background:linear-gradient(90deg,#fff,#7dd3fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+margin-bottom:10px;
 }
 
-.hero .tag{
-margin-top:18px;
-font-weight:600;
-opacity:.95;
+.desc{
+opacity:.8;
+margin-bottom:6px;
 }
 
-.hero .desc{
-margin-top:18px;
-max-width:750px;
-margin-left:auto;
-margin-right:auto;
-opacity:.7;
+.hero p{
+opacity:.6;
 }
 
-/* tools */
+/* EXPLORE */
 
-.tools{
-padding:140px 20px;
+.explore{
+margin-top:60px;
 text-align:center;
 }
 
-.grid{
-margin-top:50px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:25px;
-max-width:900px;
-margin:auto;
+.explore h2{
+margin-bottom:25px;
+}
+
+/* TOOLS GRID */
+
+.tools{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:18px;
 }
 
 .tool{
+width:150px;
+padding:18px;
 background:#020617;
-padding:30px;
-border-radius:20px;
-transition:.3s;
+border-radius:16px;
+text-align:center;
 cursor:pointer;
+transition:.25s;
 }
 
 .tool:hover{
-transform:translateY(-8px);
-background:#111827;
+transform:translateY(-4px);
+background:#0f172a;
+}
+
+/* ARTICLE */
+
+.article{
+max-width:850px;
+margin:90px auto;
+line-height:1.9;
+opacity:.85;
+padding:0 18px;
+}
+
+.article h2{
+margin-top:50px;
+font-size:28px;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:60px 0;
+opacity:.5;
+}
+
+@media(max-width:600px){
+.hero h1{font-size:32px}
+.tool{width:130px}
 }
 
 </style>
@@ -165,33 +150,16 @@ background:#111827;
 
 <body>
 
-<div class="header">
-<div class="menuBtn" onclick="openMenu()">☰</div>
+<header>
+<div class="menu">☰</div>
 
-<div class="brand">
-<div class="logo">TZ</div>
+<div class="logo">
+<div class="circle">TZ</div>
 ToolsZy
 </div>
-</div>
+</header>
 
-<div class="sidebar" id="menu">
-<div class="closeBtn" onclick="closeMenu()">✕</div>
-
-<a href="index.html">Home</a>
-<a href="age.html">Age Calculator</a>
-<a href="countdown.html">Birthday Countdown</a>
-<a href="planets.html">Age On Planets</a>
-<a href="emi.html">EMI Calculator</a>
-<a href="fd.html">FD Calculator</a>
-<a href="rd.html">RD Calculator</a>
-<a href="discount.html">Discount Calculator</a>
-<a href="percentage.html">Percentage Calculator</a>
-
-</div>
-
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
-
-<div class="hero">
+<section class="hero">
 
 <h1>Powerful Everyday Calculators</h1>
 
@@ -199,46 +167,79 @@ ToolsZy
 100% Free • No Sign-Up • No Annoying Ads • Safe & Easy Interface
 </div>
 
-<div class="desc">
+<p>
 ToolsZy is an all-in-one modern tools platform designed to simplify real-life calculations.
-</div>
+</p>
 
-</div>
+</section>
 
-<div class="tools">
+<section class="explore">
+
 <h2>Explore All Smart Tools</h2>
 
-<div class="grid">
+<div class="tools">
 
-<div class="tool" onclick="go('age.html')">Age Calculator</div>
-<div class="tool" onclick="go('countdown.html')">Birthday Countdown</div>
-<div class="tool" onclick="go('planets.html')">Age On Planets</div>
-<div class="tool" onclick="go('emi.html')">EMI Calculator</div>
-<div class="tool" onclick="go('fd.html')">FD Calculator</div>
-<div class="tool" onclick="go('rd.html')">RD Calculator</div>
-<div class="tool" onclick="go('discount.html')">Discount Calculator</div>
-<div class="tool" onclick="go('percentage.html')">Percentage</div>
+<div class="tool" onclick="go('age.html')">Age<br>Calculator</div>
+
+<div class="tool" onclick="go('countdown.html')">Birthday<br>Countdown</div>
+
+<div class="tool">Age On<br>Planets</div>
+
+<div class="tool">EMI<br>Calculator</div>
+
+<div class="tool">FD<br>Calculator</div>
+
+<div class="tool">RD<br>Calculator</div>
+
+<div class="tool">Discount<br>Calculator</div>
+
+<div class="tool">Percentage<br>Calculator</div>
 
 </div>
 
+</section>
+
+<div class="article">
+
+<h2>All-in-One Smart Calculation Platform</h2>
+<p>
+ToolsZy provides a powerful collection of modern online calculators designed
+to help users make smarter everyday decisions. Instead of searching multiple
+websites for different tools, you can access all essential utilities in one
+simple and fast platform.
+</p>
+
+<h2>Completely Free & Easy to Use</h2>
+<p>
+Every tool on ToolsZy is completely free. There is no sign-up requirement,
+no hidden charges and no annoying advertisements. The interface is optimized
+for speed and clarity so that anyone can calculate results instantly.
+</p>
+
+<h2>Optimized for All Devices</h2>
+<p>
+The platform is built with a responsive design that adapts smoothly across
+mobile phones, tablets and desktop screens. Fast loading performance ensures
+a comfortable experience even on slower networks.
+</p>
+
+<h2>Future Vision</h2>
+<p>
+More smart financial tools, productivity utilities and planning calculators
+will be continuously added. The mission of ToolsZy is to become a trusted
+all-in-one calculation hub for everyday life.
+</p>
+
 </div>
+
+<footer>
+© ToolsZy 2026
+</footer>
 
 <script>
-
-function openMenu(){
-document.getElementById("menu").style.left="0";
-document.getElementById("overlay").style.display="block";
-}
-
-function closeMenu(){
-document.getElementById("menu").style.left="-270px";
-document.getElementById("overlay").style.display="none";
-}
-
 function go(page){
-window.location.href = page;
+window.location=page;
 }
-
 </script>
 
 </body>
