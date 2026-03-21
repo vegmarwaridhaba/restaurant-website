@@ -10,7 +10,7 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;-webkit-user-select:none;user-select:none}
 
 body{
 background:linear-gradient(120deg,#06142c,#0b1e3f,#081b33);
@@ -18,18 +18,11 @@ color:white;
 overflow-x:hidden;
 }
 
-/* RANDOM FLOAT BACKGROUND */
+/* BLUR WHEN MENU OPEN */
 
-.bgAnim span{
-position:fixed;
-font-size:26px;
-opacity:.06;
-animation:float linear infinite;
-}
-
-@keyframes float{
-from{transform:translateY(110vh)}
-to{transform:translateY(-10vh)}
+.blur{
+filter:blur(6px);
+pointer-events:none;
 }
 
 /* HEADER */
@@ -51,8 +44,21 @@ z-index:999;
 .menu{
 position:absolute;
 left:20px;
-font-size:26px;
+font-size:28px;
 cursor:pointer;
+transition:.3s;
+}
+
+.menu.open{
+transform:rotate(180deg);
+}
+
+.menu.open::before{
+content:"✖";
+}
+
+.menu.open span{
+display:none;
 }
 
 .logo{
@@ -79,24 +85,31 @@ font-size:14px;
 .sidebar{
 position:fixed;
 top:0;
-left:-260px;
-width:260px;
+left:-300px;
+width:300px;
 height:100%;
 background:#020617;
-padding:90px 20px;
-transition:.3s;
+padding:90px 22px;
+transition:.35s;
 z-index:998;
-}
-
-.sidebar a{
-display:block;
-margin:15px 0;
-opacity:.8;
-cursor:pointer;
+overflow:auto;
 }
 
 .sidebar.open{
 left:0;
+}
+
+.sidebar a{
+display:block;
+margin:14px 0;
+opacity:.8;
+cursor:pointer;
+transition:.2s;
+}
+
+.sidebar a.active{
+color:#00eaff;
+opacity:1;
 }
 
 /* HERO */
@@ -105,12 +118,6 @@ left:0;
 padding-top:140px;
 text-align:center;
 padding-bottom:50px;
-animation:heroFade 1s ease;
-}
-
-@keyframes heroFade{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1;transform:translateY(0)}
 }
 
 .hero h1{
@@ -120,7 +127,8 @@ margin-bottom:10px;
 }
 
 .tag{
-opacity:.8;
+color:white;
+opacity:1;
 margin-bottom:6px;
 }
 
@@ -137,15 +145,10 @@ text-align:center;
 
 .explore h2{
 margin-bottom:25px;
-animation:exploreFade 1.2s ease;
+animation:fadeUp 1s ease;
 }
 
-@keyframes exploreFade{
-from{opacity:0;transform:translateY(30px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-/* TOOLS GRID */
+/* TOOLS */
 
 .tools{
 display:flex;
@@ -161,19 +164,12 @@ background:#020617;
 border-radius:16px;
 text-align:center;
 cursor:pointer;
-transition:.3s;
-animation:cardUp .8s ease;
-}
-
-@keyframes cardUp{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1;transform:translateY(0)}
+transition:.25s;
 }
 
 .tool:hover{
-transform:translateY(-6px) scale(1.05);
+transform:translateY(-4px);
 background:#0f172a;
-box-shadow:0 10px 40px #000;
 }
 
 /* ARTICLE */
@@ -184,12 +180,6 @@ margin:90px auto;
 line-height:1.9;
 opacity:.85;
 padding:0 18px;
-animation:fadeUp 1.2s ease;
-}
-
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(60px)}
-to{opacity:1;transform:translateY(0)}
 }
 
 .article h2{
@@ -205,6 +195,11 @@ padding:60px 0;
 opacity:.5;
 }
 
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(40px)}
+to{opacity:1;transform:translateY(0)}
+}
+
 @media(max-width:600px){
 .hero h1{font-size:32px}
 .tool{width:130px}
@@ -215,10 +210,10 @@ opacity:.5;
 
 <body>
 
-<div class="bgAnim" id="bg"></div>
+<div id="pageWrap">
 
 <header>
-<div class="menu" onclick="toggleMenu()">☰</div>
+<div class="menu" id="menuBtn" onclick="toggleMenu()"><span>☰</span></div>
 
 <div class="logo">
 <div class="circle">TZ</div>
@@ -226,12 +221,21 @@ ToolsZy
 </div>
 </header>
 
-<div class="sidebar" id="menuBox">
+<div class="sidebar" id="side">
+
+<a class="active" onclick="go('index.html')">Home</a>
+
 <a onclick="go('age.html')">Age Calculator</a>
-<a onclick="go('countdown.html')">Birthday Countdown</a>
-<a>EMI Calculator</a>
-<a>FD Calculator</a>
+<a onclick="go('countdown.html')">Birthday Countdown Live</a>
+<a>Age In Others Planets</a>
+<a>Loan EMI Calculator</a>
 <a>RD Calculator</a>
+<a>FD Calculator</a>
+<a>Discount Calculator</a>
+<a>Flat Rate Loan Interest Calculator</a>
+<a>Loan Interest Calculator</a>
+<a>Savings Bank Account Interest Calculator</a>
+
 </div>
 
 <section class="hero">
@@ -255,19 +259,12 @@ ToolsZy is an all-in-one modern tools platform designed to simplify real-life ca
 <div class="tools">
 
 <div class="tool" onclick="go('age.html')">Age<br>Calculator</div>
-
 <div class="tool" onclick="go('countdown.html')">Birthday<br>Countdown</div>
-
 <div class="tool">Age On<br>Planets</div>
-
 <div class="tool">EMI<br>Calculator</div>
-
 <div class="tool">FD<br>Calculator</div>
-
 <div class="tool">RD<br>Calculator</div>
-
 <div class="tool">Discount<br>Calculator</div>
-
 <div class="tool">Percentage<br>Calculator</div>
 
 </div>
@@ -311,27 +308,32 @@ all-in-one calculation hub for everyday life.
 © ToolsZy 2026
 </footer>
 
+</div>
+
 <script>
 
-function go(page){
-window.location=page;
+function go(p){
+location=p
 }
 
 function toggleMenu(){
-document.getElementById("menuBox").classList.toggle("open");
+
+let side=document.getElementById("side")
+let btn=document.getElementById("menuBtn")
+let wrap=document.getElementById("pageWrap")
+
+side.classList.toggle("open")
+btn.classList.toggle("open")
+wrap.classList.toggle("blur")
+
 }
 
-/* RANDOM EMOJI SYSTEM */
+document.getElementById("pageWrap").onclick=function(e){
 
-let emojis=["🎉","💰","📈","🎂","🚀","🏦","💸","🪙","📊","✨"];
+if(document.getElementById("side").classList.contains("open")){
+toggleMenu()
+}
 
-for(let i=0;i<20;i++){
-let s=document.createElement("span");
-s.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
-s.style.left=Math.random()*100+"%";
-s.style.animationDuration=(12+Math.random()*12)+"s";
-s.style.fontSize=(18+Math.random()*20)+"px";
-document.getElementById("bg").appendChild(s);
 }
 
 </script>
