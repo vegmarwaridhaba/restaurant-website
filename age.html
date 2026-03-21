@@ -3,13 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Free Age Calculator Online • ToolsZy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+}
 
 body{
 background:
@@ -19,46 +25,99 @@ radial-gradient(circle at 80% 80%,#7c3aed33,transparent),
 color:white;
 }
 
-/* main */
+/* HEADER */
+
+.topbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:70px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(5,8,22,.6);
+backdrop-filter:blur(20px);
+z-index:999;
+}
+
+.menuBtn{
+position:absolute;
+left:20px;
+font-size:26px;
+cursor:pointer;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-weight:700;
+font-size:20px;
+}
+
+.circle{
+width:36px;
+height:36px;
+border-radius:50%;
+background:linear-gradient(90deg,#00eaff,#7c3aed);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:14px;
+}
+
+/* layout */
 
 .wrap{
 max-width:900px;
 margin:auto;
-padding:40px 18px 80px;
+padding:120px 18px 80px;
 }
 
 /* card */
 
 .card{
-margin-top:60px;
+margin-top:40px;
 padding:40px;
-border-radius:28px;
+border-radius:30px;
 background:rgba(255,255,255,.07);
-backdrop-filter:blur(24px);
+backdrop-filter:blur(25px);
 box-shadow:0 40px 100px #000;
 text-align:center;
 }
 
 h1{
-font-size:30px;
+font-size:32px;
 margin-bottom:25px;
 }
 
-input{
+/* input */
+
+input[type=date]{
 width:100%;
-padding:14px;
-border-radius:14px;
+padding:15px;
+border-radius:16px;
 border:none;
 font-size:16px;
 margin-bottom:15px;
+color:white;
+background:rgba(255,255,255,.1);
 }
+
+input[type=date]::-webkit-calendar-picker-indicator{
+filter:invert(1);
+}
+
+/* button */
 
 button{
 width:100%;
-padding:14px;
+padding:15px;
 border:none;
-border-radius:14px;
+border-radius:16px;
 font-weight:700;
+font-size:16px;
 background:linear-gradient(90deg,#00eaff,#7c3aed);
 color:white;
 cursor:pointer;
@@ -67,16 +126,16 @@ cursor:pointer;
 /* result */
 
 .titleResult{
-margin-top:25px;
-font-size:20px;
+margin-top:30px;
+font-size:22px;
 font-weight:700;
 display:none;
 }
 
 .result{
-margin-top:15px;
+margin-top:20px;
 display:flex;
-gap:10px;
+gap:12px;
 justify-content:center;
 opacity:0;
 transform:translateY(20px);
@@ -86,19 +145,19 @@ transition:.5s;
 .box{
 flex:1;
 background:#020617;
-padding:18px;
+padding:22px;
 border-radius:18px;
 }
 
 .num{
-font-size:26px;
-font-weight:800;
+font-size:30px;
+font-weight:900;
 }
 
 .lab{
 opacity:.6;
-font-size:12px;
-margin-top:4px;
+font-size:13px;
+margin-top:5px;
 }
 
 .show{
@@ -119,7 +178,7 @@ width:8px;
 height:8px;
 background:white;
 border-radius:50%;
-margin:0 3px;
+margin:0 4px;
 animation:bounce 1s infinite alternate;
 }
 
@@ -132,10 +191,10 @@ to{transform:translateY(-8px)}
 
 .error{
 color:#f87171;
-margin-top:10px;
+margin-top:12px;
 }
 
-/* SEO article */
+/* article */
 
 .article{
 margin-top:90px;
@@ -149,8 +208,19 @@ font-size:26px;
 margin-bottom:10px;
 }
 
+/* footer */
+
+.foot{
+text-align:center;
+padding:50px 0;
+opacity:.6;
+}
+
+/* mobile */
+
 @media(max-width:600px){
 .card{padding:25px}
+.num{font-size:26px}
 }
 
 </style>
@@ -158,13 +228,21 @@ margin-bottom:10px;
 
 <body>
 
+<header class="topbar">
+<div class="menuBtn">☰</div>
+<div class="logo">
+<div class="circle">TZ</div>
+<span>ToolsZy</span>
+</div>
+</header>
+
 <div class="wrap">
 
 <div class="card">
 
 <h1>Age Calculator</h1>
 
-<input type="date" id="dob">
+<input type="date" id="dob" placeholder="Select Birth Date">
 
 <button onclick="calc()">Calculate Age</button>
 
@@ -176,7 +254,9 @@ margin-bottom:10px;
 
 <div class="error" id="err"></div>
 
-<div class="titleResult" id="t">Your Exact Age Is</div>
+<div class="titleResult" id="t">
+Your Exact Age Is
+</div>
 
 <div class="result" id="res">
 
@@ -205,34 +285,38 @@ margin-bottom:10px;
 
 <h2>Free Online Age Calculator</h2>
 <p>
-This free age calculator helps you instantly find your exact age in years,
-months and days. It is designed to be fast, accurate and mobile friendly.
-There is no sign-up required and no complicated steps. Simply enter your date
-of birth and get your age within seconds.
+ToolsZy age calculator helps you instantly calculate your exact age in years,
+months and days. This tool is completely free, requires no sign-up and works
+smoothly on mobile and desktop devices.
 </p>
 
-<h2>Why Use ToolsZy Age Calculator?</h2>
+<h2>Why Use This Age Calculator?</h2>
 <p>
-ToolsZy provides a clean and distraction-free experience. Whether you need to
-calculate age for job forms, school documents, financial planning or personal
-tracking, this tool gives you reliable results instantly.
+You can use this calculator for job forms, school admission, financial planning,
+loan eligibility checks and personal birthday tracking. It provides fast and
+accurate results with a modern and easy interface.
 </p>
 
-<h2>Benefits Of Calculating Age Online</h2>
+<h2>Safe & Easy To Use Tool</h2>
 <p>
-Using an online age calculator saves time and reduces manual errors. It is
-useful for birthday tracking, retirement planning, loan eligibility checks and
-many real-life decisions where age matters.
+This calculator is designed with a friendly interface and optimized performance.
+There are no annoying ads or complicated steps. Simply select your birth date
+and calculate your real age within seconds.
 </p>
 
 </div>
 
 </div>
+
+<footer class="foot">
+© ToolsZy 2026
+</footer>
 
 <script>
 
 let input=document.getElementById("dob");
 let today=new Date();
+
 input.min="1900-01-01";
 input.max=today.toISOString().split("T")[0];
 
