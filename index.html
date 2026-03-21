@@ -1,339 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ToolsZy</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Plus Jakarta Sans",sans-serif}
-
-body{
-background:
-radial-gradient(circle at 20% 20%,#22d3ee22,transparent),
-radial-gradient(circle at 80% 70%,#6366f122,transparent),
-#050816;
-color:white;
-overflow-x:hidden;
-animation:pageIn 0.8s ease;
-}
-
-@keyframes pageIn{
-from{opacity:0;transform:translateY(30px)}
-to{opacity:1}
-}
-
-/* floating background icons */
-
-.bg span{
-position:fixed;
-font-size:26px;
-opacity:.05;
-animation:float 30s linear infinite;
-}
-
-@keyframes float{
-from{transform:translateY(110vh) rotate(0)}
-to{transform:translateY(-130vh) rotate(360deg)}
-}
-
-/* header */
-
-.header{
-position:fixed;
-top:0;
-width:100%;
-height:70px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#0005;
-backdrop-filter:blur(20px);
-z-index:50;
-}
-
-.menuBtn{
-position:absolute;
-left:20px;
-font-size:26px;
-cursor:pointer;
-}
-
-.brand{
-display:flex;
-align-items:center;
-gap:10px;
-font-size:26px;
-font-weight:800;
-}
-
-.logo{
-width:34px;
-height:34px;
-border-radius:10px;
-background:linear-gradient(135deg,#22d3ee,#6366f1);
-display:flex;
-align-items:center;
-justify-content:center;
-font-weight:900;
-}
-
-/* sidebar */
-
-.sidebar{
-position:fixed;
-top:0;
-left:-270px;
-width:270px;
-height:100%;
-background:#020617;
-padding-top:80px;
-transition:.4s;
-z-index:60;
-}
-
-.closeBtn{
-position:absolute;
-top:20px;
-right:20px;
-font-size:24px;
-cursor:pointer;
-}
-
-.sidebar a{
-display:block;
-padding:15px 24px;
-color:#cbd5e1;
-text-decoration:none;
-border-bottom:1px solid #111827;
-}
-
-.overlay{
-position:fixed;
-top:0;
-width:100%;
-height:100%;
-background:#0008;
-display:none;
-z-index:55;
-}
-
-/* hero */
-
-.hero{
-padding-top:150px;
-padding-bottom:140px;
-text-align:center;
-position:relative;
-}
-
-.glow{
-position:absolute;
-width:600px;
-height:600px;
-background:radial-gradient(circle,#22d3ee55,transparent);
-filter:blur(120px);
-left:50%;
-transform:translateX(-50%);
-top:-100px;
-animation:glowMove 12s ease-in-out infinite alternate;
-}
-
-@keyframes glowMove{
-to{transform:translateX(-50%) translateY(50px) scale(1.1)}
-}
-
-.hero h1{
-font-size:56px;
-font-weight:800;
-background:linear-gradient(90deg,#fff,#7dd3fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero .tag{
-margin-top:18px;
-font-weight:600;
-opacity:.95;
-}
-
-.hero .desc{
-margin-top:18px;
-max-width:750px;
-margin-left:auto;
-margin-right:auto;
-opacity:.7;
-}
-
-/* sections */
-
-.section{
-padding:130px 20px;
-max-width:900px;
-margin:auto;
-text-align:center;
-animation:fadeUp 1s ease;
-}
-
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1}
-}
-
-.section h2{
-font-size:42px;
-margin-bottom:20px;
-}
-
-.section p{
-opacity:.7;
-line-height:1.8;
-}
-
-/* tools */
-
-.tools{
-padding:140px 20px;
-text-align:center;
-}
-
-.grid{
-margin-top:50px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:25px;
-max-width:900px;
-margin-left:auto;
-margin-right:auto;
-}
-
-.tool{
-background:#020617;
-padding:30px;
-border-radius:20px;
-transition:.3s;
-cursor:pointer;
-}
-
-.tool:hover{
-transform:translateY(-8px);
-background:#111827;
-}
-
-@media(max-width:600px){
-.hero h1{font-size:38px}
-.section h2{font-size:30px}
-}
-
+body{background:#050816;color:white;font-family:sans-serif;margin:0}
+.header{background:#000;padding:15px;text-align:center;position:fixed;width:100%;top:0}
+.menuBtn{position:absolute;left:15px;top:15px;font-size:22px;cursor:pointer}
+.sidebar{position:fixed;top:0;left:-250px;width:250px;height:100%;background:#111;padding-top:60px;transition:.3s}
+.sidebar a{display:block;padding:15px;color:white;text-decoration:none;border-bottom:1px solid #222}
+.overlay{position:fixed;top:0;width:100%;height:100%;background:#0008;display:none}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.tools{padding:80px 20px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;max-width:900px;margin:auto}
+.tool{background:#111;padding:25px;border-radius:12px;cursor:pointer}
 </style>
 </head>
 
 <body>
 
-<div class="bg" id="bg"></div>
-
 <div class="header">
 <div class="menuBtn" onclick="openMenu()">☰</div>
-
-<div class="brand">
-<div class="logo">TZ</div>
-ToolsZy
-</div>
+<h2>ToolsZy</h2>
 </div>
 
 <div class="sidebar" id="menu">
-<div class="closeBtn" onclick="closeMenu()">✕</div>
-<a href="#">Home</a>
-<a href="#">Age Calculator</a>
-<a href="#">Birthday Countdown</a>
-<a href="#">Age On Planets</a>
-<a href="#">EMI Calculator</a>
-<a href="#">FD Calculator</a>
-<a href="#">RD Calculator</a>
-<a href="#">Discount Calculator</a>
-<a href="#">Percentage Calculator</a>
+<a href="index.html">Home</a>
+<a href="age.html">Age Calculator</a>
+<a href="countdown.html">Birthday Countdown</a>
+<a href="emi.html">EMI Calculator</a>
+<a href="fd.html">FD Calculator</a>
+<a href="rd.html">RD Calculator</a>
+<a href="discount.html">Discount Calculator</a>
+<a href="percentage.html">Percentage</a>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 <div class="hero">
-<div class="glow"></div>
-
-<h1>Powerful Everyday Calculators</h1>
-
-<div class="tag">
-100% Free • No Sign-Up • No Annoying Ads • Safe & Easy Interface
+<div>
+<h1>All Calculators In One Place</h1>
+<p>Free simple tools for age, finance and maths.</p>
 </div>
-
-<div class="desc">
-ToolsZy is an all-in-one modern tools platform designed to simplify real-life
-calculations. From tracking your age milestones to planning financial decisions,
-everything is built with speed, clarity and user-focused design.
-</div>
-
-</div>
-
-<div class="section">
-<h2>Built With Passion & Precision</h2>
-<p>
-Every calculator on ToolsZy is crafted with deep research, careful logic and a
-strong focus on real-world usefulness. Our goal is to remove complexity and give
-you instant clarity — whether you are calculating savings, planning loans or
-tracking life milestones.
-</p>
-</div>
-
-<div class="section">
-<h2>Free. Fast. Future-Ready.</h2>
-<p>
-No barriers. No confusion. No distractions. ToolsZy provides a clean experience
-that respects your time and helps you make smarter daily decisions.
-</p>
 </div>
 
 <div class="tools">
-<h2>Explore All Smart Tools</h2>
+<h2>Tools</h2>
 
 <div class="grid">
-<div class="tool">Age Calculator</div>
-<div class="tool">Birthday Countdown</div>
-<div class="tool">Age On Planets</div>
-<div class="tool">EMI Calculator</div>
-<div class="tool">FD Calculator</div>
-<div class="tool">RD Calculator</div>
-<div class="tool">Discount Calculator</div>
-<div class="tool">Percentage</div>
+<div class="tool" onclick="go('age.html')">Age Calculator</div>
+<div class="tool" onclick="go('countdown.html')">Birthday Countdown</div>
+<div class="tool" onclick="go('emi.html')">EMI Calculator</div>
+<div class="tool" onclick="go('fd.html')">FD Calculator</div>
+<div class="tool" onclick="go('rd.html')">RD Calculator</div>
+<div class="tool" onclick="go('discount.html')">Discount</div>
+<div class="tool" onclick="go('percentage.html')">Percentage</div>
 </div>
 
 </div>
 
 <script>
-
 function openMenu(){
-menu.style.left="0";
-overlay.style.display="block";
+document.getElementById("menu").style.left="0";
+document.getElementById("overlay").style.display="block";
 }
 
 function closeMenu(){
-menu.style.left="-270px";
-overlay.style.display="none";
+document.getElementById("menu").style.left="-250px";
+document.getElementById("overlay").style.display="none";
 }
 
-/* floating icons */
-
-let icons=["📊","💰","📈","🧮","⏳","🏦","📅","🎯"];
-
-for(let i=0;i<18;i++){
-let s=document.createElement("span");
-s.innerHTML=icons[Math.floor(Math.random()*icons.length)];
-s.style.left=Math.random()*100+"%";
-s.style.animationDuration=20+Math.random()*20+"s";
-document.getElementById("bg").appendChild(s);
+function go(p){
+window.location = p;
 }
-
 </script>
 
 </body>
