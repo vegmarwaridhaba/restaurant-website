@@ -3,145 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Countdown</title>
+<title>AgeTool</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Plus Jakarta Sans",sans-serif}
 
 body{
 background:
-radial-gradient(circle at 20% 20%,#00eaff22,transparent),
-#070b15;
+radial-gradient(circle at 20% 30%,#5eead433,transparent),
+radial-gradient(circle at 80% 70%,#60a5fa33,transparent),
+#050816;
 color:white;
 min-height:100vh;
 display:flex;
-flex-direction:column;
 align-items:center;
 justify-content:center;
-padding:20px;
+padding:30px;
+overflow:hidden;
 }
 
-/* heading */
+/* ambient floating lights */
+
+body::before,body::after{
+content:"";
+position:absolute;
+width:500px;
+height:500px;
+border-radius:50%;
+filter:blur(140px);
+opacity:.5;
+animation:float 18s infinite alternate;
+}
+
+body::before{background:#22d3ee;top:-150px;left:-150px}
+body::after{background:#6366f1;bottom:-150px;right:-150px}
+
+@keyframes float{
+to{transform:translateY(60px) translateX(40px)}
+}
+
+/* main container */
+
+.app{
+width:100%;
+max-width:920px;
+padding:50px;
+border-radius:32px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(30px) saturate(140%);
+box-shadow:0 40px 100px rgba(0,0,0,.7);
+text-align:center;
+}
+
+/* hero */
 
 h1{
-font-size:clamp(32px,6vw,58px);
-font-weight:900;
+font-size:clamp(36px,5vw,64px);
+font-weight:800;
+letter-spacing:-1px;
 background:linear-gradient(90deg,#fff,#7dd3fc);
 -webkit-background-clip:text;
 -webkit-text-fill-color:transparent;
-text-align:center;
 }
 
-/* card */
-
-.card{
-margin-top:20px;
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(20px);
-padding:clamp(20px,5vw,40px);
-border-radius:22px;
-width:100%;
-max-width:420px;
-text-align:center;
-box-shadow:0 20px 50px #000;
+.sub{
+margin-top:10px;
+opacity:.65;
 }
 
-/* input */
+/* form */
+
+.form{
+margin-top:40px;
+display:flex;
+gap:15px;
+justify-content:center;
+flex-wrap:wrap;
+}
 
 input{
-width:100%;
-padding:16px;
+padding:18px 20px;
 border-radius:14px;
 border:none;
-margin-top:15px;
 font-size:16px;
-text-align:center;
+background:#ffffffee;
+min-width:220px;
 }
 
 button{
-width:100%;
-padding:15px;
+padding:18px 26px;
 border-radius:14px;
 border:none;
-margin-top:12px;
 font-weight:600;
-background:linear-gradient(90deg,#00ffe7,#38bdf8);
+background:linear-gradient(90deg,#22d3ee,#60a5fa);
 cursor:pointer;
+transition:.25s;
 }
 
-/* error */
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 15px 35px #22d3ee44;
+}
 
-.error{
-color:#ff6b6b;
-margin-top:8px;
-font-size:14px;
+/* loader */
+
+.loader{
+margin-top:30px;
+display:none;
+opacity:.7;
+animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+50%{opacity:.2}
 }
 
 /* countdown */
 
-.countWrap{
-margin-top:30px;
+.count{
+margin-top:40px;
 display:none;
-flex-direction:column;
-align-items:center;
-width:100%;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(70px,1fr));
-gap:12px;
-width:100%;
-max-width:420px;
-margin-top:15px;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
 }
 
 .box{
-background:#020617;
-padding:14px;
-border-radius:16px;
-text-align:center;
-box-shadow:0 10px 25px #000;
+width:120px;
+height:130px;
+border-radius:20px;
+background:linear-gradient(180deg,#0f172a,#020617);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+box-shadow:0 20px 40px #000;
 }
 
 .num{
-font-size:clamp(22px,5vw,40px);
-font-weight:800;
+font-size:46px;
+font-weight:700;
 }
 
 .lab{
-font-size:11px;
+font-size:12px;
 opacity:.6;
+margin-top:6px;
 }
 
-/* stats */
-
-.stats{
-margin-top:15px;
-opacity:.85;
-font-size:14px;
-text-align:center;
-}
-
-/* sparkle */
-
-.spark{
-position:fixed;
-width:5px;
-height:5px;
-background:#00ffe7;
-border-radius:50%;
-animation:spark 1s forwards;
-}
-
-@keyframes spark{
-to{
-transform:translateY(-100px) scale(0);
-opacity:0;
-}
+@media(max-width:600px){
+.app{padding:30px}
+.box{width:80px;height:100px}
+.num{font-size:30px}
 }
 
 </style>
@@ -149,24 +165,19 @@ opacity:0;
 
 <body>
 
-<h1>Discover Your Time</h1>
+<div class="app">
 
-<div class="card">
+<h1>Know Your Time</h1>
+<div class="sub">Real-time birthday countdown experience</div>
 
-<label>Select Birth Date</label>
+<div class="form">
 <input type="date" id="dob" min="1900-01-01" max="2030-01-01">
-
-<button id="btn">Reveal Countdown</button>
-
-<div class="error" id="err"></div>
-
+<button onclick="start()">Reveal</button>
 </div>
 
-<div class="countWrap" id="countWrap">
+<div class="loader" id="loader">Calculating timeline…</div>
 
-<h3>Next Birthday Countdown 🥳</h3>
-
-<div class="grid">
+<div class="count" id="count">
 
 <div class="box"><div class="num" id="d">00</div><div class="lab">DAYS</div></div>
 <div class="box"><div class="num" id="h">00</div><div class="lab">HOURS</div></div>
@@ -175,66 +186,35 @@ opacity:0;
 
 </div>
 
-<div class="stats" id="stats"></div>
-
 </div>
 
 <script>
 
 let timer;
 
-document.getElementById("btn").onclick=start;
-
-document.getElementById("dob").addEventListener("keydown",e=>{
-if(e.key==="Enter") start();
-});
-
 function start(){
 
 let val=dob.value;
-let err=document.getElementById("err");
-
 if(!val){
-err.innerHTML="Select date of birth";
+alert("Enter birth date");
 return;
 }
 
-let dobDate=new Date(val);
-let now=new Date();
+loader.style.display="block";
+count.style.display="none";
 
-if(dobDate>now){
-err.innerHTML="Birth date invalid";
-return;
-}
+setTimeout(()=>{
 
-err.innerHTML="";
+loader.style.display="none";
+count.style.display="flex";
 
-countWrap.style.display="flex";
+run(new Date(val));
 
-/* sparkle burst */
-
-for(let i=0;i<30;i++){
-let sp=document.createElement("div");
-sp.className="spark";
-sp.style.left=(window.innerWidth/2+Math.random()*200-100)+"px";
-sp.style.top=(window.innerHeight/2)+"px";
-document.body.appendChild(sp);
-setTimeout(()=>sp.remove(),1000);
-}
-
-/* lived stats */
-
-let lived=Math.floor((now-dobDate)/86400000);
-let hours=Math.floor((now-dobDate)/3600000);
-
-stats.innerHTML=
-`You lived approx <b>${lived}</b> days / <b>${hours}</b> hours`;
-
-runCountdown(dobDate);
+},1200);
 
 }
 
-function runCountdown(dob){
+function run(dobDate){
 
 clearInterval(timer);
 
@@ -242,7 +222,7 @@ timer=setInterval(()=>{
 
 let now=new Date();
 
-let next=new Date(now.getFullYear(),dob.getMonth(),dob.getDate());
+let next=new Date(now.getFullYear(),dobDate.getMonth(),dobDate.getDate());
 if(next<now) next.setFullYear(now.getFullYear()+1);
 
 let diff=next-now;
