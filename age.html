@@ -1,33 +1,261 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Age Calculator</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Countdown</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+
 <style>
-body{background:#050816;color:white;font-family:sans-serif;text-align:center;padding:40px}
-input,button{padding:12px;margin:10px;border-radius:8px;border:none}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter}
+
+body{
+background:
+radial-gradient(circle at 20% 20%,#00eaff22,transparent),
+#070b15;
+color:white;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+/* heading */
+
+h1{
+font-size:clamp(32px,6vw,58px);
+font-weight:900;
+background:linear-gradient(90deg,#fff,#7dd3fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-align:center;
+}
+
+/* card */
+
+.card{
+margin-top:20px;
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(20px);
+padding:clamp(20px,5vw,40px);
+border-radius:22px;
+width:100%;
+max-width:420px;
+text-align:center;
+box-shadow:0 20px 50px #000;
+}
+
+/* input */
+
+input{
+width:100%;
+padding:16px;
+border-radius:14px;
+border:none;
+margin-top:15px;
+font-size:16px;
+text-align:center;
+}
+
+button{
+width:100%;
+padding:15px;
+border-radius:14px;
+border:none;
+margin-top:12px;
+font-weight:600;
+background:linear-gradient(90deg,#00ffe7,#38bdf8);
+cursor:pointer;
+}
+
+/* error */
+
+.error{
+color:#ff6b6b;
+margin-top:8px;
+font-size:14px;
+}
+
+/* countdown */
+
+.countWrap{
+margin-top:30px;
+display:none;
+flex-direction:column;
+align-items:center;
+width:100%;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(70px,1fr));
+gap:12px;
+width:100%;
+max-width:420px;
+margin-top:15px;
+}
+
+.box{
+background:#020617;
+padding:14px;
+border-radius:16px;
+text-align:center;
+box-shadow:0 10px 25px #000;
+}
+
+.num{
+font-size:clamp(22px,5vw,40px);
+font-weight:800;
+}
+
+.lab{
+font-size:11px;
+opacity:.6;
+}
+
+/* stats */
+
+.stats{
+margin-top:15px;
+opacity:.85;
+font-size:14px;
+text-align:center;
+}
+
+/* sparkle */
+
+.spark{
+position:fixed;
+width:5px;
+height:5px;
+background:#00ffe7;
+border-radius:50%;
+animation:spark 1s forwards;
+}
+
+@keyframes spark{
+to{
+transform:translateY(-100px) scale(0);
+opacity:0;
+}
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>Age Calculator</h1>
+<h1>See Time Until Your Next Celebration</h1>
 
-<input type="date" id="dob">
-<br>
-<button onclick="calc()">Calculate</button>
+<div class="card">
 
-<h2 id="res"></h2>
+<label>Select Birth Date</label>
+<input type="date" id="dob" min="1900-01-01" max="2030-01-01">
+
+<button id="btn">Reveal Countdown</button>
+
+<div class="error" id="err"></div>
+
+</div>
+
+<div class="countWrap" id="countWrap">
+
+<h3>Next Birthday Countdown 🥳</h3>
+
+<div class="grid">
+
+<div class="box"><div class="num" id="d">00</div><div class="lab">DAYS</div></div>
+<div class="box"><div class="num" id="h">00</div><div class="lab">HOURS</div></div>
+<div class="box"><div class="num" id="m">00</div><div class="lab">MIN</div></div>
+<div class="box"><div class="num" id="s">00</div><div class="lab">SEC</div></div>
+
+</div>
+
+<div class="stats" id="stats"></div>
+
+</div>
 
 <script>
-function calc(){
-let dob=new Date(document.getElementById("dob").value);
-let now=new Date();
-let diff=now-dob;
-let days=Math.floor(diff/86400000);
-let years=Math.floor(days/365);
-res.innerHTML=years+" Years ("+days+" days)";
+
+let timer;
+
+document.getElementById("btn").onclick=start;
+
+document.getElementById("dob").addEventListener("keydown",e=>{
+if(e.key==="Enter") start();
+});
+
+function start(){
+
+let val=dob.value;
+let err=document.getElementById("err");
+
+if(!val){
+err.innerHTML="Select date of birth";
+return;
 }
+
+let dobDate=new Date(val);
+let now=new Date();
+
+if(dobDate>now){
+err.innerHTML="Birth date invalid";
+return;
+}
+
+err.innerHTML="";
+
+countWrap.style.display="flex";
+
+/* sparkle burst */
+
+for(let i=0;i<30;i++){
+let sp=document.createElement("div");
+sp.className="spark";
+sp.style.left=(window.innerWidth/2+Math.random()*200-100)+"px";
+sp.style.top=(window.innerHeight/2)+"px";
+document.body.appendChild(sp);
+setTimeout(()=>sp.remove(),1000);
+}
+
+/* lived stats */
+
+let lived=Math.floor((now-dobDate)/86400000);
+let hours=Math.floor((now-dobDate)/3600000);
+
+stats.innerHTML=
+`You lived approx <b>${lived}</b> days / <b>${hours}</b> hours`;
+
+runCountdown(dobDate);
+
+}
+
+function runCountdown(dob){
+
+clearInterval(timer);
+
+timer=setInterval(()=>{
+
+let now=new Date();
+
+let next=new Date(now.getFullYear(),dob.getMonth(),dob.getDate());
+if(next<now) next.setFullYear(now.getFullYear()+1);
+
+let diff=next-now;
+
+d.innerHTML=Math.floor(diff/86400000);
+h.innerHTML=Math.floor(diff/3600000)%24;
+m.innerHTML=Math.floor(diff/60000)%60;
+s.innerHTML=Math.floor(diff/1000)%60;
+
+},1000);
+
+}
+
 </script>
 
 </body>
