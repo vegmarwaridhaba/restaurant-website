@@ -3,145 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Countdown</title>
+<title>Free Age Calculator Online – ToolsZy</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter}
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Plus Jakarta Sans",sans-serif}
 
 body{
 background:
-radial-gradient(circle at 20% 20%,#00eaff22,transparent),
-#070b15;
+radial-gradient(circle at 20% 20%,#22d3ee33,transparent),
+radial-gradient(circle at 80% 80%,#6366f133,transparent),
+#050816;
 color:white;
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-padding:20px;
 }
 
-/* heading */
+/* layout */
 
-h1{
-font-size:clamp(32px,6vw,58px);
-font-weight:900;
-background:linear-gradient(90deg,#fff,#7dd3fc);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-align:center;
+.wrap{
+max-width:900px;
+margin:auto;
+padding:40px 18px 80px;
 }
 
-/* card */
+/* calculator card */
 
 .card{
-margin-top:20px;
+margin-top:60px;
 background:rgba(255,255,255,.06);
 backdrop-filter:blur(20px);
-padding:clamp(20px,5vw,40px);
-border-radius:22px;
-width:100%;
-max-width:420px;
+padding:40px;
+border-radius:26px;
+box-shadow:0 30px 80px #000;
 text-align:center;
-box-shadow:0 20px 50px #000;
 }
 
-/* input */
+h1{
+font-size:34px;
+margin-bottom:20px;
+}
 
 input{
 width:100%;
-padding:16px;
+padding:14px;
 border-radius:14px;
 border:none;
-margin-top:15px;
+margin-top:10px;
 font-size:16px;
-text-align:center;
 }
 
 button{
 width:100%;
-padding:15px;
-border-radius:14px;
+margin-top:16px;
+padding:14px;
 border:none;
-margin-top:12px;
-font-weight:600;
-background:linear-gradient(90deg,#00ffe7,#38bdf8);
+border-radius:14px;
+font-weight:700;
+background:linear-gradient(90deg,#22d3ee,#6366f1);
+color:white;
 cursor:pointer;
 }
 
-/* error */
+/* result box */
 
-.error{
-color:#ff6b6b;
-margin-top:8px;
-font-size:14px;
-}
-
-/* countdown */
-
-.countWrap{
+.resultBox{
 margin-top:30px;
-display:none;
-flex-direction:column;
-align-items:center;
-width:100%;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(70px,1fr));
-gap:12px;
-width:100%;
-max-width:420px;
-margin-top:15px;
-}
-
-.box{
 background:#020617;
-padding:14px;
-border-radius:16px;
-text-align:center;
-box-shadow:0 10px 25px #000;
+padding:22px;
+border-radius:18px;
+display:none;
 }
 
-.num{
-font-size:clamp(22px,5vw,40px);
+.age{
+font-size:26px;
 font-weight:800;
 }
 
-.lab{
-font-size:11px;
-opacity:.6;
+.sub{
+margin-top:6px;
+opacity:.7;
 }
 
-/* stats */
+/* article */
 
-.stats{
-margin-top:15px;
-opacity:.85;
-font-size:14px;
-text-align:center;
+.article{
+margin-top:80px;
+line-height:1.8;
+opacity:.8;
 }
 
-/* sparkle */
-
-.spark{
-position:fixed;
-width:5px;
-height:5px;
-background:#00ffe7;
-border-radius:50%;
-animation:spark 1s forwards;
+.article h2{
+margin-top:40px;
+margin-bottom:10px;
+font-size:26px;
 }
 
-@keyframes spark{
-to{
-transform:translateY(-100px) scale(0);
-opacity:0;
-}
+@media(max-width:600px){
+.card{padding:25px}
+h1{font-size:26px}
 }
 
 </style>
@@ -149,110 +109,105 @@ opacity:0;
 
 <body>
 
-<h1>See Time Until Your Next Celebration</h1>
+<div class="wrap">
 
 <div class="card">
 
-<label>Select Birth Date</label>
-<input type="date" id="dob" min="1900-01-01" max="2030-01-01">
+<h1>Free Age Calculator</h1>
 
-<button id="btn">Reveal Countdown</button>
+<input type="date" id="dob">
 
-<div class="error" id="err"></div>
+<button onclick="calc()">Calculate Age</button>
+
+<div id="err" style="margin-top:10px;color:#f87171"></div>
+
+<div class="resultBox" id="box">
+<div class="age" id="ageText"></div>
+<div class="sub" id="extra"></div>
+</div>
 
 </div>
 
-<div class="countWrap" id="countWrap">
+<div class="article">
 
-<h3>Next Birthday Countdown 🥳</h3>
+<h2>What Is Age Calculator?</h2>
+<p>
+Age calculator is a simple online tool that helps you instantly find your exact age in years,
+months and days. Instead of manually calculating differences between dates, you can use this
+free tool to get accurate results within seconds.
+</p>
 
-<div class="grid">
+<h2>Why Use This Free Age Calculator?</h2>
+<p>
+This calculator is designed to be fast, mobile friendly and completely free to use.
+There is no sign-up required and no complicated steps. You simply enter your date of birth
+and the tool shows your approximate age instantly.
+</p>
 
-<div class="box"><div class="num" id="d">00</div><div class="lab">DAYS</div></div>
-<div class="box"><div class="num" id="h">00</div><div class="lab">HOURS</div></div>
-<div class="box"><div class="num" id="m">00</div><div class="lab">MIN</div></div>
-<div class="box"><div class="num" id="s">00</div><div class="lab">SEC</div></div>
+<h2>Benefits Of Calculating Age Online</h2>
+<p>
+Online age calculation tools are useful for school forms, job applications,
+financial planning, birthday tracking and many other real life situations.
+This tool focuses on simplicity, accuracy and smooth user experience.
+</p>
 
 </div>
-
-<div class="stats" id="stats"></div>
 
 </div>
 
 <script>
 
-let timer;
+let today=new Date();
+let year=today.getFullYear();
 
-document.getElementById("btn").onclick=start;
+let input=document.getElementById("dob");
+input.min="1900-01-01";
+input.max=year+"-12-31";
 
-document.getElementById("dob").addEventListener("keydown",e=>{
-if(e.key==="Enter") start();
-});
+function calc(){
 
-function start(){
-
-let val=dob.value;
+let val=input.value;
 let err=document.getElementById("err");
-
-if(!val){
-err.innerHTML="Select date of birth";
-return;
-}
-
-let dobDate=new Date(val);
-let now=new Date();
-
-if(dobDate>now){
-err.innerHTML="Birth date invalid";
-return;
-}
+let box=document.getElementById("box");
 
 err.innerHTML="";
+box.style.display="none";
 
-countWrap.style.display="flex";
-
-/* sparkle burst */
-
-for(let i=0;i<30;i++){
-let sp=document.createElement("div");
-sp.className="spark";
-sp.style.left=(window.innerWidth/2+Math.random()*200-100)+"px";
-sp.style.top=(window.innerHeight/2)+"px";
-document.body.appendChild(sp);
-setTimeout(()=>sp.remove(),1000);
+if(!val){
+err.innerHTML="Please select date of birth";
+return;
 }
 
-/* lived stats */
+let dob=new Date(val);
 
-let lived=Math.floor((now-dobDate)/86400000);
-let hours=Math.floor((now-dobDate)/3600000);
-
-stats.innerHTML=
-`You lived approx <b>${lived}</b> days / <b>${hours}</b> hours`;
-
-runCountdown(dobDate);
-
+if(dob>today){
+err.innerHTML="Future date not allowed";
+return;
 }
 
-function runCountdown(dob){
+let y=today.getFullYear()-dob.getFullYear();
+let m=today.getMonth()-dob.getMonth();
+let d=today.getDate()-dob.getDate();
 
-clearInterval(timer);
+if(d<0){
+m--;
+d+=new Date(today.getFullYear(),today.getMonth(),0).getDate();
+}
 
-timer=setInterval(()=>{
+if(m<0){
+y--;
+m+=12;
+}
 
-let now=new Date();
+document.getElementById("ageText").innerHTML=
+`Approx Age is ${y}Y ${m}M ${d}D`;
 
-let next=new Date(now.getFullYear(),dob.getMonth(),dob.getDate());
-if(next<now) next.setFullYear(now.getFullYear()+1);
+let days=Math.floor((today-dob)/86400000);
 
-let diff=next-now;
+document.getElementById("extra").innerHTML=
+`You have lived approximately ${days.toLocaleString()} days`;
 
-d.innerHTML=Math.floor(diff/86400000);
-h.innerHTML=Math.floor(diff/3600000)%24;
-m.innerHTML=Math.floor(diff/60000)%60;
-s.innerHTML=Math.floor(diff/1000)%60;
-
-},1000);
+box.style.display="block";
 
 }
 
