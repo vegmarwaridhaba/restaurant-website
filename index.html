@@ -18,20 +18,14 @@ color:white;
 overflow-x:hidden;
 }
 
-/* FLOAT BACKGROUND */
+/* RANDOM FLOAT BACKGROUND */
 
 .bgAnim span{
 position:fixed;
 font-size:26px;
 opacity:.06;
-animation:float 18s linear infinite;
+animation:float linear infinite;
 }
-
-.bgAnim span:nth-child(1){left:6%}
-.bgAnim span:nth-child(2){left:25%;animation-delay:3s}
-.bgAnim span:nth-child(3){left:45%;animation-delay:6s}
-.bgAnim span:nth-child(4){left:65%;animation-delay:9s}
-.bgAnim span:nth-child(5){left:85%;animation-delay:12s}
 
 @keyframes float{
 from{transform:translateY(110vh)}
@@ -80,6 +74,31 @@ justify-content:center;
 font-size:14px;
 }
 
+/* SIDEBAR */
+
+.sidebar{
+position:fixed;
+top:0;
+left:-260px;
+width:260px;
+height:100%;
+background:#020617;
+padding:90px 20px;
+transition:.3s;
+z-index:998;
+}
+
+.sidebar a{
+display:block;
+margin:15px 0;
+opacity:.8;
+cursor:pointer;
+}
+
+.sidebar.open{
+left:0;
+}
+
 /* HERO */
 
 .hero{
@@ -118,6 +137,12 @@ text-align:center;
 
 .explore h2{
 margin-bottom:25px;
+animation:exploreFade 1.2s ease;
+}
+
+@keyframes exploreFade{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 /* TOOLS GRID */
@@ -190,22 +215,24 @@ opacity:.5;
 
 <body>
 
-<div class="bgAnim">
-<span>🎉</span>
-<span>💰</span>
-<span>📈</span>
-<span>🎂</span>
-<span>🚀</span>
-</div>
+<div class="bgAnim" id="bg"></div>
 
 <header>
-<div class="menu">☰</div>
+<div class="menu" onclick="toggleMenu()">☰</div>
 
 <div class="logo">
 <div class="circle">TZ</div>
 ToolsZy
 </div>
 </header>
+
+<div class="sidebar" id="menuBox">
+<a onclick="go('age.html')">Age Calculator</a>
+<a onclick="go('countdown.html')">Birthday Countdown</a>
+<a>EMI Calculator</a>
+<a>FD Calculator</a>
+<a>RD Calculator</a>
+</div>
 
 <section class="hero">
 
@@ -285,9 +312,28 @@ all-in-one calculation hub for everyday life.
 </footer>
 
 <script>
+
 function go(page){
 window.location=page;
 }
+
+function toggleMenu(){
+document.getElementById("menuBox").classList.toggle("open");
+}
+
+/* RANDOM EMOJI SYSTEM */
+
+let emojis=["🎉","💰","📈","🎂","🚀","🏦","💸","🪙","📊","✨"];
+
+for(let i=0;i<20;i++){
+let s=document.createElement("span");
+s.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
+s.style.left=Math.random()*100+"%";
+s.style.animationDuration=(12+Math.random()*12)+"s";
+s.style.fontSize=(18+Math.random()*20)+"px";
+document.getElementById("bg").appendChild(s);
+}
+
 </script>
 
 </body>
