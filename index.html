@@ -1,3 +1,5 @@
+<!-- ===== TOOLSZY SYSTEM PART 1 START ===== -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,19 +12,58 @@
 
 <style>
 
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;-webkit-user-select:none;user-select:none}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins;
+-webkit-user-select:none;
+user-select:none;
+}
 
 body{
 background:linear-gradient(120deg,#06142c,#0b1e3f,#081b33);
 color:white;
 overflow-x:hidden;
+animation:pageEnter 1.2s ease;
 }
 
-/* BLUR WHEN MENU OPEN */
+/* PAGE ENTER ANIMATION */
 
-.blur{
-filter:blur(6px);
-pointer-events:none;
+@keyframes pageEnter{
+from{
+opacity:0;
+transform:translateY(40px) scale(.98);
+}
+to{
+opacity:1;
+transform:translateY(0) scale(1);
+}
+}
+
+/* FLOATING EMOJI ENGINE */
+
+.emojiBox{
+position:fixed;
+inset:0;
+overflow:hidden;
+z-index:-1;
+}
+
+.emoji{
+position:absolute;
+font-size:22px;
+opacity:.15;
+animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+from{
+transform:translateY(120vh) rotate(0deg);
+}
+to{
+transform:translateY(-20vh) rotate(360deg);
+}
 }
 
 /* HEADER */
@@ -46,18 +87,18 @@ position:absolute;
 left:20px;
 font-size:28px;
 cursor:pointer;
-transition:.3s;
+transition:.4s;
 }
 
-.menu.open{
+.menu.active{
 transform:rotate(180deg);
 }
 
-.menu.open::before{
+.menu.active::before{
 content:"✖";
 }
 
-.menu.open span{
+.menu.active span{
 display:none;
 }
 
@@ -89,10 +130,9 @@ left:-300px;
 width:300px;
 height:100%;
 background:#020617;
-padding:90px 22px;
-transition:.35s;
+padding:90px 25px;
+transition:.45s;
 z-index:998;
-overflow:auto;
 }
 
 .sidebar.open{
@@ -102,22 +142,42 @@ left:0;
 .sidebar a{
 display:block;
 margin:14px 0;
-opacity:.8;
+opacity:.75;
 cursor:pointer;
 transition:.2s;
 }
 
-.sidebar a.active{
-color:#00eaff;
+.sidebar a:hover{
 opacity:1;
+color:#00eaff;
 }
 
-/* HERO */
+/* BLUR WRAP */
+
+.wrap.blur{
+filter:blur(6px);
+pointer-events:none;
+}
+
+<!-- ===== TOOLSZY SYSTEM PART 1 END ===== -->
+/* ===== HERO ===== */
 
 .hero{
 padding-top:140px;
 text-align:center;
-padding-bottom:50px;
+padding-bottom:60px;
+animation:heroFade 1.4s ease;
+}
+
+@keyframes heroFade{
+from{
+opacity:0;
+transform:translateY(60px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 .hero h1{
@@ -136,19 +196,32 @@ margin-bottom:6px;
 opacity:.6;
 }
 
-/* EXPLORE */
+
+/* ===== EXPLORE ===== */
 
 .explore{
-margin-top:60px;
+margin-top:80px;
 text-align:center;
+animation:exploreFade 1.6s ease;
+}
+
+@keyframes exploreFade{
+from{
+opacity:0;
+transform:translateY(80px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
 }
 
 .explore h2{
-margin-bottom:25px;
-animation:fadeUp 1s ease;
+margin-bottom:28px;
 }
 
-/* TOOLS */
+
+/* ===== TOOLS GRID ===== */
 
 .tools{
 display:flex;
@@ -165,66 +238,55 @@ border-radius:16px;
 text-align:center;
 cursor:pointer;
 transition:.25s;
+position:relative;
+overflow:hidden;
+}
+
+.tool::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(120deg,transparent,#00eaff33,transparent);
+opacity:0;
+transition:.3s;
 }
 
 .tool:hover{
-transform:translateY(-4px);
+transform:translateY(-6px) scale(1.03);
 background:#0f172a;
 }
 
-/* ARTICLE */
-
-.article{
-max-width:850px;
-margin:90px auto;
-line-height:1.9;
-opacity:.85;
-padding:0 18px;
+.tool:hover::after{
+opacity:1;
 }
 
-.article h2{
-margin-top:50px;
-font-size:28px;
-}
 
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:60px 0;
-opacity:.5;
-}
-
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-@media(max-width:600px){
-.hero h1{font-size:32px}
-.tool{width:130px}
-}
+/* ===== RANDOM EMOJI ENGINE ===== */
 
 </style>
+
 </head>
 
 <body>
 
-<div id="pageWrap">
+<div class="emojiBox" id="emojiBox"></div>
 
 <header>
-<div class="menu" id="menuBtn" onclick="toggleMenu()"><span>☰</span></div>
+
+<div class="menu" id="menuBtn">
+<span>☰</span>
+</div>
 
 <div class="logo">
 <div class="circle">TZ</div>
 ToolsZy
 </div>
+
 </header>
 
-<div class="sidebar" id="side">
+<div class="sidebar" id="sidebar">
 
-<a class="active" onclick="go('index.html')">Home</a>
-
+<a onclick="go('index.html')">Home</a>
 <a onclick="go('age.html')">Age Calculator</a>
 <a onclick="go('countdown.html')">Birthday Countdown Live</a>
 <a>Age In Others Planets</a>
@@ -232,11 +294,13 @@ ToolsZy
 <a>RD Calculator</a>
 <a>FD Calculator</a>
 <a>Discount Calculator</a>
-<a>Flat Rate Loan Interest Calculator</a>
+<a>Flat Rate Loan Interest</a>
 <a>Loan Interest Calculator</a>
-<a>Savings Bank Account Interest Calculator</a>
+<a>Savings Bank Interest</a>
 
 </div>
+
+<div class="wrap" id="wrap">
 
 <section class="hero">
 
@@ -259,84 +323,301 @@ ToolsZy is an all-in-one modern tools platform designed to simplify real-life ca
 <div class="tools">
 
 <div class="tool" onclick="go('age.html')">Age<br>Calculator</div>
+
 <div class="tool" onclick="go('countdown.html')">Birthday<br>Countdown</div>
+
 <div class="tool">Age On<br>Planets</div>
+
 <div class="tool">EMI<br>Calculator</div>
+
 <div class="tool">FD<br>Calculator</div>
+
 <div class="tool">RD<br>Calculator</div>
+
 <div class="tool">Discount<br>Calculator</div>
+
 <div class="tool">Percentage<br>Calculator</div>
 
 </div>
 
 </section>
 
+<script>
+
+/* ===== MENU SYSTEM ===== */
+
+const menuBtn = document.getElementById("menuBtn")
+const sidebar = document.getElementById("sidebar")
+const wrap = document.getElementById("wrap")
+
+menuBtn.onclick = ()=>{
+menuBtn.classList.toggle("active")
+sidebar.classList.toggle("open")
+wrap.classList.toggle("blur")
+}
+
+wrap.onclick = ()=>{
+sidebar.classList.remove("open")
+menuBtn.classList.remove("active")
+wrap.classList.remove("blur")
+}
+
+/* ===== PAGE NAV ===== */
+
+function go(page){
+window.location = page
+}
+
+/* ===== RANDOM FLOATING EMOJI ===== */
+
+const emojis = ["🎉","💰","🚀","📈","🪐","🏦","💡","🎯","✨","💵","📊"]
+
+const box = document.getElementById("emojiBox")
+
+for(let i=0;i<25;i++){
+
+let e = document.createElement("div")
+
+e.className="emoji"
+e.innerHTML = emojis[Math.floor(Math.random()*emojis.length)]
+
+e.style.left = Math.random()*100+"%"
+e.style.animationDuration = 6 + Math.random()*10 + "s"
+e.style.fontSize = 16 + Math.random()*20 + "px"
+
+box.appendChild(e)
+
+}
+
+</script>
+<!-- ===== LONG SEO ARTICLE ===== -->
+
 <div class="article">
 
 <h2>All-in-One Smart Calculation Platform</h2>
+
 <p>
-ToolsZy provides a powerful collection of modern online calculators designed
-to help users make smarter everyday decisions. Instead of searching multiple
-websites for different tools, you can access all essential utilities in one
-simple and fast platform.
+ToolsZy is built to simplify everyday digital calculations through a clean,
+modern and powerful interface. Instead of switching between multiple websites
+for different tools, users can access essential utilities like age calculator,
+birthday countdown, EMI planning tools, savings interest calculators and more
+in one single place.
 </p>
 
-<h2>Completely Free & Easy to Use</h2>
 <p>
-Every tool on ToolsZy is completely free. There is no sign-up requirement,
-no hidden charges and no annoying advertisements. The interface is optimized
-for speed and clarity so that anyone can calculate results instantly.
+The platform focuses on speed, clarity and real-world usefulness. Each tool is
+designed after careful planning so that users can quickly get results without
+confusion. Whether you want to calculate your exact age, plan financial goals
+or evaluate discounts while shopping, ToolsZy helps you make smarter decisions.
 </p>
 
-<h2>Optimized for All Devices</h2>
+<h2>Completely Free Experience</h2>
+
 <p>
-The platform is built with a responsive design that adapts smoothly across
-mobile phones, tablets and desktop screens. Fast loading performance ensures
-a comfortable experience even on slower networks.
+Every calculator available on ToolsZy is 100% free to use. There are no hidden
+subscriptions, no forced sign-ups and no disturbing advertisement pop-ups.
+The experience is built to remain smooth and distraction-free so users can
+focus only on results.
 </p>
 
-<h2>Future Vision</h2>
+<h2>Modern Interface & Smooth Performance</h2>
+
 <p>
-More smart financial tools, productivity utilities and planning calculators
-will be continuously added. The mission of ToolsZy is to become a trusted
-all-in-one calculation hub for everyday life.
+The design philosophy of ToolsZy is based on minimalism combined with smooth
+animations and responsive layouts. The interface automatically adapts to
+different screen sizes so the same premium experience can be enjoyed on mobile,
+tablet and desktop devices.
+</p>
+
+<h2>Future Expansion Vision</h2>
+
+<p>
+ToolsZy aims to become a complete digital calculation hub. More advanced tools
+such as loan interest planners, investment estimators, savings growth trackers
+and productivity utilities will continue to be added. The goal is to build a
+trusted smart platform where users can calculate, plan and grow with confidence.
 </p>
 
 </div>
+
+
+<!-- ===== FOOTER ===== -->
 
 <footer>
 © ToolsZy 2026
 </footer>
 
-</div>
+
+
+<style>
+
+/* ===== ARTICLE ===== */
+
+.article{
+max-width:850px;
+margin:100px auto;
+line-height:1.9;
+opacity:.85;
+padding:0 18px;
+animation:fadeUp 1.4s ease;
+}
+
+.article h2{
+margin-top:50px;
+font-size:28px;
+}
+
+
+/* ===== FOOTER ===== */
+
+footer{
+text-align:center;
+padding:70px 0;
+opacity:.55;
+font-size:14px;
+}
+
+
+/* ===== SCROLL FADE EFFECT ===== */
+
+.reveal{
+opacity:0;
+transform:translateY(80px);
+transition:1s;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+
+/* ===== MOBILE POLISH ===== */
+
+@media(max-width:600px){
+
+.hero h1{
+font-size:32px;
+}
+
+.tools{
+gap:14px;
+}
+
+.tool{
+width:130px;
+padding:16px;
+}
+
+.article{
+margin:70px auto;
+}
+
+}
+
+</style>
+
 
 <script>
 
-function go(p){
-location=p
+/* ===== SCROLL REVEAL ===== */
+
+const reveals = document.querySelectorAll(".article, .explore")
+
+window.addEventListener("scroll", ()=>{
+reveals.forEach(r=>{
+let top = r.getBoundingClientRect().top
+if(top < window.innerHeight - 80){
+r.classList.add("active")
 }
-
-function toggleMenu(){
-
-let side=document.getElementById("side")
-let btn=document.getElementById("menuBtn")
-let wrap=document.getElementById("pageWrap")
-
-side.classList.toggle("open")
-btn.classList.toggle("open")
-wrap.classList.toggle("blur")
-
-}
-
-document.getElementById("pageWrap").onclick=function(e){
-
-if(document.getElementById("side").classList.contains("open")){
-toggleMenu()
-}
-
-}
+})
+})
 
 </script>
 
 </body>
 </html>
+
+<style>
+
+/* ===== HERO PERFECT ALIGN FIX ===== */
+
+.hero{
+padding-top:170px !important;
+padding-bottom:60px !important;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+min-height:70vh;
+}
+
+.hero h1{
+font-size:52px;
+font-weight:900;
+letter-spacing:.5px;
+margin-bottom:14px;
+line-height:1.2;
+}
+
+.tag{
+margin-top:6px;
+margin-bottom:8px;
+color:white !important;
+opacity:1 !important;
+}
+
+.hero p{
+opacity:.75;
+max-width:650px;
+margin:auto;
+}
+
+/* ===== EXPLORE POSITION FIX ===== */
+
+.explore{
+margin-top:90px !important;
+padding-bottom:40px;
+}
+
+/* ===== TOOL GRID POLISH ===== */
+
+.tools{
+max-width:900px;
+margin:auto;
+}
+
+/* ===== MOBILE HERO FIX ===== */
+
+@media(max-width:600px){
+
+.hero{
+padding-top:140px !important;
+min-height:60vh;
+}
+
+.hero h1{
+font-size:34px;
+}
+
+}
+
+</style>
+
+
+
+<script>
+
+/* ===== PAGE LOAD ENTRY ANIMATION ===== */
+
+window.addEventListener("load",()=>{
+document.body.style.opacity="0"
+document.body.style.transition="1s"
+
+setTimeout(()=>{
+document.body.style.opacity="1"
+},200)
+})
+
+</script>
