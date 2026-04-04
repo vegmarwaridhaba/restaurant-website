@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discount Calculator Pro | ToolsZy</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; -webkit-user-select:none; user-select:none; }
+body{ background:#020617; color:white; overflow-x:hidden; }
+
+/* BACKGROUND ENGINE */
+.bg-glow{ position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% -20%, #1e3a8a 0%, #020617 80%); }
+.emojiBox{ position:fixed; inset:0; overflow:hidden; z-index:-1; pointer-events: none;}
+.emoji{ position:absolute; font-size:22px; opacity:.1; animation:floatUp linear infinite; }
+@keyframes floatUp{ from{transform:translateY(110vh) rotate(0deg);} to{transform:translateY(-10vh) rotate(360deg);} }
+
+/* HEADER & SIDEBAR */
+header{ position:fixed; top:0; width:100%; height:75px; display:flex; align-items:center; justify-content:center; background: rgba(0,0,0,0.3); backdrop-filter: blur(15px); z-index:999; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.menu-btn { position: absolute; left: 20px; width: 30px; height: 22px; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; transition: 0.4s; }
+.line { width: 100%; height: 3px; background: #00eaff; border-radius: 5px; transition: 0.4s; }
+.menu-btn.active .line:nth-child(1) { transform: translateY(9.5px) rotate(45deg); }
+.menu-btn.active .line:nth-child(2) { opacity: 0; }
+.menu-btn.active .line:nth-child(3) { transform: translateY(-9.5px) rotate(-45deg); }
+
+.logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:22px; }
+.circle{ width:36px; height:36px; border-radius:50%; background:linear-gradient(90deg,#00eaff,#7c3aed); display:flex; align-items:center; justify-content:center; font-size:14px; }
+
+.sidebar{ position:fixed; top:0; left:-300px; width:300px; height:100%; background: #020617; padding:100px 25px; transition:.45s cubic-bezier(0.4, 0, 0.2, 1); z-index:998; }
+.sidebar.open{ left:0; }
+.sidebar a{ display:block; margin:15px 0; opacity:.7; text-decoration:none; color:white; transition:.3s; }
+.sidebar a:hover{ opacity:1; color:#00eaff; transform: translateX(8px); }
+
+/* MAIN WRAP & CARD */
+.wrap{ transition: 0.5s; padding-top: 130px; }
+.wrap.blur{ filter:blur(8px); pointer-events: none; }
+.calc-card { max-width: 480px; margin: 0 auto; background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border-radius: 25px; padding: 40px; border: 1px solid rgba(255,255,255,0.08); text-align: center; }
+
+/* LOADING & BUTTONS */
+.loader-container { display: none; justify-content: center; margin-top: 20px; }
+.spinner { width: 30px; height: 30px; border: 3px solid rgba(0, 234, 255, 0.1); border-top: 3px solid #00eaff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.btn-premium { width: 100%; padding: 18px; border-radius: 15px; border: none; background: linear-gradient(90deg, #00eaff, #7c3aed); color: white; font-weight: 700; cursor: pointer; transition: 0.3s; }
+.btn-premium:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,234,255,0.3); }
+
+/* SOCIAL FOOTER */
+.toolszy-footer { margin-top: 80px; padding: 40px 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.social-icons-box { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+.social-link { position: relative; font-size: 26px; color: rgba(255,255,255,0.3); text-decoration: none; transition: 0.4s; }
+.social-link:hover { transform: scale(1.3) translateY(-5px); opacity: 1; }
+.insta:hover { color: #e1306c; } .tele:hover { color: #0088cc; } .mail:hover { color: #ea4335; }
+
+.social-link::after { content: attr(data-label); position: absolute; top: -45px; left: 50%; transform: translateX(-50%); background: #00eaff; color: #020617; padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: 800; opacity: 0; transition: 0.3s; pointer-events: none; }
+.social-link:hover::after { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="emojiBox" id="emojiBox"></div>
+
+<header>
+    <div class="menu-btn" id="menuBtn">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <div class="logo"><div class="circle">TZ</div>ToolsZy</div>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="age.html">Age Calculator</a>
+    <a href="#">Discount Calculator</a>
+    <a href="#">EMI Calculator</a>
+</div>
+
+<div class="wrap" id="wrap">
+    <div style="text-align:center; margin-bottom:40px; padding: 0 20px;">
+        <h1 style="font-size: 48px; font-weight: 900; background: linear-gradient(white, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Instant Savings</h1>
+        <p style="opacity:0.5; letter-spacing: 2px;">PREMIUM UTILITY TOOL</p>
+    </div>
+
+    <div class="calc-card">
+        <div style="text-align: left; margin-bottom: 20px;">
+            <label style="font-size: 12px; opacity: 0.5;">BILL AMOUNT (₹)</label>
+            <input type="number" id="amt" style="width:100%; padding:16px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:15px; color:white; font-size:18px; outline:none;" placeholder="0.00" onkeydown="if(event.key==='Enter') processCalc()">
+        </div>
+        <div style="text-align: left; margin-bottom: 25px;">
+            <label style="font-size: 12px; opacity: 0.5;">DISCOUNT (%)</label>
+            <input type="number" id="pct" style="width:100%; padding:16px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:15px; color:white; font-size:18px; outline:none;" placeholder="0" onkeydown="if(event.key==='Enter') processCalc()">
+        </div>
+        <button class="btn-premium" id="calcBtn" onclick="processCalc()">Find Savings</button>
+
+        <div class="loader-container" id="loader"><div class="spinner"></div></div>
+
+        <div id="res-box" style="margin-top:30px; display:none;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span style="opacity:0.6;">You Save:</span>
+                <span id="save" style="color: #ff4757; font-weight:700;">-₹0</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; border-top:1px solid rgba(255,255,255,0.1); padding-top:15px;">
+                <span style="font-weight:700;">Final Price:</span>
+                <span id="total" style="font-size: 28px; font-weight:900; color:#00eaff;">₹0</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="max-width:850px; margin:80px auto; padding:0 20px; opacity:0.6; line-height:1.8;">
+        <h2>Professional Discount Calculator by ToolsZy</h2>
+        <p>In 2026, saving money is a skill. ToolsZy provides the most accurate discount engine for digital entrepreneurs and smart shoppers. Our platform is optimized for every device, ensuring you get zero-latency results while calculating your profit margins or shopping savings.</p>
+        <p>Stay ahead of the game with our upcoming financial suite. From EMI to RD, ToolsZy Hub is building the future of daily utility tools.</p>
+    </div>
+
+    <footer class="toolszy-footer">
+        <div class="social-icons-box">
+            <a href="#" class="social-link insta" data-label="@ToolsZy_Official"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-link tele" data-label="t.me/ToolsZy"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="social-link mail" data-label="Support Mail"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+        <div style="opacity:0.3; font-size:12px;">© TOOLS.ZY 2026 • BUILT FOR SUCCESS</div>
+    </footer>
+</div>
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("sidebar");
+const wrap = document.getElementById("wrap");
+
+menuBtn.onclick = () => {
+    menuBtn.classList.toggle("active");
+    sidebar.classList.toggle("open");
+    wrap.classList.toggle("blur");
+};
+
+wrap.onclick = () => {
+    menuBtn.classList.remove("active");
+    sidebar.classList.remove("open");
+    wrap.classList.remove("blur");
+};
+
+function processCalc() {
+    const amt = parseFloat(document.getElementById('amt').value);
+    const pct = parseFloat(document.getElementById('pct').value);
+    const res = document.getElementById('res-box');
+    const loader = document.getElementById('loader');
+    const btn = document.getElementById('calcBtn');
+
+    if (amt > 0 && pct >= 0 && pct <= 100) {
+        res.style.display = 'none';
+        loader.style.display = 'flex';
+        btn.innerText = "Analyzing...";
+        btn.disabled = true;
+
+        setTimeout(() => {
+            const s = (amt * pct) / 100;
+            const t = amt - s;
+            document.getElementById('save').innerText = "-₹" + s.toLocaleString('en-IN');
+            document.getElementById('total').innerText = "₹" + t.toLocaleString('en-IN');
+            
+            loader.style.display = 'none';
+            res.style.display = 'block';
+            btn.innerText = "Find Savings";
+            btn.disabled = false;
+        }, 500);
+    } else { alert("Sahi details dalo bhai!"); }
+}
+
+const emojis = ["💰","📉","🚀","✨","💵"];
+const boxE = document.getElementById("emojiBox");
+for(let i=0;i<15;i++){
+    let e = document.createElement("div"); e.className="emoji";
+    e.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left = Math.random()*100+"%";
+    e.style.animationDuration = 6 + Math.random()*10 + "s";
+    boxE.appendChild(e);
+}
+</script>
+</body>
+</html>
