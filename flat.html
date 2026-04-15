@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flat Interest Loan Calculator — ToolsZy • Smart Loan Comparison</title>
+<meta name="description" content="Free Flat Rate Interest Loan Calculator with smart comparison vs reducing interest EMI. Understand your true loan cost, compare options and make informed decisions.">
+<meta name="keywords" content="flat interest loan calculator, flat rate loan India, flat vs reducing interest, loan EMI calculator, loan comparison tool">
+<meta name="robots" content="index, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ROOT — EXACT ToolsZy DESIGN SYSTEM
+============================================================ */
+:root {
+  --bg:         #050d1f;
+  --bg2:        #071228;
+  --surface:    #0a1a35;
+  --surface2:   #0e2040;
+  --border:     rgba(0,234,255,0.1);
+  --border2:    rgba(255,255,255,0.06);
+  --cyan:       #00eaff;
+  --cyan-dim:   rgba(0,234,255,0.12);
+  --cyan-glow:  rgba(0,234,255,0.28);
+  --violet:     #7c3aed;
+  --violet-dim: rgba(124,58,237,0.18);
+  --gold:       #f5a623;
+  --gold-dim:   rgba(245,166,35,0.13);
+  --green:      #22c55e;
+  --green-dim:  rgba(34,197,94,0.13);
+  --red:        #f87171;
+  --red-dim:    rgba(248,113,113,0.11);
+  --amber:      #fb923c;
+  --amber-dim:  rgba(251,146,60,0.12);
+  --text:       #e8f4ff;
+  --muted:      rgba(232,244,255,0.5);
+  --dim:        rgba(232,244,255,0.22);
+  --header-h:   68px;
+  --sidebar-w:  290px;
+  --radius:     16px;
+  --radius-sm:  10px;
+  --trans:      0.22s cubic-bezier(0.4,0,0.2,1);
+  --max-w:      980px;
+}
+
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  opacity:0;transition:opacity .45s ease;
+}
+body.loaded{opacity:1}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
+
+/* ============================================================
+   AMBIENT BACKGROUND
+============================================================ */
+.bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;will-change:transform}
+.bg-orb-1{
+  width:650px;height:650px;
+  background:radial-gradient(circle,#00eaff 0%,transparent 70%);
+  top:-180px;left:-180px;
+  animation:orbDrift 20s ease-in-out infinite alternate;
+}
+.bg-orb-2{
+  width:550px;height:550px;
+  background:radial-gradient(circle,#7c3aed 0%,transparent 70%);
+  bottom:-180px;right:-80px;
+  animation:orbDrift 26s ease-in-out infinite alternate-reverse;
+}
+@keyframes orbDrift{from{transform:translate(0,0)}to{transform:translate(50px,35px)}}
+.bg-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,234,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,234,255,.022) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.particles{position:absolute;inset:0;pointer-events:none}
+.p{position:absolute;font-size:18px;opacity:.06;animation:floatUp linear infinite}
+.p:nth-child(1){left:4%;animation-duration:16s;animation-delay:0s}
+.p:nth-child(2){left:14%;animation-duration:20s;animation-delay:4s;font-size:22px}
+.p:nth-child(3){left:26%;animation-duration:13s;animation-delay:1s;font-size:14px}
+.p:nth-child(4){left:38%;animation-duration:18s;animation-delay:6s;font-size:20px}
+.p:nth-child(5){left:52%;animation-duration:14s;animation-delay:2s}
+.p:nth-child(6){left:65%;animation-duration:22s;animation-delay:8s;font-size:20px}
+.p:nth-child(7){left:76%;animation-duration:11s;animation-delay:3s;font-size:24px}
+.p:nth-child(8){left:87%;animation-duration:19s;animation-delay:1s;font-size:14px}
+.p:nth-child(9){left:93%;animation-duration:15s;animation-delay:5s;font-size:20px}
+@keyframes floatUp{
+  from{transform:translateY(110vh) rotate(0deg);opacity:.06}
+  85%{opacity:.06}
+  to{transform:translateY(-15vh) rotate(360deg);opacity:0}
+}
+
+/* ============================================================
+   HEADER
+============================================================ */
+header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);
+  background:rgba(5,13,31,.72);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px 0 16px;z-index:1000;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:1.2rem;font-weight:800;letter-spacing:-.01em;
+  user-select:none;cursor:pointer;
+}
+.logo-badge{
+  width:36px;height:36px;border-radius:10px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:900;color:#fff;
+  box-shadow:0 0 16px var(--cyan-glow);flex-shrink:0;
+}
+.logo-text span{color:var(--cyan)}
+.header-right{display:flex;align-items:center;gap:10px}
+.btn-coffee-sm{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:8px;
+  border:1px solid rgba(245,166,35,.3);
+  background:var(--gold-dim);color:var(--gold);
+  font-size:.75rem;font-weight:600;
+  transition:var(--trans);white-space:nowrap;
+}
+.btn-coffee-sm:hover{background:rgba(245,166,35,.22);transform:translateY(-1px);box-shadow:0 4px 16px rgba(245,166,35,.22)}
+#hamburger{
+  width:42px;height:42px;border-radius:9px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  transition:var(--trans);flex-shrink:0;
+}
+#hamburger:hover{background:rgba(255,255,255,.05)}
+.h-line{display:block;width:20px;height:1.5px;background:var(--text);border-radius:2px;transition:var(--trans);transform-origin:center}
+body.open #hamburger .h-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+body.open #hamburger .h-line:nth-child(2){opacity:0;transform:scaleX(0)}
+body.open #hamburger .h-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ============================================================
+   SIDEBAR + OVERLAY
+============================================================ */
+#overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(5px);
+  z-index:900;opacity:0;transition:opacity var(--trans);
+}
+body.open #overlay{display:block;opacity:1}
+#sidebar{
+  position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;
+  background:linear-gradient(160deg,#060f22,#080e1f);
+  border-right:1px solid var(--border);z-index:950;
+  transform:translateX(-100%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
+body.open #sidebar{transform:translateX(0)}
+.sidebar-logo{
+  display:flex;align-items:center;gap:10px;
+  padding:22px 22px 20px;border-bottom:1px solid var(--border2);
+  font-size:1.1rem;font-weight:800;flex-shrink:0;
+}
+.sidebar-section{
+  font-size:.62rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--dim);padding:18px 22px 7px;
+}
+.sidebar-link{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 22px;font-size:.88rem;color:var(--muted);
+  transition:var(--trans);cursor:pointer;border-left:3px solid transparent;
+}
+.sidebar-link:hover,.sidebar-link.active{color:var(--text);background:rgba(0,234,255,.05);border-left-color:var(--cyan)}
+.sidebar-link.active{color:var(--cyan)}
+.sl-icon{font-size:17px;width:22px;text-align:center}
+.sidebar-social{margin-top:auto;padding:20px 22px 24px;border-top:1px solid var(--border2);flex-shrink:0}
+.sidebar-social p{font-size:.68rem;color:var(--dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em}
+.sidebar-socials{display:flex;gap:9px;flex-wrap:wrap}
+.ss-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:9px;border:1px solid var(--border2);
+  background:var(--surface);font-size:16px;transition:var(--trans);
+  cursor:pointer;text-decoration:none;
+}
+.ss-btn:hover{border-color:var(--cyan);background:var(--cyan-dim);transform:translateY(-2px)}
+
+/* ============================================================
+   WRAP
+============================================================ */
+.wrap{position:relative;z-index:1;padding-top:var(--header-h)}
+
+/* ============================================================
+   HERO
+============================================================ */
+.hero{
+  padding:50px 20px 36px;
+  text-align:center;max-width:var(--max-w);margin:0 auto;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:6px 16px;border-radius:100px;
+  border:1px solid var(--border);background:var(--amber-dim);
+  font-size:.72rem;font-weight:600;color:var(--amber);
+  margin-bottom:18px;letter-spacing:.04em;
+  animation:fadeUp .5s ease both;
+}
+.badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--amber);box-shadow:0 0 7px var(--amber);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{
+  font-size:clamp(1.9rem,4.5vw,3.1rem);
+  font-weight:900;line-height:1.13;letter-spacing:-.03em;margin-bottom:12px;
+  animation:fadeUp .5s .07s ease both;
+}
+.hero h1 .accent{
+  background:linear-gradient(90deg,var(--amber),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:clamp(.88rem,1.8vw,.98rem);color:var(--muted);
+  max-width:500px;margin:0 auto;line-height:1.7;font-weight:300;
+  animation:fadeUp .5s .14s ease both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+.breadcrumb{
+  display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--dim);
+  max-width:var(--max-w);margin:0 auto;padding:14px 20px 0;
+  animation:fadeUp .5s ease both;
+}
+.breadcrumb a{color:var(--cyan);transition:var(--trans)}
+.breadcrumb a:hover{opacity:.8}
+.breadcrumb span{color:var(--dim)}
+
+/* ============================================================
+   CALCULATOR LAYOUT
+============================================================ */
+.calc-section{
+  max-width:var(--max-w);margin:0 auto;
+  padding:36px 20px 20px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px;align-items:start;
+}
+
+/* ============================================================
+   SHARED CARD STYLE
+============================================================ */
+.card{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius);
+  overflow:hidden;
+}
+.card-header{
+  padding:18px 24px;border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;gap:9px;
+  background:linear-gradient(135deg,rgba(251,146,60,.05),transparent);
+}
+.card-header-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--amber);box-shadow:0 0 7px var(--amber);flex-shrink:0;
+}
+.card-header-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim)}
+.card-body{padding:24px}
+
+/* ============================================================
+   INPUT FIELDS
+============================================================ */
+.field{margin-bottom:20px}
+.field:last-of-type{margin-bottom:0}
+.field-label{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:9px;
+}
+.field-val{font-size:.78rem;font-weight:700;color:var(--amber);font-variant-numeric:tabular-nums}
+.input-wrap{position:relative}
+.field-input{
+  width:100%;padding:11px 44px 11px 14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border2);border-radius:var(--radius-sm);
+  color:var(--text);font-size:.9rem;font-family:'Poppins',sans-serif;font-weight:500;
+  transition:border-color var(--trans),box-shadow var(--trans),background var(--trans);
+  outline:none;-webkit-appearance:none;
+}
+.field-input:focus{
+  border-color:var(--amber);
+  background:rgba(251,146,60,.05);
+  box-shadow:0 0 0 3px rgba(251,146,60,.12);
+}
+.field-input.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(248,113,113,.1)}
+.input-suffix{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font-size:.75rem;color:var(--dim);pointer-events:none;font-weight:500;
+}
+.field-range{
+  width:100%;height:4px;-webkit-appearance:none;appearance:none;
+  background:var(--surface2);border-radius:2px;outline:none;cursor:pointer;
+  margin-top:9px;
+}
+.field-range::-webkit-slider-thumb{
+  -webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--amber);border:3px solid var(--bg);
+  box-shadow:0 0 0 1px var(--amber);cursor:pointer;
+  transition:box-shadow var(--trans),transform var(--trans);
+}
+.field-range::-webkit-slider-thumb:hover{box-shadow:0 0 0 5px rgba(251,146,60,.22);transform:scale(1.1)}
+.field-range::-moz-range-thumb{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--amber);border:3px solid var(--bg);cursor:pointer;
+}
+.range-ticks{display:flex;justify-content:space-between;margin-top:5px;font-size:.62rem;color:var(--dim)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field-divider{border:none;border-top:1px solid var(--border2);margin:18px 0}
+.field-select{
+  width:100%;padding:11px 14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border2);border-radius:var(--radius-sm);
+  color:var(--text);font-size:.88rem;font-family:'Poppins',sans-serif;font-weight:500;
+  transition:border-color var(--trans),box-shadow var(--trans);
+  outline:none;cursor:pointer;
+  -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23fb923c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;padding-right:36px;
+}
+.field-select:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(251,146,60,.12)}
+.field-select option{background:var(--surface2)}
+.err-msg{font-size:.68rem;color:var(--red);margin-top:4px;display:none}
+.err-msg.show{display:block}
+
+/* ============================================================
+   RESULT CARD
+============================================================ */
+.result-card{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius);
+  overflow:hidden;animation:fadeUp .5s .18s ease both;
+  position:sticky;top:calc(var(--header-h) + 16px);
+}
+.result-top{
+  padding:22px 24px 18px;border-bottom:1px solid var(--border2);
+  background:linear-gradient(135deg,rgba(251,146,60,.07),transparent);
+  position:relative;
+}
+.result-top::after{
+  content:'';position:absolute;bottom:0;left:24px;right:24px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);opacity:.3;
+}
+.result-lbl{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:5px}
+.result-big{
+  font-size:clamp(1.7rem,3vw,2.2rem);font-weight:900;
+  color:var(--amber);letter-spacing:-.02em;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.result-note{font-size:.72rem;color:var(--muted);margin-top:5px}
+.result-rows{padding:18px 24px}
+.result-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border2);
+}
+.result-row:last-of-type{border-bottom:none}
+.rr-lbl{display:flex;align-items:center;gap:8px;font-size:.81rem;color:var(--muted)}
+.rr-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.rr-val{font-size:.88rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Donut chart */
+.chart-wrap{
+  padding:18px 24px 20px;border-top:1px solid var(--border2);
+  display:flex;align-items:center;gap:18px;
+}
+.donut-container{position:relative;flex-shrink:0;width:96px;height:96px}
+.donut-canvas{display:block}
+.donut-center{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;pointer-events:none;
+}
+.donut-pct{font-size:.85rem;font-weight:800;color:var(--amber);line-height:1;font-variant-numeric:tabular-nums}
+.donut-sub{font-size:.55rem;color:var(--dim);margin-top:1px}
+.chart-legend{flex:1;min-width:0}
+.legend-item{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.legend-item:last-child{margin-bottom:0}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.legend-lbl{font-size:.72rem;color:var(--muted)}
+.legend-amt{font-size:.78rem;font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ============================================================
+   AWARENESS BLOCK
+============================================================ */
+.awareness-section{
+  max-width:var(--max-w);margin:0 auto;padding:32px 20px 0;
+}
+.awareness-card{
+  background:linear-gradient(135deg,rgba(251,146,60,.07),rgba(10,26,53,.6));
+  border:1px solid rgba(251,146,60,.2);border-radius:var(--radius);
+  padding:26px 28px;position:relative;overflow:hidden;
+}
+.awareness-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--amber),transparent);
+}
+.awareness-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:1rem;font-weight:700;margin-bottom:16px;
+}
+.awareness-title .icon{font-size:20px}
+.awareness-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.awareness-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:12px 14px;
+  background:rgba(255,255,255,.03);border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+}
+.awareness-item .ai-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.awareness-item p{font-size:.78rem;color:var(--muted);line-height:1.6}
+
+/* ============================================================
+   COMPARISON ENGINE
+============================================================ */
+.compare-section{
+  max-width:var(--max-w);margin:0 auto;padding:28px 20px 0;
+}
+.compare-toggle-row{
+  display:flex;align-items:center;gap:14px;
+  padding:18px 22px;
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius);
+  cursor:pointer;user-select:none;transition:var(--trans);margin-bottom:0;
+}
+.compare-toggle-row:hover{border-color:rgba(0,234,255,.18)}
+.toggle-pill{
+  width:42px;height:22px;border-radius:11px;
+  background:var(--surface2);border:1px solid var(--border2);
+  position:relative;transition:background var(--trans);flex-shrink:0;
+}
+.toggle-pill.on{background:var(--cyan);border-color:var(--cyan)}
+.toggle-thumb{
+  position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;
+  background:#fff;transition:transform var(--trans);
+}
+.toggle-pill.on .toggle-thumb{transform:translateX(20px)}
+.toggle-label{font-size:.88rem;font-weight:600}
+.toggle-sub{font-size:.72rem;color:var(--muted);margin-left:auto}
+
+.compare-panel{
+  display:none;margin-top:14px;
+}
+.compare-panel.open{display:block}
+
+.compare-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  margin-bottom:14px;
+}
+.compare-card{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius);
+  overflow:hidden;transition:var(--trans);
+}
+.compare-card.highlight{border-color:rgba(34,197,94,.25)}
+.compare-card-head{
+  padding:14px 18px;border-bottom:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.compare-card-head h4{font-size:.82rem;font-weight:700}
+.compare-badge{
+  font-size:.65rem;font-weight:700;padding:3px 9px;
+  border-radius:100px;
+}
+.badge-flat{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,146,60,.2)}
+.badge-reducing{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.2)}
+.compare-card-body{padding:16px 18px}
+.compare-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--border2);
+  font-size:.78rem;
+}
+.compare-row:last-of-type{border-bottom:none}
+.compare-row-lbl{color:var(--muted)}
+.compare-row-val{font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Savings spotlight */
+.savings-spotlight{
+  background:linear-gradient(135deg,rgba(34,197,94,.1),rgba(10,26,53,.7));
+  border:1px solid rgba(34,197,94,.22);border-radius:var(--radius);
+  padding:20px 22px;display:flex;align-items:center;gap:16px;
+  position:relative;overflow:hidden;
+}
+.savings-spotlight::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+}
+.savings-icon{font-size:2rem;flex-shrink:0}
+.savings-text{}
+.savings-title{font-size:.75rem;color:var(--muted);margin-bottom:4px}
+.savings-amount{font-size:1.5rem;font-weight:900;color:var(--green);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.savings-note{font-size:.72rem;color:var(--muted);margin-top:3px}
+
+/* ============================================================
+   SMART GUIDANCE
+============================================================ */
+.guidance-section{
+  max-width:var(--max-w);margin:0 auto;padding:28px 20px 0;
+}
+.guidance-card{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius);padding:26px 28px;
+}
+.guidance-title{
+  font-size:1rem;font-weight:700;margin-bottom:18px;
+  display:flex;align-items:center;gap:9px;
+}
+.guidance-items{display:flex;flex-direction:column;gap:10px}
+.guidance-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 16px;border-radius:var(--radius-sm);
+  border:1px solid var(--border2);
+  transition:var(--trans);
+}
+.guidance-item:hover{border-color:rgba(0,234,255,.15);background:rgba(0,234,255,.03)}
+.gi-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.gi-title{font-size:.82rem;font-weight:600;margin-bottom:3px}
+.gi-text{font-size:.75rem;color:var(--muted);line-height:1.6}
+.guidance-dynamic{
+  margin-top:14px;padding:14px 16px;
+  border-radius:var(--radius-sm);
+  background:rgba(251,146,60,.07);
+  border:1px solid rgba(251,146,60,.18);
+  font-size:.8rem;color:var(--muted);line-height:1.65;
+  display:none;
+}
+.guidance-dynamic.show{display:block}
+.guidance-dynamic strong{color:var(--amber)}
+
+/* ============================================================
+   DECISION SUPPORT
+============================================================ */
+.decision-section{
+  max-width:var(--max-w);margin:0 auto;padding:28px 20px 0;
+}
+.sec-header{text-align:center;margin-bottom:24px}
+.sec-header h2{font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;letter-spacing:-.025em;margin-bottom:7px}
+.sec-header p{font-size:.85rem;color:var(--muted)}
+
+.decision-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;
+}
+.decision-card{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius-sm);
+  padding:18px 16px;transition:var(--trans);
+  display:flex;flex-direction:column;gap:8px;
+}
+.decision-card:hover{border-color:rgba(0,234,255,.18);transform:translateY(-2px)}
+.dc-icon{font-size:20px}
+.dc-title{font-size:.8rem;font-weight:700}
+.dc-text{font-size:.72rem;color:var(--muted);line-height:1.55}
+
+/* ============================================================
+   EXPLORE OPTIONS
+============================================================ */
+.explore-section{
+  max-width:var(--max-w);margin:0 auto;padding:28px 20px 0;
+}
+.explore-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;
+  margin-bottom:10px;
+}
+.explore-card{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius);
+  padding:20px;transition:var(--trans);
+  display:flex;flex-direction:column;gap:10px;
+  position:relative;overflow:hidden;
+}
+.explore-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,234,255,.05),transparent);
+  opacity:0;transition:var(--trans);
+}
+.explore-card:hover{border-color:rgba(0,234,255,.2);transform:translateY(-3px);box-shadow:0 6px 22px rgba(0,0,0,.3)}
+.explore-card:hover::before{opacity:1}
+.explore-top{display:flex;align-items:center;gap:10px}
+.explore-icon{
+  width:40px;height:40px;border-radius:9px;
+  background:var(--cyan-dim);border:1px solid rgba(0,234,255,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.explore-name{font-size:.88rem;font-weight:700}
+.explore-sub{font-size:.68rem;color:var(--muted);margin-top:1px}
+.explore-desc{font-size:.74rem;color:var(--muted);line-height:1.5}
+.btn-explore{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:8px 14px;border-radius:7px;
+  border:1px solid var(--border);background:var(--cyan-dim);
+  color:var(--cyan);font-size:.74rem;font-weight:600;
+  transition:var(--trans);align-self:flex-start;
+}
+.btn-explore:hover{background:rgba(0,234,255,.18);border-color:rgba(0,234,255,.3);transform:translateX(2px)}
+.explore-disclaimer{font-size:.63rem;color:var(--dim);padding:4px 0}
+.explore-disclaimer::before{content:'ⓘ '}
+
+/* ============================================================
+   FAQ
+============================================================ */
+.faq-section{
+  max-width:760px;margin:0 auto;padding:28px 20px 0;
+}
+.faq-item{
+  border:1px solid var(--border2);border-radius:var(--radius-sm);
+  margin-bottom:10px;overflow:hidden;transition:border-color var(--trans);
+}
+.faq-item:hover{border-color:var(--border)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:15px 18px;cursor:pointer;font-size:.87rem;font-weight:600;
+  user-select:none;
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  transition:background var(--trans);
+}
+.faq-q:hover{background:var(--surface2)}
+.faq-arrow{
+  width:22px;height:22px;border-radius:50%;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--amber);
+  transition:transform var(--trans),background var(--trans);flex-shrink:0;
+}
+.faq-item.open .faq-arrow{transform:rotate(180deg);background:var(--amber-dim)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s cubic-bezier(.4,0,.2,1),padding .35s ease;
+  background:rgba(10,26,53,.5);
+  font-size:.81rem;color:var(--muted);line-height:1.75;padding:0 18px;
+}
+.faq-item.open .faq-a{max-height:400px;padding:13px 18px 16px}
+
+/* ============================================================
+   ARTICLE
+============================================================ */
+.article-section{
+  max-width:860px;margin:0 auto;padding:28px 20px 56px;
+}
+.article-section h2{
+  font-size:1.15rem;font-weight:700;margin-bottom:10px;margin-top:32px;
+  color:var(--amber);letter-spacing:-.01em;
+}
+.article-section p{font-size:.85rem;color:var(--muted);line-height:1.88;margin-bottom:10px}
+.article-section ul{margin:8px 0 12px 18px;font-size:.85rem;color:var(--muted);line-height:1.8}
+.article-section ul li{margin-bottom:3px}
+.article-section ul li::marker{color:var(--amber)}
+.scenario-box{
+  background:linear-gradient(145deg,var(--surface),var(--surface2));
+  border:1px solid var(--border2);border-radius:var(--radius-sm);
+  padding:18px 20px;margin:14px 0;
+}
+.scenario-box h4{font-size:.82rem;font-weight:700;margin-bottom:8px;color:var(--cyan)}
+.scenario-box p{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:0}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer{
+  border-top:1px solid var(--border2);
+  padding:32px 20px;text-align:center;margin-top:60px;
+}
+.footer-inner{max-width:var(--max-w);margin:0 auto}
+.footer-logo{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;font-weight:800;margin-bottom:13px;cursor:pointer}
+.footer-socials{display:flex;justify-content:center;gap:9px;margin-bottom:16px}
+.fs-btn{
+  width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);
+  background:var(--surface);display:flex;align-items:center;justify-content:center;
+  font-size:14px;transition:var(--trans);cursor:pointer;text-decoration:none;
+}
+.fs-btn:hover{border-color:var(--cyan);background:var(--cyan-dim);transform:translateY(-2px)}
+.footer-links{display:flex;justify-content:center;gap:16px;margin-bottom:13px;flex-wrap:wrap}
+.footer-links a{font-size:.74rem;color:var(--dim);transition:var(--trans)}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{font-size:.68rem;color:var(--dim)}
+.footer-copy span{color:var(--cyan)}
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ============================================================
+   RESPONSIVE
+============================================================ */
+@media(max-width:768px){
+  .calc-section{grid-template-columns:1fr;padding:24px 16px 20px}
+  .result-card{position:static}
+  .compare-grid{grid-template-columns:1fr}
+  .awareness-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr 1fr}
+  .hero{padding:36px 16px 28px}
+  .chart-wrap{flex-direction:column;align-items:flex-start;gap:12px}
+}
+@media(max-width:480px){
+  .field-row{grid-template-columns:1fr}
+  .btn-coffee-sm span{display:none}
+  .savings-spotlight{flex-direction:column;align-items:flex-start;gap:8px}
+}
+@media(min-width:900px){
+  .explore-grid{grid-template-columns:repeat(3,1fr)}
+  .decision-grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- AMBIENT BG -->
+<div class="bg-canvas" aria-hidden="true">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-grid"></div>
+  <div class="particles">
+    <div class="p">💳</div><div class="p">📊</div><div class="p">💰</div>
+    <div class="p">🏦</div><div class="p">📈</div><div class="p">💡</div>
+    <div class="p">⚖️</div><div class="p">🔍</div><div class="p">✨</div>
+  </div>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" aria-hidden="true"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar" aria-label="Site navigation">
+  <div class="sidebar-logo">
+    <div class="logo-badge">TZ</div>
+    Tools<span style="color:var(--cyan)">Zy</span>
+  </div>
+  <div class="sidebar-section">Navigation</div>
+  <div class="sidebar-link" onclick="go('index.html')"><span class="sl-icon">🏠</span>Home</div>
+  <div class="sidebar-section">Loan Tools</div>
+  <div class="sidebar-link" onclick="go('emi.html')"><span class="sl-icon">🏦</span>EMI Calculator</div>
+  <div class="sidebar-link"><span class="sl-icon">📊</span>Loan Interest</div>
+  <div class="sidebar-link active"><span class="sl-icon">💳</span>Flat Rate Loan</div>
+  <div class="sidebar-section">Savings Tools</div>
+  <div class="sidebar-link" onclick="go('fd.html')"><span class="sl-icon">📈</span>FD Calculator</div>
+  <div class="sidebar-link"><span class="sl-icon">💰</span>RD Calculator</div>
+  <div class="sidebar-link"><span class="sl-icon">🪙</span>Savings Interest</div>
+  <div class="sidebar-section">Life Tools</div>
+  <div class="sidebar-link" onclick="go('age.html')"><span class="sl-icon">🎂</span>Age Calculator</div>
+  <div class="sidebar-link" onclick="go('countdown.html')"><span class="sl-icon">⏳</span>Birthday Countdown</div>
+  <div class="sidebar-link"><span class="sl-icon">🪐</span>Age on Planets</div>
+  <div class="sidebar-link" onclick="go('discount.html')"><span class="sl-icon">🏷️</span>Discount Calculator</div>
+  <div class="sidebar-link"><span class="sl-icon">%</span>Percentage Calculator</div>
+  <div class="sidebar-social">
+    <p>Connect with us</p>
+    <div class="sidebar-socials">
+      <a href="https://instagram.com/toolszy" target="_blank" rel="noopener" class="ss-btn">📸</a>
+      <a href="https://x.com/toolszy" target="_blank" rel="noopener" class="ss-btn">𝕏</a>
+      <a href="https://t.me/toolszy" target="_blank" rel="noopener" class="ss-btn">✈️</a>
+      <a href="https://buymeacoffee.com/toolszy" target="_blank" rel="noopener" class="ss-btn">☕</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <button id="hamburger" aria-label="Toggle menu">
+    <span class="h-line"></span><span class="h-line"></span><span class="h-line"></span>
+  </button>
+  <div class="logo" onclick="go('index.html')">
+    <div class="logo-badge">TZ</div>
+    <div class="logo-text">Tools<span>Zy</span></div>
+  </div>
+  <div class="header-right">
+    <a href="https://buymeacoffee.com/toolszy" target="_blank" rel="noopener" class="btn-coffee-sm">
+      ☕ <span>Support Us</span>
+    </a>
+  </div>
+</header>
+
+<!-- WRAP -->
+<div class="wrap">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a><span>›</span>
+    <span>Loan Tools</span><span>›</span>
+    <span style="color:var(--amber)">Flat Rate Loan Calculator</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge"><span class="badge-dot"></span>Loan Tool · Smart Comparison</div>
+    <h1>Flat Interest <span class="accent">Loan Calculator</span></h1>
+    <p class="hero-sub">Calculate your total loan cost clearly — then compare with reducing interest to make a fully informed decision.</p>
+  </section>
+
+  <!-- CALCULATOR -->
+  <section class="calc-section">
+
+    <!-- INPUTS -->
+    <div class="card" style="animation:fadeUp .5s .1s ease both">
+      <div class="card-header">
+        <span class="card-header-dot"></span>
+        <span class="card-header-title">Loan Details</span>
+      </div>
+      <div class="card-body">
+
+        <!-- Principal -->
+        <div class="field">
+          <div class="field-label">
+            <span>Loan Amount</span>
+            <span class="field-val" id="lbl-p">₹1,00,000</span>
+          </div>
+          <div class="input-wrap">
+            <input type="number" class="field-input" id="inp-p" value="100000" min="1000" max="5000000" autocomplete="off">
+            <span class="input-suffix">₹</span>
+          </div>
+          <input type="range" class="field-range" id="rng-p" min="1000" max="5000000" step="1000" value="100000">
+          <div class="range-ticks"><span>₹1K</span><span>₹12.5L</span><span>₹25L</span><span>₹37.5L</span><span>₹50L</span></div>
+          <div class="err-msg" id="err-p">Enter ₹1,000 – ₹50,00,000</div>
+        </div>
+
+        <hr class="field-divider">
+
+        <!-- Rate -->
+        <div class="field">
+          <div class="field-label">
+            <span>Flat Interest Rate</span>
+            <span class="field-val" id="lbl-r">10.0% p.a.</span>
+          </div>
+          <div class="input-wrap">
+            <input type="number" class="field-input" id="inp-r" value="10" min="1" max="30" step="0.1" autocomplete="off">
+            <span class="input-suffix">%</span>
+          </div>
+          <input type="range" class="field-range" id="rng-r" min="1" max="30" step="0.1" value="10">
+          <div class="range-ticks"><span>1%</span><span>8%</span><span>15%</span><span>22%</span><span>30%</span></div>
+          <div class="err-msg" id="err-r">Enter 1%–30%</div>
+        </div>
+
+        <hr class="field-divider">
+
+        <!-- Tenure -->
+        <div class="field">
+          <div class="field-label">
+            <span>Tenure</span>
+            <span class="field-val" id="lbl-t">2 years</span>
+          </div>
+          <div class="field-row">
+            <div>
+              <div class="input-wrap">
+                <input type="number" class="field-input" id="inp-yr" value="2" min="0" max="30" autocomplete="off">
+                <span class="input-suffix">Yrs</span>
+              </div>
+              <div class="err-msg" id="err-yr">Max 30 years</div>
+            </div>
+            <div>
+              <div class="input-wrap">
+                <input type="number" class="field-input" id="inp-mo" value="0" min="0" max="11" autocomplete="off">
+                <span class="input-suffix">Mo</span>
+              </div>
+              <div class="err-msg" id="err-mo">0 – 11 months</div>
+            </div>
+          </div>
+          <input type="range" class="field-range" id="rng-t" min="1" max="360" step="1" value="24" style="margin-top:10px">
+          <div class="range-ticks"><span>1 mo</span><span>7 yrs</span><span>15 yrs</span><span>22 yrs</span><span>30 yrs</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="result-card">
+      <div class="result-top">
+        <div class="result-lbl">Monthly EMI</div>
+        <div class="result-big" id="res-emi">₹0</div>
+        <div class="result-note" id="res-note">Flat rate calculation</div>
+      </div>
+      <div class="result-rows">
+        <div class="result-row">
+          <div class="rr-lbl"><span class="rr-dot" style="background:var(--cyan)"></span>Principal Amount</div>
+          <div class="rr-val" id="res-principal" style="color:var(--cyan)">₹0</div>
+        </div>
+        <div class="result-row">
+          <div class="rr-lbl"><span class="rr-dot" style="background:var(--amber)"></span>Total Interest</div>
+          <div class="rr-val" id="res-interest" style="color:var(--amber)">₹0</div>
+        </div>
+        <div class="result-row">
+          <div class="rr-lbl"><span class="rr-dot" style="background:var(--violet)"></span>Total Repayment</div>
+          <div class="rr-val" id="res-total" style="color:#a78bfa">₹0</div>
+        </div>
+        <div class="result-row">
+          <div class="rr-lbl"><span class="rr-dot" style="background:var(--gold)"></span>Effective Annual Rate</div>
+          <div class="rr-val" id="res-eff" style="color:var(--gold)">0%</div>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <div class="donut-container">
+          <canvas class="donut-canvas" id="donut" width="96" height="96"></canvas>
+          <div class="donut-center">
+            <div class="donut-pct" id="donut-pct">0%</div>
+            <div class="donut-sub">interest</div>
+          </div>
+        </div>
+        <div class="chart-legend">
+          <div class="legend-item">
+            <span class="legend-dot" style="background:var(--cyan)"></span>
+            <div>
+              <div class="legend-lbl">Principal</div>
+              <div class="legend-amt" id="leg-p" style="color:var(--cyan)">₹0</div>
+            </div>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot" style="background:var(--amber)"></span>
+            <div>
+              <div class="legend-lbl">Interest</div>
+              <div class="legend-amt" id="leg-i" style="color:var(--amber)">₹0</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- AWARENESS BLOCK -->
+  <section class="awareness-section reveal">
+    <div class="awareness-card">
+      <div class="awareness-title">
+        <span class="icon">💡</span>
+        Understand How This Loan Works
+      </div>
+      <div class="awareness-grid">
+        <div class="awareness-item">
+          <span class="ai-icon">📌</span>
+          <p>In flat interest loans, interest is calculated on the <strong>full original principal</strong> for the entire loan period — regardless of how much you have already repaid.</p>
+        </div>
+        <div class="awareness-item">
+          <span class="ai-icon">📊</span>
+          <p>This means the <strong>total cost can appear higher</strong> compared to reducing balance loans, where interest is recalculated on the outstanding balance each month.</p>
+        </div>
+        <div class="awareness-item">
+          <span class="ai-icon">🧮</span>
+          <p>The effective interest rate on a flat loan is typically <strong>1.7–1.9× higher</strong> than the stated rate when compared against the equivalent reducing balance rate.</p>
+        </div>
+        <div class="awareness-item">
+          <span class="ai-icon">✅</span>
+          <p>Flat rate loans are <strong>simple to understand</strong> and have fixed, predictable EMIs. They are common in vehicle loans and some personal loan products.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON ENGINE -->
+  <section class="compare-section reveal">
+    <div class="compare-toggle-row" onclick="toggleCompare()">
+      <div class="toggle-pill" id="cmp-pill"><div class="toggle-thumb"></div></div>
+      <span class="toggle-label">Compare with Reducing Interest (EMI Loan)</span>
+      <span class="toggle-sub">See actual difference →</span>
+    </div>
+
+    <div class="compare-panel" id="cmp-panel">
+      <div class="compare-grid">
+
+        <!-- Flat card -->
+        <div class="compare-card">
+          <div class="compare-card-head">
+            <h4>Flat Rate Loan</h4>
+            <span class="compare-badge badge-flat">Current</span>
+          </div>
+          <div class="compare-card-body">
+            <div class="compare-row">
+              <span class="compare-row-lbl">Monthly EMI</span>
+              <span class="compare-row-val" id="cmp-flat-emi" style="color:var(--amber)">—</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-row-lbl">Total Interest</span>
+              <span class="compare-row-val" id="cmp-flat-int" style="color:var(--amber)">—</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-row-lbl">Total Repayment</span>
+              <span class="compare-row-val" id="cmp-flat-total" style="color:var(--amber)">—</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-row-lbl">Effective Rate</span>
+              <span class="compare-row-val" id="cmp-flat-eff" style="color:var(--gold)">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reducing card -->
+        <div class="compare-card highlight">
+          <div class="compare-card-head">
+            <h4>Reducing Balance Loan</h4>
+            <span class="compare-badge badge-reducing">For comparison</span>
+          </div>
+          <div class="compare-card-body">
+            <div class="compare-row">
+              <span class="compare-row-lbl">Monthly EMI</span>
+              <span class="compare-row-val" id="cmp-red-emi" style="color:var(--green)">—</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-row-lbl">Total Interest</span>
+              <span class="compare-row-val" id="cmp-red-int" style="color:var(--green)">—</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-row-lbl">Total Repayment</span>
+              <span class="compare-row-val" id="cmp-red-total" style="color:var(--green)">—</span>
+            </div>
+            <div class="compare-row">
+              <span class="compare-row-lbl">Same Stated Rate</span>
+              <span class="compare-row-val" id="cmp-red-rate" style="color:var(--cyan)">—</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Savings spotlight -->
+      <div class="savings-spotlight">
+        <div class="savings-icon">💸</div>
+        <div class="savings-text">
+          <div class="savings-title">If this were a reducing interest loan at the same rate, you could save</div>
+          <div class="savings-amount" id="cmp-savings">₹0</div>
+          <div class="savings-note" id="cmp-savings-note">in total interest over the loan tenure</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SMART GUIDANCE -->
+  <section class="guidance-section reveal">
+    <div class="guidance-card">
+      <div class="guidance-title">🧠 Which Loan Type Might Suit You?</div>
+      <div class="guidance-items">
+        <div class="guidance-item">
+          <span class="gi-icon">⚡</span>
+          <div>
+            <div class="gi-title">When flat rate loans can make sense</div>
+            <div class="gi-text">For short tenures (under 2 years), the EMI amount is simple to understand and plan around. The total interest difference versus reducing balance may be modest.</div>
+          </div>
+        </div>
+        <div class="guidance-item">
+          <span class="gi-icon">📅</span>
+          <div>
+            <div class="gi-title">What changes over longer periods</div>
+            <div class="gi-text">Over longer tenures, the total cost difference between flat and reducing interest becomes more pronounced. It is worth calculating both before committing.</div>
+          </div>
+        </div>
+        <div class="guidance-item">
+          <span class="gi-icon">🔍</span>
+          <div>
+            <div class="gi-title">The right question to ask your lender</div>
+            <div class="gi-text">Always ask: "What is the effective annual rate?" A flat rate of 10% is not the same as a reducing balance rate of 10% — the total cost can differ significantly.</div>
+          </div>
+        </div>
+      </div>
+      <!-- Dynamic guidance based on inputs -->
+      <div class="guidance-dynamic" id="guidance-dynamic">
+        Based on your current inputs, <strong id="gd-text">—</strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- BEFORE YOU FINALIZE -->
+  <section class="decision-section reveal">
+    <div class="sec-header">
+      <h2>Before You Finalise a Loan</h2>
+      <p>A few things worth checking — not to complicate, but to clarify</p>
+    </div>
+    <div class="decision-grid">
+      <div class="decision-card">
+        <div class="dc-icon">📋</div>
+        <div class="dc-title">Compare total repayment, not just EMI</div>
+        <div class="dc-text">A lower EMI can mask a much higher total cost. Always check the full repayment amount before deciding.</div>
+      </div>
+      <div class="decision-card">
+        <div class="dc-icon">🕵️</div>
+        <div class="dc-title">Check processing fees & hidden charges</div>
+        <div class="dc-text">Processing fees, foreclosure charges, and insurance premiums can add 1–3% to your effective loan cost.</div>
+      </div>
+      <div class="decision-card">
+        <div class="dc-icon">📉</div>
+        <div class="dc-title">A small rate difference matters over time</div>
+        <div class="dc-text">On a ₹5L loan over 5 years, a 2% rate difference can mean ₹30,000–₹60,000 in extra interest paid.</div>
+      </div>
+      <div class="decision-card">
+        <div class="dc-icon">🔄</div>
+        <div class="dc-title">Ask about prepayment options</div>
+        <div class="dc-text">Some lenders allow early repayment, which can reduce your interest burden significantly — especially on flat rate loans.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORE BETTER OPTIONS -->
+  <section class="explore-section reveal">
+    <div class="sec-header">
+      <h2>Explore Better Loan Options</h2>
+      <p>Helpful next steps — not advertisements, just guidance</p>
+    </div>
+    <div class="explore-grid">
+      <div class="explore-card">
+        <div class="explore-top">
+          <div class="explore-icon">🏛️</div>
+          <div>
+            <div class="explore-name">Compare Bank Loans</div>
+            <div class="explore-sub">Multiple lenders, one search</div>
+          </div>
+        </div>
+        <div class="explore-desc">Compare personal, home and vehicle loan rates across leading banks. Find the lowest effective rate for your loan amount and tenure.</div>
+        <a href="#" target="_blank" rel="noopener sponsored" class="btn-explore">Explore Options →</a>
+      </div>
+      <div class="explore-card">
+        <div class="explore-top">
+          <div class="explore-icon">📱</div>
+          <div>
+            <div class="explore-name">Online Loan Platforms</div>
+            <div class="explore-sub">Instant, digital, paperless</div>
+          </div>
+        </div>
+        <div class="explore-desc">Digital lenders often offer reducing balance loans at competitive rates with minimal documentation and fast disbursal.</div>
+        <a href="#" target="_blank" rel="noopener sponsored" class="btn-explore">Explore Options →</a>
+      </div>
+      <div class="explore-card">
+        <div class="explore-top">
+          <div class="explore-icon">📊</div>
+          <div>
+            <div class="explore-name">EMI Calculator</div>
+            <div class="explore-sub">Reducing balance comparison</div>
+          </div>
+        </div>
+        <div class="explore-desc">Use our detailed EMI calculator to run a full reducing balance calculation with amortisation schedule for any loan scenario.</div>
+        <a href="emi.html" class="btn-explore">Open Calculator →</a>
+      </div>
+    </div>
+    <div class="explore-disclaimer">We may earn a small commission at no extra cost to you when you apply via partner links.</div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section reveal">
+    <div class="sec-header">
+      <h2>Frequently Asked Questions</h2>
+      <p>Clear answers about flat rate loans</p>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is a flat interest rate loan?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a">In a flat interest rate loan, the interest is calculated on the original principal amount throughout the entire tenure, regardless of how much of the loan you have already repaid. For example, if you borrow ₹1,00,000 at 10% flat for 3 years, interest is always calculated on ₹1,00,000 — not on the declining balance. This makes EMI calculation straightforward: Total = P + (P × R × T), then EMI = Total ÷ Months.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the difference between flat rate and reducing interest?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a">In a reducing balance loan, interest is calculated only on the outstanding principal after each monthly payment. As you repay, the principal decreases, and so does the interest charged. This results in lower total interest compared to a flat rate loan at the same stated percentage. A flat rate of 10% is typically equivalent to a reducing balance rate of approximately 17–19%, depending on tenure.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Why does the effective rate appear higher than the flat rate?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Because in a flat rate loan, you are paying interest on the full principal even as you repay it. In the final month, you may have only ₹5,000 remaining to repay, but you are still being charged interest on the original ₹1,00,000. The "effective annual rate" reflects the true cost of the loan as if it were a reducing balance loan — giving you a meaningful comparison figure.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Are flat rate loans bad?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Not inherently. Flat rate loans are straightforward, predictable, and easy to budget around. They are commonly used for vehicle financing and short-term personal loans. The key is to understand the total cost before committing, and to compare using the effective annual rate rather than just the stated percentage. For short tenures, the difference may be acceptable. For long tenures, it is worth exploring reducing balance alternatives.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I convert a flat rate loan to reducing balance?<span class="faq-arrow">▼</span></div>
+      <div class="faq-a">Generally, loan terms are fixed at the time of disbursement and cannot be changed mid-tenure. However, some lenders allow balance transfers, where you refinance your existing loan at a lower reducing interest rate with another lender. This can reduce your remaining interest burden significantly if you are early in the tenure. Always check the prepayment penalty and processing fee before transferring.</div>
+    </div>
+  </section>
+
+  <!-- SEO ARTICLE -->
+  <article class="article-section reveal">
+    <h2>What Is a Flat Rate Interest Loan?</h2>
+    <p>A flat rate interest loan is one of the most common loan structures in India, particularly for vehicle financing, two-wheeler loans, and consumer durable loans. The defining feature is simple: interest is calculated on the original principal amount throughout the entire loan tenure, not on the reducing outstanding balance.</p>
+    <p>The formula is: Interest = P × R × T, where P is principal, R is the annual flat rate, and T is the tenure in years. The monthly EMI is then (P + Interest) ÷ number of months. This makes the calculation extremely transparent and the repayment amount completely fixed.</p>
+
+    <h2>The Real Difference: Flat vs Reducing Balance</h2>
+    <p>The most important thing to understand about flat rate loans is how they compare to reducing balance (also called diminishing balance) loans, which are used in home loans and most personal loan products from banks today.</p>
+    <div class="scenario-box">
+      <h4>Real-Life Example</h4>
+      <p>Loan: ₹2,00,000 — Rate: 12% — Tenure: 3 years (36 months)<br>
+      <strong>Flat Rate:</strong> Interest = ₹2,00,000 × 12% × 3 = ₹72,000. EMI = ₹7,556/month. Total = ₹2,72,000.<br>
+      <strong>Reducing Balance at same 12%:</strong> EMI ≈ ₹6,643/month. Total interest ≈ ₹39,148. Total = ₹2,39,148.<br>
+      Difference: ₹32,852 more in interest on the flat rate loan.</p>
+    </div>
+    <p>As this example illustrates, comparing loans using only the stated interest rate is not sufficient. A 12% flat rate loan is significantly more expensive than a 12% reducing balance loan. This is why asking for the effective annual rate is essential.</p>
+
+    <h2>Why the Total Repayment Amount Matters More Than EMI</h2>
+    <p>Many borrowers focus primarily on the monthly EMI when comparing loan options. This is understandable — the EMI directly affects your monthly budget. However, a loan with a lower EMI can have a much higher total repayment if it has a longer tenure or a flat rate structure.</p>
+    <p>Consider two loans with a ₹5,000 monthly EMI difference. If one loan runs 5 years longer, that gap translates to ₹3,00,000 in extra payments. The habit of calculating total repayment — not just EMI — is one of the most valuable financial skills you can develop.</p>
+
+    <h2>When Flat Rate Loans Are Used</h2>
+    <p>Despite their higher effective cost, flat rate loans persist because of their simplicity. They are commonly used in:</p>
+    <ul>
+      <li>Vehicle and two-wheeler financing through dealerships</li>
+      <li>Consumer durable loans (electronics, appliances)</li>
+      <li>Microfinance and rural lending products</li>
+      <li>Some personal and salary advance loans</li>
+    </ul>
+    <p>In these contexts, the simplicity of a fixed, unchanging EMI over a short period often outweighs the cost difference versus a reducing balance product.</p>
+
+    <h2>How to Evaluate Any Loan Offer Correctly</h2>
+    <p>Before signing any loan agreement, follow this checklist. First, request the total repayment amount in writing — not just the EMI. Second, ask for the effective annual rate (EAR), not just the stated rate. Third, check all associated fees: processing fees, insurance, foreclosure charges and documentation costs. Fourth, calculate the difference in total cost if you took a reducing balance loan at the same rate. Fifth, consider whether you can prepay — for flat rate loans, early repayment may not save proportional interest.</p>
+    <p>This page gives you the tools to do steps one through four instantly. The goal is simple: walk into any loan conversation with complete clarity about what you are agreeing to pay.</p>
+  </article>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo" onclick="go('index.html')">
+        <div class="logo-badge">TZ</div>
+        Tools<span style="color:var(--cyan)">Zy</span>
+      </div>
+      <div class="footer-socials">
+        <a href="https://instagram.com/toolszy" target="_blank" rel="noopener" class="fs-btn">📸</a>
+        <a href="https://x.com/toolszy" target="_blank" rel="noopener" class="fs-btn">𝕏</a>
+        <a href="https://t.me/toolszy" target="_blank" rel="noopener" class="fs-btn">✈️</a>
+        <a href="https://buymeacoffee.com/toolszy" target="_blank" rel="noopener" class="fs-btn">☕</a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy</a><a href="#">About</a>
+        <a href="#">Contact</a><a href="index.html">All Tools</a>
+      </div>
+      <div class="footer-copy">© 2026 <span>ToolsZy</span> · Free Forever · No Data Stored</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+   MENU
+============================================================ */
+document.getElementById('hamburger').addEventListener('click', () => document.body.classList.toggle('open'));
+document.getElementById('overlay').addEventListener('click',   () => document.body.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.body.classList.remove('open'); });
+function go(p) { window.location.href = p; }
+
+/* ============================================================
+   SCROLL REVEAL
+============================================================ */
+const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } }), { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+/* ============================================================
+   FAQ
+============================================================ */
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const was  = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!was) item.classList.add('open');
+}
+
+/* ============================================================
+   FORMAT
+============================================================ */
+function inr(n)  { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+function pct(n)  { return n.toFixed(2) + '%'; }
+
+/* ============================================================
+   RANGE FILL
+============================================================ */
+function fillRange(id, min, max) {
+  const r = document.getElementById(id);
+  const p = ((parseFloat(r.value) - min) / (max - min)) * 100;
+  r.style.background = `linear-gradient(to right,var(--amber) ${p}%,var(--surface2) ${p}%)`;
+}
+
+/* ============================================================
+   COUNT-UP
+============================================================ */
+const _st = {};
+function countUp(id, target, isRaw = false) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const cur = _st[id] || 0;
+  const steps = 16;
+  const step  = (target - cur) / steps;
+  let c = 0;
+  if (_st['_r_' + id]) cancelAnimationFrame(_st['_r_' + id]);
+  function tick() {
+    c++;
+    const v = cur + step * c;
+    el.textContent = isRaw ? v.toFixed(2) + '%' : inr(v);
+    if (c < steps) {
+      _st['_r_' + id] = requestAnimationFrame(tick);
+    } else {
+      el.textContent = isRaw ? target.toFixed(2) + '%' : inr(target);
+      _st[id] = target;
+    }
+  }
+  tick();
+}
+
+/* ============================================================
+   DONUT
+============================================================ */
+function drawDonut(pPct, iPct) {
+  const cv = document.getElementById('donut');
+  const cx = cv.getContext('2d');
+  const c  = 48, r = 38, w = 10, tau = Math.PI * 2, s = -Math.PI / 2;
+  cx.clearRect(0, 0, 96, 96);
+
+  cx.beginPath(); cx.arc(c, c, r, 0, tau);
+  cx.strokeStyle = 'rgba(255,255,255,.05)'; cx.lineWidth = w; cx.stroke();
+
+  if (pPct > 0) {
+    cx.beginPath(); cx.arc(c, c, r, s, s + tau * (pPct / 100));
+    cx.strokeStyle = '#00eaff'; cx.lineWidth = w; cx.lineCap = 'round'; cx.stroke();
+  }
+  if (iPct > 0.5) {
+    const gap = 0.05;
+    cx.beginPath(); cx.arc(c, c, r, s + tau * (pPct / 100) + gap, s + tau * (pPct / 100) + gap + tau * (iPct / 100));
+    cx.strokeStyle = '#fb923c'; cx.lineWidth = w; cx.lineCap = 'round'; cx.stroke();
+  }
+  document.getElementById('donut-pct').textContent = Math.round(iPct) + '%';
+}
+
+/* ============================================================
+   REDUCING BALANCE EMI (Standard Formula)
+============================================================ */
+function calcReducing(P, annualRate, months) {
+  if (months === 0) return { emi: 0, total: 0, interest: 0 };
+  const mr = annualRate / 100 / 12;
+  if (mr === 0) { const emi = P / months; return { emi, total: P, interest: 0 }; }
+  const emi = P * mr * Math.pow(1 + mr, months) / (Math.pow(1 + mr, months) - 1);
+  const total    = emi * months;
+  const interest = total - P;
+  return { emi, total, interest };
+}
+
+/* ============================================================
+   EFFECTIVE RATE (Approximate via Newton iterations)
+============================================================ */
+function approxEffectiveRate(P, flatEMI, months) {
+  if (months === 0) return 0;
+  let mr = 0.01;
+  for (let i = 0; i < 40; i++) {
+    const pw = Math.pow(1 + mr, months);
+    const f  = P * mr * pw / (pw - 1) - flatEMI;
+    const df = (P * (pw * (1 + mr * months) - pw) / Math.pow(pw - 1, 2));
+    const step = f / df;
+    mr -= step;
+    if (Math.abs(step) < 1e-8) break;
+    mr = Math.max(mr, 0.0001);
+  }
+  return mr * 12 * 100;
+}
+
+/* ============================================================
+   MAIN CALCULATION
+============================================================ */
+let cmpOpen = false;
+
+function calculate() {
+  const P  = parseFloat(document.getElementById('inp-p').value) || 0;
+  const r  = parseFloat(document.getElementById('inp-r').value) || 0;
+  const yr = parseInt(document.getElementById('inp-yr').value) || 0;
+  let   mo = parseInt(document.getElementById('inp-mo').value) || 0;
+
+  // Validation
+  let bad = false;
+  const ep = document.getElementById('err-p');
+  const er = document.getElementById('err-r');
+  const ey = document.getElementById('err-yr');
+  const em = document.getElementById('err-mo');
+
+  ep.classList.toggle('show', P < 1000 || P > 5000000);
+  er.classList.toggle('show', r < 1 || r > 30);
+  ey.classList.toggle('show', yr > 30);
+  em.classList.toggle('show', mo > 11);
+
+  if (P < 1000 || P > 5000000 || r < 1 || r > 30 || yr > 30 || mo > 11) bad = true;
+
+  // Auto-correct months overflow
+  if (mo > 11) { const yrExtra = Math.floor(mo / 12); mo = mo % 12; }
+
+  const months = yr * 12 + mo;
+  if (bad || months === 0 || P === 0) return;
+
+  // Flat calculation
+  const T        = months / 12;
+  const interest = P * (r / 100) * T;
+  const total    = P + interest;
+  const emi      = total / months;
+
+  // Effective rate
+  const effRate = approxEffectiveRate(P, emi, months);
+
+  // Update main results
+  countUp('res-emi',       emi);
+  countUp('res-principal', P);
+  countUp('res-interest',  interest);
+  countUp('res-total',     total);
+  countUp('leg-p',         P);
+  countUp('leg-i',         interest);
+  document.getElementById('res-eff').textContent   = pct(effRate);
+  document.getElementById('res-note').textContent  = `Over ${yr > 0 ? yr + 'yr ' : ''}${mo > 0 ? mo + 'mo' : ''}`;
+
+  // Donut
+  const pPct = (P / total) * 100;
+  const iPct = (interest / total) * 100;
+  drawDonut(pPct, iPct);
+
+  // Compare panel
+  if (cmpOpen) fillCompare(P, r, months, emi, interest, total);
+
+  // Dynamic guidance
+  const gd = document.getElementById('guidance-dynamic');
+  const gt = document.getElementById('gd-text');
+  gd.classList.add('show');
+  if (T <= 1) {
+    gt.textContent = 'your tenure is under 1 year. Flat rate loans are commonly used for such durations, and the interest difference versus reducing balance may be relatively small.';
+  } else if (T <= 3) {
+    gt.textContent = `your tenure is ${yr} year${yr !== 1 ? 's' : ''}. It is worth running the comparison below to see the exact interest difference versus a reducing balance loan.`;
+  } else {
+    gt.textContent = `your tenure is ${yr} year${yr !== 1 ? 's' : ''}. Over this period, the total cost difference between flat and reducing balance interest becomes more noticeable. The comparison below shows the exact figure.`;
+  }
+
+  // Tenure label
+  const parts = [];
+  if (yr > 0) parts.push(yr + (yr === 1 ? ' year' : ' years'));
+  if (mo > 0) parts.push(mo + (mo === 1 ? ' month' : ' months'));
+  document.getElementById('lbl-t').textContent = parts.join(', ') || '—';
+}
+
+/* ============================================================
+   FILL COMPARISON PANEL
+============================================================ */
+function fillCompare(P, flatRate, months, flatEMI, flatInt, flatTotal) {
+  const red = calcReducing(P, flatRate, months);
+
+  document.getElementById('cmp-flat-emi').textContent   = inr(flatEMI);
+  document.getElementById('cmp-flat-int').textContent   = inr(flatInt);
+  document.getElementById('cmp-flat-total').textContent = inr(flatTotal);
+
+  const eff = approxEffectiveRate(P, flatEMI, months);
+  document.getElementById('cmp-flat-eff').textContent   = pct(eff);
+
+  document.getElementById('cmp-red-emi').textContent    = inr(red.emi);
+  document.getElementById('cmp-red-int').textContent    = inr(red.interest);
+  document.getElementById('cmp-red-total').textContent  = inr(red.total);
+  document.getElementById('cmp-red-rate').textContent   = flatRate.toFixed(1) + '% p.a.';
+
+  const saved = Math.max(0, flatInt - red.interest);
+  document.getElementById('cmp-savings').textContent      = inr(saved);
+  document.getElementById('cmp-savings-note').textContent =
+    saved > 0
+      ? `in total interest over ${months >= 12 ? Math.round(months / 12) + ' year' + (Math.round(months/12) !== 1 ? 's' : '') : months + ' months'}`
+      : 'The interest difference at this tenure and rate is minimal.';
+}
+
+/* ============================================================
+   TOGGLE COMPARE
+============================================================ */
+function toggleCompare() {
+  cmpOpen = !cmpOpen;
+  document.getElementById('cmp-pill').classList.toggle('on', cmpOpen);
+  document.getElementById('cmp-panel').classList.toggle('open', cmpOpen);
+  if (cmpOpen) calculate();
+}
+
+/* ============================================================
+   SYNC INPUTS ↔ RANGES
+============================================================ */
+function syncP(from) {
+  const i = document.getElementById('inp-p');
+  const r = document.getElementById('rng-p');
+  if (from === 'i') r.value = Math.min(Math.max(parseFloat(i.value) || 0, 1000), 5000000);
+  else i.value = r.value;
+  document.getElementById('lbl-p').textContent = '₹' + (parseFloat(i.value) || 0).toLocaleString('en-IN');
+  fillRange('rng-p', 1000, 5000000);
+  calculate();
+}
+function syncR(from) {
+  const i = document.getElementById('inp-r');
+  const r = document.getElementById('rng-r');
+  if (from === 'i') r.value = Math.min(Math.max(parseFloat(i.value) || 0, 1), 30);
+  else i.value = parseFloat(r.value).toFixed(1);
+  document.getElementById('lbl-r').textContent = (parseFloat(i.value) || 0).toFixed(1) + '% p.a.';
+  fillRange('rng-r', 1, 30);
+  calculate();
+}
+function syncT_slider() {
+  const total = parseInt(document.getElementById('rng-t').value);
+  document.getElementById('inp-yr').value = Math.floor(total / 12);
+  document.getElementById('inp-mo').value = total % 12;
+  fillRange('rng-t', 1, 360);
+  calculate();
+}
+function syncT_inputs() {
+  let yr = Math.min(parseInt(document.getElementById('inp-yr').value) || 0, 30);
+  let mo = parseInt(document.getElementById('inp-mo').value) || 0;
+  if (mo > 11) { yr += Math.floor(mo / 12); mo = mo % 12; yr = Math.min(yr, 30); document.getElementById('inp-yr').value = yr; document.getElementById('inp-mo').value = mo; }
+  document.getElementById('rng-t').value = Math.min(yr * 12 + mo, 360);
+  fillRange('rng-t', 1, 360);
+  calculate();
+}
+
+/* ============================================================
+   BIND EVENTS
+============================================================ */
+document.getElementById('inp-p').addEventListener('input',  () => syncP('i'));
+document.getElementById('rng-p').addEventListener('input',  () => syncP('r'));
+document.getElementById('inp-r').addEventListener('input',  () => syncR('i'));
+document.getElementById('rng-r').addEventListener('input',  () => syncR('r'));
+document.getElementById('rng-t').addEventListener('input',  syncT_slider);
+document.getElementById('inp-yr').addEventListener('input', syncT_inputs);
+document.getElementById('inp-mo').addEventListener('input', syncT_inputs);
+
+/* ============================================================
+   INIT
+============================================================ */
+window.addEventListener('load', () => {
+  ['rng-p','rng-r','rng-t'].forEach(id => {
+    const el = document.getElementById(id);
+    const mn = parseFloat(el.min), mx = parseFloat(el.max);
+    fillRange(id, mn, mx);
+  });
+  calculate();
+  requestAnimationFrame(() => document.body.classList.add('loaded'));
+});
+</script>
+</body>
+</html>
