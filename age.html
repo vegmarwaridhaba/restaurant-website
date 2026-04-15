@@ -3,382 +3,1246 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Free Age Calculator Online • ToolsZy</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700;900&display=swap" rel="stylesheet">
+<title>Age Calculator — Find Your Exact Age Instantly | ToolsZy</title>
+<meta name="description" content="Free Age Calculator by ToolsZy. Find your exact age in years, months, days, weeks, hours, minutes and seconds instantly. No sign-up. No ads.">
+<meta name="keywords" content="age calculator, exact age calculator, birthday calculator, date of birth calculator, age in months, age in days, how old am i, age finder tool">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Age Calculator — ToolsZy">
+<meta property="og:description" content="Know your exact age in years, months, days, hours, minutes, and seconds instantly. Free, private, no sign-up.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Poppins;
+/* ================================================================
+   ROOT — EXACT ToolsZy DESIGN SYSTEM
+================================================================ */
+:root {
+  --bg:         #050d1f;
+  --bg2:        #071228;
+  --surface:    #0a1a35;
+  --surface2:   #0e2040;
+  --border:     rgba(0,234,255,0.10);
+  --border2:    rgba(255,255,255,0.06);
+  --cyan:       #00eaff;
+  --cyan-dim:   rgba(0,234,255,0.12);
+  --cyan-glow:  rgba(0,234,255,0.28);
+  --violet:     #7c3aed;
+  --violet-dim: rgba(124,58,237,0.18);
+  --gold:       #f5a623;
+  --gold-dim:   rgba(245,166,35,0.13);
+  --green:      #22c55e;
+  --green-dim:  rgba(34,197,94,0.13);
+  --red:        #f87171;
+  --red-dim:    rgba(248,113,113,0.11);
+  --amber:      #fb923c;
+  --amber-dim:  rgba(251,146,60,0.12);
+  --pink:       #f472b6;
+  --pink-dim:   rgba(244,114,182,0.12);
+  --text:       #e8f4ff;
+  --muted:      rgba(232,244,255,0.50);
+  --dim:        rgba(232,244,255,0.22);
+  --mono:       'JetBrains Mono', monospace;
+  --header-h:   68px;
+  --sidebar-w:  290px;
+  --radius:     16px;
+  --radius-sm:  10px;
+  --trans:      0.22s cubic-bezier(0.4,0,0.2,1);
+  --max-w:      960px;
 }
 
-body{
-background:
-radial-gradient(circle at 20% 20%,#00eaff33,transparent),
-radial-gradient(circle at 80% 80%,#7c3aed33,transparent),
-#050816;
-color:white;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;opacity:0;transition:opacity .45s ease}
+body.loaded{opacity:1}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
+
+/* ================================================================
+   AMBIENT BACKGROUND
+================================================================ */
+.bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;will-change:transform}
+.bg-orb-1{width:650px;height:650px;background:radial-gradient(circle,#00eaff 0%,transparent 70%);top:-180px;left:-180px;animation:orbDrift 20s ease-in-out infinite alternate}
+.bg-orb-2{width:550px;height:550px;background:radial-gradient(circle,#7c3aed 0%,transparent 70%);bottom:-180px;right:-80px;animation:orbDrift 26s ease-in-out infinite alternate-reverse}
+@keyframes orbDrift{from{transform:translate(0,0)}to{transform:translate(50px,35px)}}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,234,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(0,234,255,.022) 1px,transparent 1px);background-size:60px 60px}
+.particles{position:absolute;inset:0;pointer-events:none}
+.p{position:absolute;opacity:.07;animation:floatUp linear infinite}
+.p:nth-child(1){left:4%;animation-duration:16s;font-size:20px}.p:nth-child(2){left:13%;animation-duration:21s;animation-delay:3s;font-size:24px}.p:nth-child(3){left:23%;animation-duration:13s;animation-delay:1s;font-size:16px}.p:nth-child(4){left:34%;animation-duration:19s;animation-delay:6s;font-size:22px}.p:nth-child(5){left:45%;animation-duration:14s;animation-delay:2s;font-size:18px}.p:nth-child(6){left:57%;animation-duration:22s;animation-delay:8s;font-size:20px}.p:nth-child(7){left:68%;animation-duration:11s;animation-delay:3s;font-size:26px}.p:nth-child(8){left:79%;animation-duration:18s;animation-delay:1s;font-size:14px}.p:nth-child(9){left:89%;animation-duration:15s;animation-delay:5s;font-size:22px}.p:nth-child(10){left:95%;animation-duration:12s;animation-delay:3s;font-size:16px}
+@keyframes floatUp{from{transform:translateY(110vh) rotate(0deg);opacity:.07}85%{opacity:.07}to{transform:translateY(-15vh) rotate(360deg);opacity:0}}
+
+/* Confetti burst on result */
+.confetti-piece{position:fixed;width:8px;height:14px;border-radius:2px;opacity:0;pointer-events:none;z-index:9999;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ================================================================
+   HEADER
+================================================================ */
+header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(5,13,31,.72);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 16px;z-index:1000}
+.logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:800;letter-spacing:-.01em;user-select:none;cursor:pointer}
+.logo-badge{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--cyan),var(--violet));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;box-shadow:0 0 16px var(--cyan-glow);flex-shrink:0}
+.logo-text span{color:var(--cyan)}
+.header-right{display:flex;align-items:center;gap:10px}
+.btn-coffee-sm{display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;border:1px solid rgba(245,166,35,.3);background:var(--gold-dim);color:var(--gold);font-size:.75rem;font-weight:600;transition:var(--trans);white-space:nowrap}
+.btn-coffee-sm:hover{background:rgba(245,166,35,.22);transform:translateY(-1px);box-shadow:0 4px 16px rgba(245,166,35,.22)}
+#hamburger{width:42px;height:42px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:var(--trans);flex-shrink:0}
+#hamburger:hover{background:rgba(255,255,255,.05)}
+.h-line{display:block;width:20px;height:1.5px;background:var(--text);border-radius:2px;transition:var(--trans);transform-origin:center}
+body.open #hamburger .h-line:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+body.open #hamburger .h-line:nth-child(2){opacity:0;transform:scaleX(0)}
+body.open #hamburger .h-line:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ================================================================
+   SIDEBAR + OVERLAY
+================================================================ */
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);z-index:900;opacity:0;transition:opacity var(--trans)}
+body.open #overlay{display:block;opacity:1}
+#sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:linear-gradient(160deg,#060f22,#080e1f);border-right:1px solid var(--border);z-index:950;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column}
+body.open #sidebar{transform:translateX(0)}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:22px 22px 20px;border-bottom:1px solid var(--border2);font-size:1.1rem;font-weight:800;flex-shrink:0}
+.sidebar-section{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--dim);padding:18px 22px 7px}
+.sidebar-link{display:flex;align-items:center;gap:12px;padding:11px 22px;font-size:.88rem;color:var(--muted);transition:var(--trans);cursor:pointer;border-left:3px solid transparent}
+.sidebar-link:hover,.sidebar-link.active{color:var(--text);background:rgba(0,234,255,.05);border-left-color:var(--cyan)}
+.sidebar-link.active{color:var(--cyan)}
+.sl-icon{font-size:17px;width:22px;text-align:center}
+.sidebar-social{margin-top:auto;padding:20px 22px 24px;border-top:1px solid var(--border2);flex-shrink:0}
+.sidebar-social p{font-size:.68rem;color:var(--dim);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em}
+.sidebar-socials{display:flex;gap:9px;flex-wrap:wrap}
+.ss-btn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9px;border:1px solid var(--border2);background:var(--surface);font-size:16px;transition:var(--trans);cursor:pointer;text-decoration:none}
+.ss-btn:hover{border-color:var(--cyan);background:var(--cyan-dim);transform:translateY(-2px)}
+
+/* ================================================================
+   WRAP & BREADCRUMB
+================================================================ */
+.wrap{position:relative;z-index:1;padding-top:var(--header-h)}
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--dim);max-width:var(--max-w);margin:0 auto;padding:14px 20px 0}
+.breadcrumb a{color:var(--cyan);transition:var(--trans)}
+.breadcrumb a:hover{opacity:.8}
+.breadcrumb span{color:var(--dim)}
+
+/* ================================================================
+   HERO
+================================================================ */
+.hero{padding:44px 20px 32px;text-align:center;max-width:var(--max-w);margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 16px;border-radius:100px;border:1px solid var(--border);background:var(--gold-dim);font-size:.72rem;font-weight:600;color:var(--gold);margin-bottom:18px;letter-spacing:.04em;animation:fadeUp .5s ease both}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(1.9rem,4.8vw,3.2rem);font-weight:900;line-height:1.12;letter-spacing:-.03em;margin-bottom:14px;animation:fadeUp .5s .07s ease both}
+.hero h1 .accent{background:linear-gradient(90deg,var(--gold),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(.88rem,1.8vw,.98rem);color:var(--muted);max-width:520px;margin:0 auto 18px;line-height:1.7;font-weight:300;animation:fadeUp .5s .14s ease both}
+.hero-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:10px;animation:fadeUp .5s .2s ease both}
+.trust-pill{padding:5px 13px;border-radius:100px;border:1px solid var(--border2);background:var(--surface);font-size:.7rem;color:var(--muted);font-weight:500}
+.hero-private{font-size:.68rem;color:var(--dim);animation:fadeUp .5s .25s ease both;margin-bottom:24px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ================================================================
+   CALCULATOR CARD
+================================================================ */
+.calc-wrap{max-width:680px;margin:0 auto;padding:0 20px;animation:fadeUp .5s .3s ease both}
+.calc-card{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;transition:box-shadow var(--trans)}
+.calc-card:hover{box-shadow:0 8px 32px rgba(0,0,0,.3),0 0 0 1px rgba(0,234,255,.07)}
+.calc-card-header{padding:18px 24px;border-bottom:1px solid var(--border2);background:linear-gradient(135deg,var(--gold-dim),transparent);display:flex;align-items:center;gap:9px}
+.cch-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 7px var(--gold);flex-shrink:0}
+.cch-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim)}
+.calc-body{padding:26px}
+
+/* Fields */
+.field{margin-bottom:20px}
+.field:last-of-type{margin-bottom:0}
+.field-label{font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.field-label .lbl-optional{font-size:.64rem;color:var(--dim);font-weight:400}
+.f-input{width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:.92rem;font-family:'Poppins',sans-serif;font-weight:500;outline:none;transition:border-color var(--trans),box-shadow var(--trans),background var(--trans);-webkit-appearance:none}
+.f-input:focus{border-color:var(--gold);background:rgba(245,166,35,.04);box-shadow:0 0 0 3px var(--gold-dim)}
+.f-select{width:100%;padding:12px 14px;background:rgba(255,255,255,.04);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-size:.88rem;font-family:'Poppins',sans-serif;font-weight:500;outline:none;cursor:pointer;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23f5a623' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:36px;transition:border-color var(--trans),box-shadow var(--trans)}
+.f-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim);background-color:rgba(245,166,35,.04)}
+.f-select option{background:var(--surface2);color:var(--text)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* Buttons */
+.btn-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn-calc{flex:2;padding:13px 24px;border-radius:var(--radius-sm);background:linear-gradient(135deg,var(--gold),#e8920f);color:#1a0800;font-size:.92rem;font-weight:800;transition:var(--trans);box-shadow:0 4px 20px rgba(245,166,35,.28)}
+.btn-calc:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 30px rgba(245,166,35,.42)}
+.btn-calc:active{transform:translateY(0)}
+.btn-today{flex:1;padding:13px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:.82rem;font-weight:600;transition:var(--trans)}
+.btn-today:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-reset{flex:1;padding:13px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:.82rem;font-weight:600;transition:var(--trans)}
+.btn-reset:hover{border-color:var(--red);color:var(--red)}
+
+/* ================================================================
+   RESULT SECTION
+================================================================ */
+#result-section{display:none;max-width:var(--max-w);margin:0 auto;padding:32px 20px 0}
+#result-section.visible{display:block}
+
+/* Main age display */
+.age-hero{background:linear-gradient(145deg,rgba(245,166,35,.08),rgba(0,234,255,.05),rgba(10,26,53,.7));border:1px solid rgba(245,166,35,.2);border-radius:var(--radius);padding:30px 28px;margin-bottom:18px;position:relative;overflow:hidden;animation:fadeUp .4s ease both}
+.age-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--cyan))}
+.age-hero-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);margin-bottom:10px}
+.age-main{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 18px;margin-bottom:10px}
+.age-unit{display:flex;flex-direction:column;align-items:center}
+.age-num{font-family:var(--mono);font-size:clamp(2.2rem,6vw,4rem);font-weight:900;color:var(--gold);line-height:1}
+.age-lbl{font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+.age-sep{font-size:clamp(1.5rem,4vw,2.5rem);color:var(--dim);font-weight:300;align-self:flex-end;padding-bottom:16px}
+.age-note{font-size:.78rem;color:var(--muted);margin-top:4px}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;animation:fadeUp .4s .05s ease both}
+.stat-card{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius-sm);padding:16px;text-align:center;transition:var(--trans)}
+.stat-card:hover{border-color:rgba(0,234,255,.18);transform:translateY(-2px)}
+.stat-icon{font-size:18px;display:block;margin-bottom:6px}
+.stat-label{font-size:.65rem;color:var(--muted);margin-bottom:4px}
+.stat-val{font-family:var(--mono);font-size:.95rem;font-weight:700}
+
+/* ================================================================
+   ADVANCED CARDS GRID
+================================================================ */
+.adv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:13px;margin-bottom:18px;animation:fadeUp .4s .1s ease both}
+.adv-card{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius-sm);padding:18px;transition:var(--trans);position:relative;overflow:hidden}
+.adv-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,166,35,.04),transparent);opacity:0;transition:var(--trans)}
+.adv-card:hover{border-color:rgba(245,166,35,.18);transform:translateY(-2px);box-shadow:0 5px 18px rgba(0,0,0,.28)}
+.adv-card:hover::before{opacity:1}
+.adv-card-icon{font-size:22px;margin-bottom:8px;display:block}
+.adv-card-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--dim);margin-bottom:4px}
+.adv-card-val{font-size:.92rem;font-weight:700;line-height:1.3}
+.adv-card-sub{font-size:.7rem;color:var(--muted);margin-top:3px;line-height:1.4}
+
+/* ================================================================
+   BIRTHDAY COUNTDOWN
+================================================================ */
+.bday-countdown{background:linear-gradient(135deg,rgba(244,114,182,.08),rgba(10,26,53,.7));border:1px solid rgba(244,114,182,.2);border-radius:var(--radius);padding:24px;margin-bottom:18px;position:relative;overflow:hidden;animation:fadeUp .4s .15s ease both}
+.bday-countdown::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pink),transparent)}
+.bday-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);margin-bottom:14px}
+.bday-units{display:flex;gap:12px;flex-wrap:wrap}
+.bday-unit{flex:1;min-width:70px;background:rgba(244,114,182,.07);border:1px solid rgba(244,114,182,.15);border-radius:var(--radius-sm);padding:12px 8px;text-align:center}
+.bday-num{font-family:var(--mono);font-size:1.5rem;font-weight:800;color:var(--pink);display:block;line-height:1}
+.bday-lbl{font-size:.62rem;color:var(--muted);margin-top:3px;text-transform:uppercase;letter-spacing:.07em}
+
+/* ================================================================
+   FUN INSIGHTS
+================================================================ */
+.insights-section{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;margin-bottom:18px;animation:fadeUp .4s .2s ease both}
+.insights-header{padding:16px 22px;border-bottom:1px solid var(--border2);background:linear-gradient(135deg,rgba(124,58,237,.1),transparent);display:flex;align-items:center;gap:9px}
+.ih-icon{font-size:16px}
+.ih-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim)}
+.insights-body{padding:20px 22px}
+.insight-item{display:flex;align-items:flex-start;gap:12px;padding:11px 0;border-bottom:1px solid var(--border2)}
+.insight-item:last-child{border-bottom:none}
+.ii-emoji{font-size:18px;flex-shrink:0;margin-top:1px}
+.ii-text{font-size:.8rem;color:var(--muted);line-height:1.6}
+.ii-text strong{color:var(--text)}
+
+/* ================================================================
+   PLANET AGE
+================================================================ */
+.planet-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:11px;margin-bottom:18px;animation:fadeUp .4s .22s ease both}
+.planet-card{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px;text-align:center;transition:var(--trans)}
+.planet-card:hover{border-color:rgba(124,58,237,.22);transform:translateY(-2px)}
+.planet-icon{font-size:24px;display:block;margin-bottom:6px}
+.planet-name{font-size:.66rem;color:var(--muted);margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.planet-age{font-family:var(--mono);font-size:.95rem;font-weight:700;color:var(--violet)}
+.planet-unit{font-size:.6rem;color:var(--dim)}
+
+/* ================================================================
+   COMPARE & TOOLS SECTIONS
+================================================================ */
+.section-block{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;margin-bottom:18px;animation:fadeUp .4s .25s ease both}
+.sb-header{padding:15px 22px;border-bottom:1px solid var(--border2);background:linear-gradient(135deg,var(--cyan-dim),transparent);display:flex;align-items:center;gap:9px}
+.sb-header-icon{font-size:15px}
+.sb-header-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim)}
+.sb-body{padding:22px}
+
+/* Compare two ages */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.compare-result{background:rgba(0,234,255,.06);border:1px solid rgba(0,234,255,.14);border-radius:var(--radius-sm);padding:14px;text-align:center;margin-top:4px}
+.cr-label{font-size:.7rem;color:var(--muted);margin-bottom:4px}
+.cr-val{font-family:var(--mono);font-size:1.1rem;font-weight:800;color:var(--cyan)}
+
+/* Milestone tracker */
+.milestone-list{display:flex;flex-direction:column;gap:10px}
+.milestone-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--radius-sm);border:1px solid var(--border2);transition:var(--trans)}
+.milestone-item.reached{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.06)}
+.milestone-item.upcoming{border-color:var(--border2)}
+.mi-icon{font-size:20px;flex-shrink:0}
+.mi-name{font-size:.82rem;font-weight:600;flex:1}
+.mi-date{font-size:.72rem;color:var(--muted)}
+.mi-badge{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:100px}
+.mi-badge.done{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.22)}
+.mi-badge.soon{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(251,146,60,.22)}
+.mi-badge.future{background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,234,255,.22)}
+
+/* Pet converter */
+.pet-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.pet-result{background:rgba(255,255,255,.03);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.pr-icon{font-size:22px;display:block;margin-bottom:5px}
+.pr-label{font-size:.68rem;color:var(--muted);margin-bottom:3px}
+.pr-val{font-family:var(--mono);font-size:1.1rem;font-weight:800}
+
+/* Birthday facts */
+.facts-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.fact-card{background:rgba(255,255,255,.025);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:14px;text-align:center;transition:var(--trans)}
+.fact-card:hover{border-color:rgba(245,166,35,.2)}
+.fc-icon{font-size:20px;display:block;margin-bottom:6px}
+.fc-label{font-size:.66rem;color:var(--muted);margin-bottom:3px}
+.fc-val{font-size:.88rem;font-weight:700;color:var(--gold)}
+
+/* ================================================================
+   SHARE SECTION
+================================================================ */
+.share-section{background:linear-gradient(145deg,var(--surface),var(--surface2));border:1px solid var(--border2);border-radius:var(--radius);padding:22px;margin-bottom:18px;animation:fadeUp .4s .3s ease both}
+.share-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);margin-bottom:14px}
+.share-btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn-share{display:flex;align-items:center;gap:7px;padding:10px 16px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:var(--surface2);font-size:.78rem;font-weight:600;color:var(--muted);transition:var(--trans);cursor:pointer}
+.btn-share:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-1px)}
+.btn-share.copied{color:var(--green);border-color:rgba(34,197,94,.3)}
+
+/* ================================================================
+   SEO ARTICLE
+================================================================ */
+.article-section{max-width:860px;margin:0 auto;padding:36px 20px 52px}
+.article-section h2{font-size:1.12rem;font-weight:700;margin-bottom:10px;margin-top:32px;color:var(--gold);letter-spacing:-.01em}
+.article-section h3{font-size:.92rem;font-weight:700;margin:14px 0 6px;color:var(--text)}
+.article-section p{font-size:.84rem;color:var(--muted);line-height:1.88;margin-bottom:10px}
+.article-section ul{margin:7px 0 10px 18px;font-size:.84rem;color:var(--muted);line-height:1.8}
+.article-section ul li{margin-bottom:3px}
+.article-section ul li::marker{color:var(--gold)}
+
+/* ================================================================
+   FOOTER
+================================================================ */
+footer{border-top:1px solid var(--border2);padding:32px 20px;text-align:center;margin-top:60px}
+.footer-inner{max-width:var(--max-w);margin:0 auto}
+.footer-logo{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;font-weight:800;margin-bottom:13px;cursor:pointer}
+.footer-socials{display:flex;justify-content:center;gap:9px;margin-bottom:16px}
+.fs-btn{width:36px;height:36px;border-radius:9px;border:1px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:14px;transition:var(--trans);cursor:pointer;text-decoration:none}
+.fs-btn:hover{border-color:var(--cyan);background:var(--cyan-dim);transform:translateY(-2px)}
+.footer-links{display:flex;justify-content:center;gap:16px;margin-bottom:13px;flex-wrap:wrap}
+.footer-links a{font-size:.74rem;color:var(--dim);transition:var(--trans)}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{font-size:.68rem;color:var(--dim)}
+.footer-copy span{color:var(--cyan)}
+
+/* ================================================================
+   SCROLL REVEAL
+================================================================ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ================================================================
+   RESPONSIVE
+================================================================ */
+@media(max-width:640px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .adv-grid{grid-template-columns:1fr 1fr}
+  .field-row{grid-template-columns:1fr}
+  .compare-grid{grid-template-columns:1fr}
+  .planet-grid{grid-template-columns:repeat(3,1fr)}
+  .facts-grid{grid-template-columns:1fr 1fr}
+  .pet-result-grid{grid-template-columns:1fr 1fr}
+  .bday-units{gap:8px}
+  .btn-row{flex-direction:column}
+  .btn-calc{flex:unset}
+  .btn-coffee-sm span{display:none}
+  .hero h1{font-size:1.9rem}
 }
-
-/* HEADER */
-
-.topbar{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:70px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:rgba(5,8,22,.6);
-backdrop-filter:blur(20px);
-z-index:999;
+@media(max-width:380px){
+  .adv-grid{grid-template-columns:1fr}
+  .planet-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:1fr}
 }
-
-.menuBtn{
-position:absolute;
-left:20px;
-font-size:26px;
-cursor:pointer;
+@media(min-width:900px){
+  .adv-grid{grid-template-columns:repeat(4,1fr)}
+  .stats-grid{grid-template-columns:repeat(6,1fr)}
 }
-
-.logo{
-display:flex;
-align-items:center;
-gap:10px;
-font-weight:700;
-font-size:20px;
-}
-
-.circle{
-width:36px;
-height:36px;
-border-radius:50%;
-background:linear-gradient(90deg,#00eaff,#7c3aed);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:14px;
-}
-
-/* layout */
-
-.wrap{
-max-width:900px;
-margin:auto;
-padding:120px 18px 80px;
-}
-
-/* card */
-
-.card{
-margin-top:40px;
-padding:40px;
-border-radius:30px;
-background:rgba(255,255,255,.07);
-backdrop-filter:blur(25px);
-box-shadow:0 40px 100px #000;
-text-align:center;
-}
-
-h1{
-font-size:32px;
-margin-bottom:25px;
-}
-
-/* input */
-
-input[type=date]{
-width:100%;
-padding:15px;
-border-radius:16px;
-border:none;
-font-size:16px;
-margin-bottom:15px;
-color:white;
-background:rgba(255,255,255,.1);
-}
-
-input[type=date]::-webkit-calendar-picker-indicator{
-filter:invert(1);
-}
-
-/* button */
-
-button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:16px;
-font-weight:700;
-font-size:16px;
-background:linear-gradient(90deg,#00eaff,#7c3aed);
-color:white;
-cursor:pointer;
-}
-
-/* result */
-
-.titleResult{
-margin-top:30px;
-font-size:22px;
-font-weight:700;
-display:none;
-}
-
-.result{
-margin-top:20px;
-display:flex;
-gap:12px;
-justify-content:center;
-opacity:0;
-transform:translateY(20px);
-transition:.5s;
-}
-
-.box{
-flex:1;
-background:#020617;
-padding:22px;
-border-radius:18px;
-}
-
-.num{
-font-size:30px;
-font-weight:900;
-}
-
-.lab{
-opacity:.6;
-font-size:13px;
-margin-top:5px;
-}
-
-.show{
-opacity:1;
-transform:translateY(0);
-}
-
-/* loader */
-
-.loader{
-margin-top:20px;
-display:none;
-}
-
-.dot{
-display:inline-block;
-width:8px;
-height:8px;
-background:white;
-border-radius:50%;
-margin:0 4px;
-animation:bounce 1s infinite alternate;
-}
-
-.dot:nth-child(2){animation-delay:.2s}
-.dot:nth-child(3){animation-delay:.4s}
-
-@keyframes bounce{
-to{transform:translateY(-8px)}
-}
-
-.error{
-color:#f87171;
-margin-top:12px;
-}
-
-/* article */
-
-.article{
-margin-top:90px;
-line-height:1.9;
-opacity:.85;
-}
-
-.article h2{
-margin-top:40px;
-font-size:26px;
-margin-bottom:10px;
-}
-
-/* footer */
-
-.foot{
-text-align:center;
-padding:50px 0;
-opacity:.6;
-}
-
-/* mobile */
-
-@media(max-width:600px){
-.card{padding:25px}
-.num{font-size:26px}
-}
-
 </style>
 </head>
-
 <body>
 
-<header class="topbar">
-<div class="menuBtn">☰</div>
-<div class="logo">
-<div class="circle">TZ</div>
-<span>ToolsZy</span>
+<!-- AMBIENT -->
+<div class="bg-canvas" aria-hidden="true">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-grid"></div>
+  <div class="particles">
+    <div class="p">🎂</div><div class="p">🎉</div><div class="p">🎈</div>
+    <div class="p">⏳</div><div class="p">✨</div><div class="p">🎊</div>
+    <div class="p">💫</div><div class="p">🥳</div><div class="p">⭐</div>
+    <div class="p">🎁</div>
+  </div>
 </div>
+
+<!-- OVERLAY -->
+<div id="overlay" aria-hidden="true"></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar" aria-label="Site navigation">
+  <div class="sidebar-logo"><div class="logo-badge">TZ</div>Tools<span style="color:var(--cyan)">Zy</span></div>
+  <div class="sidebar-section">Navigation</div>
+  <div class="sidebar-link" onclick="go('index.html')"><span class="sl-icon">🏠</span>Home</div>
+  <div class="sidebar-section">Life Tools</div>
+  <div class="sidebar-link active"><span class="sl-icon">🎂</span>Age Calculator</div>
+  <div class="sidebar-link" onclick="go('countdown.html')"><span class="sl-icon">⏳</span>Birthday Countdown</div>
+  <div class="sidebar-link"><span class="sl-icon">🪐</span>Age on Planets</div>
+  <div class="sidebar-section">Calculators</div>
+  <div class="sidebar-link" onclick="go('emi.html')"><span class="sl-icon">🏦</span>EMI Calculator</div>
+  <div class="sidebar-link" onclick="go('fd.html')"><span class="sl-icon">📈</span>FD Calculator</div>
+  <div class="sidebar-link"><span class="sl-icon">💰</span>RD Calculator</div>
+  <div class="sidebar-link" onclick="go('discount.html')"><span class="sl-icon">🏷️</span>Discount Calculator</div>
+  <div class="sidebar-section">Loan Tools</div>
+  <div class="sidebar-link" onclick="go('emi.html')"><span class="sl-icon">📊</span>Loan Interest</div>
+  <div class="sidebar-link" onclick="go('flat-loan.html')"><span class="sl-icon">💳</span>Flat Rate Loan</div>
+  <div class="sidebar-social">
+    <p>Connect with us</p>
+    <div class="sidebar-socials">
+      <a href="https://instagram.com/toolszy" target="_blank" rel="noopener" class="ss-btn">📸</a>
+      <a href="https://x.com/toolszy" target="_blank" rel="noopener" class="ss-btn">𝕏</a>
+      <a href="https://t.me/toolszy" target="_blank" rel="noopener" class="ss-btn">✈️</a>
+      <a href="https://buymeacoffee.com/toolszy" target="_blank" rel="noopener" class="ss-btn">☕</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <button id="hamburger" aria-label="Toggle menu"><span class="h-line"></span><span class="h-line"></span><span class="h-line"></span></button>
+  <div class="logo" onclick="go('index.html')"><div class="logo-badge">TZ</div><div class="logo-text">Tools<span>Zy</span></div></div>
+  <div class="header-right">
+    <a href="https://buymeacoffee.com/toolszy" target="_blank" rel="noopener" class="btn-coffee-sm">☕ <span>Support Us</span></a>
+  </div>
 </header>
 
+<!-- WRAP -->
 <div class="wrap">
+  <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Life Tools</span><span>›</span><span style="color:var(--gold)">Age Calculator</span></div>
 
-<div class="card">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge"><span class="badge-dot"></span>Age Calculator · Instant · Free</div>
+    <h1>Know Your <span class="accent">Exact Age</span> in Seconds</h1>
+    <p class="hero-sub">Find your age in years, months, days, hours and even seconds instantly — plus zodiac, generation, planet ages, life milestones and much more.</p>
+    <div class="hero-trust">
+      <span class="trust-pill">✔ 100% Free</span>
+      <span class="trust-pill">✔ No Sign-Up</span>
+      <span class="trust-pill">✔ No Ads</span>
+      <span class="trust-pill">✔ Instant Results</span>
+      <span class="trust-pill">✔ Mobile Friendly</span>
+    </div>
+    <p class="hero-private">🔒 Private calculation — nothing is stored or shared.</p>
+  </section>
 
-<h1>Age Calculator</h1>
+  <!-- CALCULATOR CARD -->
+  <div class="calc-wrap">
+    <div class="calc-card">
+      <div class="calc-card-header"><span class="cch-dot"></span><span class="cch-title">Enter Your Details</span></div>
+      <div class="calc-body">
 
-<input type="date" id="dob" placeholder="Select Birth Date">
+        <div class="field">
+          <label class="field-label" for="dob">📅 Date of Birth <span class="lbl-optional">*required</span></label>
+          <input type="date" class="f-input" id="dob" max="">
+        </div>
 
-<button onclick="calc()">Calculate Age</button>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="calc-on">📆 Calculate Age On <span class="lbl-optional">optional</span></label>
+            <input type="date" class="f-input" id="calc-on">
+          </div>
+          <div class="field">
+            <label class="field-label" for="tob">🕐 Time of Birth <span class="lbl-optional">optional</span></label>
+            <input type="time" class="f-input" id="tob" value="00:00">
+          </div>
+        </div>
 
-<div class="loader" id="load">
-<span class="dot"></span>
-<span class="dot"></span>
-<span class="dot"></span>
+        <div class="field-row">
+          <div class="field">
+            <label class="field-label" for="gender">👤 Gender <span class="lbl-optional">optional</span></label>
+            <select class="f-select" id="gender">
+              <option value="">Prefer not to say</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="country">🌍 Country <span class="lbl-optional">optional</span></label>
+            <select class="f-select" id="country">
+              <option value="IN">India</option>
+              <option value="US">United States</option>
+              <option value="UK">United Kingdom</option>
+              <option value="AU">Australia</option>
+              <option value="CN">China</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calculateAge()">🎂 Calculate My Age</button>
+          <button class="btn-today" onclick="setToday()">📆 Use Today</button>
+          <button class="btn-reset" onclick="resetCalc()">🔄 Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT SECTION -->
+  <div id="result-section">
+
+    <!-- Main age -->
+    <div class="age-hero" id="age-hero">
+      <div class="age-hero-label">Your Exact Age</div>
+      <div class="age-main">
+        <div class="age-unit"><div class="age-num" id="r-years">0</div><div class="age-lbl">Years</div></div>
+        <div class="age-sep">·</div>
+        <div class="age-unit"><div class="age-num" id="r-months">0</div><div class="age-lbl">Months</div></div>
+        <div class="age-sep">·</div>
+        <div class="age-unit"><div class="age-num" id="r-days">0</div><div class="age-lbl">Days</div></div>
+      </div>
+      <div class="age-note" id="r-dob-note"></div>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-icon">📅</span><div class="stat-label">Total Months</div><div class="stat-val" id="r-tot-months">—</div></div>
+      <div class="stat-card"><span class="stat-icon">📆</span><div class="stat-label">Total Weeks</div><div class="stat-val" id="r-tot-weeks">—</div></div>
+      <div class="stat-card"><span class="stat-icon">🗓️</span><div class="stat-label">Total Days</div><div class="stat-val" id="r-tot-days">—</div></div>
+      <div class="stat-card"><span class="stat-icon">⏰</span><div class="stat-label">Total Hours</div><div class="stat-val" id="r-tot-hours">—</div></div>
+      <div class="stat-card"><span class="stat-icon">⏱️</span><div class="stat-label">Total Minutes</div><div class="stat-val" id="r-tot-mins">—</div></div>
+      <div class="stat-card"><span class="stat-icon">⚡</span><div class="stat-label">Total Seconds</div><div class="stat-val" id="r-tot-secs">—</div></div>
+    </div>
+
+    <!-- Birthday countdown -->
+    <div class="bday-countdown">
+      <div class="bday-title">🎉 Next Birthday Countdown</div>
+      <div class="bday-units">
+        <div class="bday-unit"><span class="bday-num" id="bd-days">0</span><div class="bday-lbl">Days</div></div>
+        <div class="bday-unit"><span class="bday-num" id="bd-weeks">0</span><div class="bday-lbl">Weeks</div></div>
+        <div class="bday-unit"><span class="bday-num" id="bd-months">0</span><div class="bday-lbl">Months</div></div>
+        <div class="bday-unit"><span class="bday-num" id="bd-date">—</span><div class="bday-lbl">On Date</div></div>
+      </div>
+    </div>
+
+    <!-- Advanced cards -->
+    <div class="adv-grid" id="adv-grid"></div>
+
+    <!-- Planet ages -->
+    <div class="section-block">
+      <div class="sb-header"><span class="sb-header-icon">🪐</span><span class="sb-header-title">Your Age on Other Planets</span></div>
+      <div class="sb-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:14px">If you had been born on another planet, your age would be very different — each planet takes a different amount of time to orbit the Sun.</p>
+        <div class="planet-grid" id="planet-grid"></div>
+      </div>
+    </div>
+
+    <!-- Fun Insights -->
+    <div class="insights-section">
+      <div class="insights-header"><span class="ih-icon">🌟</span><span class="ih-title">Your Life Journey So Far</span></div>
+      <div class="insights-body" id="insights-body"></div>
+    </div>
+
+    <!-- Milestone tracker -->
+    <div class="section-block reveal">
+      <div class="sb-header"><span class="sb-header-icon">🏆</span><span class="sb-header-title">Age Milestone Tracker</span></div>
+      <div class="sb-body"><div class="milestone-list" id="milestone-list"></div></div>
+    </div>
+
+    <!-- Compare two ages -->
+    <div class="section-block reveal">
+      <div class="sb-header"><span class="sb-header-icon">👥</span><span class="sb-header-title">Compare Two Ages</span></div>
+      <div class="sb-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:16px">Compare your age with a friend, sibling, partner or parent.</p>
+        <div class="compare-grid">
+          <div class="field">
+            <label class="field-label" for="cmp-dob1">Person 1 (You)</label>
+            <input type="date" class="f-input" id="cmp-dob1" style="border-color:rgba(0,234,255,.2)">
+          </div>
+          <div class="field">
+            <label class="field-label" for="cmp-dob2">Person 2</label>
+            <input type="date" class="f-input" id="cmp-dob2">
+          </div>
+        </div>
+        <button class="btn-calc" style="padding:11px 20px;font-size:.82rem;width:auto" onclick="compareAges()">Compare →</button>
+        <div class="compare-result" id="cmp-result" style="display:none">
+          <div class="cr-label">Age Difference</div>
+          <div class="cr-val" id="cmp-diff">—</div>
+          <div style="font-size:.7rem;color:var(--muted);margin-top:3px" id="cmp-note"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pet age converter -->
+    <div class="section-block reveal">
+      <div class="sb-header"><span class="sb-header-icon">🐾</span><span class="sb-header-title">Pet Age Converter</span></div>
+      <div class="sb-body">
+        <p style="font-size:.75rem;color:var(--muted);margin-bottom:14px">How old would you be in dog or cat years? (Based on your calculated age)</p>
+        <div class="pet-result-grid">
+          <div class="pet-result"><span class="pr-icon">🐶</span><div class="pr-label">Dog Years</div><div class="pr-val" id="dog-age" style="color:var(--amber)">—</div></div>
+          <div class="pet-result"><span class="pr-icon">🐱</span><div class="pr-label">Cat Years</div><div class="pr-val" id="cat-age" style="color:var(--pink)">—</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Birthday facts -->
+    <div class="section-block reveal">
+      <div class="sb-header"><span class="sb-header-icon">🎊</span><span class="sb-header-title">Birthday Facts</span></div>
+      <div class="sb-body">
+        <div class="facts-grid" id="bday-facts"></div>
+      </div>
+    </div>
+
+    <!-- Share -->
+    <div class="share-section">
+      <div class="share-title">📤 Share Your Age</div>
+      <div class="share-btns">
+        <button class="btn-share" id="btn-copy" onclick="copyResult()">📋 Copy Result</button>
+        <a class="btn-share" id="btn-wa" href="#" target="_blank" rel="noopener">📱 WhatsApp</a>
+        <a class="btn-share" id="btn-tg" href="#" target="_blank" rel="noopener">✈️ Telegram</a>
+        <button class="btn-share" onclick="printResult()">🖨️ Print</button>
+      </div>
+    </div>
+
+  </div><!-- /result-section -->
+
+  <!-- SEO ARTICLE -->
+  <article class="article-section reveal">
+
+    <h2>What is an Age Calculator?</h2>
+    <p>An age calculator is a digital tool that computes the exact time elapsed between two dates — typically a person's date of birth and the current date (or any chosen date). While calculating a rough age is simple arithmetic, finding your <em>exact</em> age in years, months, days, hours, minutes, and seconds requires precise date logic, accounting for leap years, varying month lengths, and time zones.</p>
+    <p>ToolsZy's Age Calculator goes far beyond a simple subtraction. It gives you your age in every unit of time imaginable, your zodiac sign, planet ages, generation type, life milestones, fun body statistics and much more — making it one of the most complete age tools available.</p>
+
+    <h2>How Exact Age is Calculated</h2>
+    <p>Age calculation is more complex than it appears. A year has either 365 or 366 days depending on whether it is a leap year. Months have different lengths — 28, 29, 30 or 31 days. Calculating your age in complete years, months, and remaining days requires careful day-by-day arithmetic, not just dividing by 365.</p>
+    <p>The standard method: first count complete years between dates, then count complete months after that, then count remaining days. This is how governments, courts, and official institutions calculate age for legal and administrative purposes.</p>
+
+    <h2>Why Knowing Your Exact Age Matters in Real Life</h2>
+    <h3>Government & Legal Documents</h3>
+    <p>In India and most countries, age determines eligibility for a vast number of things: voter registration starts at 18, driving licence eligibility, passport applications, senior citizen discounts (60+), retirement benefits, government job eligibility, and more. Many government forms require your age in years and months, not just years.</p>
+    <h3>School & Education</h3>
+    <p>School admission cutoff dates are strict. In India, most states require children to be a certain age (typically 5 or 6 years) by June 1st or April 1st of the admission year. Being even one day short of the cutoff can delay admission by a full year. Knowing your exact age and the admission cutoff date is crucial for parents.</p>
+    <h3>Job Applications</h3>
+    <p>Many government jobs have upper age limits — often 25, 28, 30, or 35 years depending on the post and category. Being off by even one day past the cutoff means ineligibility. Candidates must know their exact age relative to the application closing date to confirm eligibility.</p>
+    <h3>Insurance & Finance</h3>
+    <p>Life insurance premiums are calculated based on your exact age at the time of policy purchase. Term plans bought at age 30 are significantly cheaper than those bought at 31. Health insurance, pension plans, and investment schemes also have age-based eligibility and pricing. Knowing your exact age helps you time financial decisions optimally.</p>
+
+    <h2>Leap Year Effect on Age</h2>
+    <p>If you were born on February 29th — a leap year date — your technical birthday only exists every four years. This makes age calculation for leap year babies an interesting edge case. Most countries legally recognise February 28th or March 1st as the birthday substitute in non-leap years, but this varies by jurisdiction. Our calculator correctly handles leap year birthdays.</p>
+    <p>Leap years also affect total days calculations. A year with 366 days rather than 365 means that two people born exactly one year apart may have 365 or 366 days between them, depending on whether a February 29th falls in between.</p>
+
+    <h2>Zodiac Signs and What They Mean</h2>
+    <p>Western astrology divides the year into 12 zodiac signs, each corresponding to roughly 30 days of the solar year. Your sun sign (the one most commonly referred to as your "zodiac sign") is determined by your date of birth:</p>
+    <ul>
+      <li><strong>Aries (Mar 21 – Apr 19):</strong> Bold, ambitious, energetic</li>
+      <li><strong>Taurus (Apr 20 – May 20):</strong> Patient, reliable, determined</li>
+      <li><strong>Gemini (May 21 – Jun 20):</strong> Adaptable, curious, communicative</li>
+      <li><strong>Cancer (Jun 21 – Jul 22):</strong> Intuitive, emotional, loyal</li>
+      <li><strong>Leo (Jul 23 – Aug 22):</strong> Creative, passionate, generous</li>
+      <li><strong>Virgo (Aug 23 – Sep 22):</strong> Analytical, kind, hardworking</li>
+      <li><strong>Libra (Sep 23 – Oct 22):</strong> Cooperative, fair-minded, social</li>
+      <li><strong>Scorpio (Oct 23 – Nov 21):</strong> Resourceful, brave, passionate</li>
+      <li><strong>Sagittarius (Nov 22 – Dec 21):</strong> Generous, idealistic, adventurous</li>
+      <li><strong>Capricorn (Dec 22 – Jan 19):</strong> Responsible, disciplined, self-controlled</li>
+      <li><strong>Aquarius (Jan 20 – Feb 18):</strong> Progressive, original, independent</li>
+      <li><strong>Pisces (Feb 19 – Mar 20):</strong> Compassionate, artistic, wise</li>
+    </ul>
+
+    <h2>Generations — Which One Are You?</h2>
+    <p>Researchers and demographers define generations by birth year ranges. Each generation grows up in a distinct social, technological and cultural environment that shapes their worldview:</p>
+    <ul>
+      <li><strong>Silent Generation (1928–1945):</strong> Lived through World War II, shaped by scarcity and conformity</li>
+      <li><strong>Baby Boomers (1946–1964):</strong> Post-war optimism, economic growth, rock and roll</li>
+      <li><strong>Generation X (1965–1980):</strong> Latchkey kids, MTV, rise of personal computing</li>
+      <li><strong>Millennials / Gen Y (1981–1996):</strong> Digital natives, 9/11 generation, social media pioneers</li>
+      <li><strong>Generation Z (1997–2012):</strong> True digital natives, smartphone-first, TikTok, climate anxiety</li>
+      <li><strong>Generation Alpha (2013–present):</strong> Born into AI and tablets, the most technologically immersed generation ever</li>
+    </ul>
+
+    <h2>Interesting Age Facts and Milestones</h2>
+    <h3>Key Birthday Milestones</h3>
+    <ul>
+      <li><strong>1,000 days old:</strong> Approximately 2 years 8 months — a remarkable early childhood milestone</li>
+      <li><strong>18 years:</strong> Legal adulthood in India — voting rights, driving licence, contracts</li>
+      <li><strong>21 years:</strong> Full legal age in many countries, symbolic "coming of age"</li>
+      <li><strong>10,000 days old:</strong> Approximately 27 years 4 months — celebrated in some cultures as a major milestone</li>
+      <li><strong>30 years:</strong> The decade of establishment — career, family, financial decisions</li>
+      <li><strong>50 years:</strong> Half-century! Major reflection point — retirement planning, health priorities</li>
+      <li><strong>60 years:</strong> Senior citizen status in India — special railway discounts, pension eligibility</li>
+    </ul>
+
+    <h2>Best Goals for Every Decade of Life</h2>
+    <h3>Your 20s — Build the Foundation</h3>
+    <p>This decade is for building — skills, habits, relationships, and early financial momentum. Invest in education or vocational training, start a SIP or FD even if small, build your professional network, travel while responsibilities are fewer, and experiment with career paths. The habits formed in your 20s compound powerfully over the following decades.</p>
+    <h3>Your 30s — Scale and Stabilise</h3>
+    <p>The 30s are for deepening commitment — to a career path, relationships, and financial strategy. Most people see their fastest income growth in their 30s. This is the decade to maximise 80C deductions, buy term insurance, start a home loan, and ensure your emergency fund is fully built. Avoid lifestyle inflation that outpaces income growth.</p>
+    <h3>Your 40s — Consolidate and Protect</h3>
+    <p>Your 40s are peak earning years for most professionals. This decade calls for accelerating investment, reviewing and strengthening insurance coverage, planning children's higher education, and beginning to think seriously about retirement timelines. Health begins to require conscious attention — annual health check-ups become non-negotiable.</p>
+    <h3>Your 50s — Accelerate Retirement Planning</h3>
+    <p>In your 50s, retirement is no longer abstract — it is 10–15 years away. If you have not yet built a substantial corpus, now is the time to maximise contributions and reduce high-risk investments. Also begin planning for potential healthcare costs in retirement, which are often underestimated.</p>
+    <h3>Your 60s and Beyond — Enjoy and Legacy</h3>
+    <p>The 60s are for harvesting decades of work. Focus shifts to health maintenance, spending time with family, pursuing passions deferred by career, and thoughtful estate planning to protect the wealth you have built for the next generation.</p>
+
+    <h2>Financial Advice by Age Group</h2>
+    <p>Age is one of the most important variables in financial planning. A 25-year-old can afford to take significantly more investment risk than a 55-year-old because of the decades available for recovery from market downturns. Here is a simplified framework:</p>
+    <ul>
+      <li><strong>Under 30:</strong> 100% in equity/SIP is defensible. Time horizon is long enough to ride market cycles</li>
+      <li><strong>30–45:</strong> 70% equity, 30% debt. Begin diversifying with real estate and PPF</li>
+      <li><strong>45–55:</strong> 50% equity, 50% debt. Gradually de-risk as retirement approaches</li>
+      <li><strong>55+:</strong> 30% equity, 70% debt/fixed income. Capital preservation priority rises</li>
+    </ul>
+
+    <h2>Health Tips by Age Group</h2>
+    <h3>20s and 30s</h3>
+    <p>Build the habits now that will protect you later: consistent exercise, sleep hygiene, stress management, dental care, and avoiding tobacco and excessive alcohol. Annual blood work from age 30 onwards catches issues early when they are most treatable.</p>
+    <h3>40s</h3>
+    <p>Add regular BP monitoring, blood sugar screening, cholesterol checks, and eye examinations. Begin tracking weight more carefully. For women, mammograms are typically recommended from 40. For men, prostate health awareness begins here.</p>
+    <h3>50s and beyond</h3>
+    <p>Bone density, cardiovascular health, and cognitive function become priority areas. Regular walking, a protein-rich diet, and social engagement are among the most evidence-supported longevity factors.</p>
+
+    <h2>Age in Indian Culture and Society</h2>
+    <p>In India, age holds significant cultural weight beyond legal definitions. Sixty is the Sashtiabdapurthi — a deeply significant milestone celebrated with elaborate ceremonies in South India. Age determines respect in social hierarchy — elders are addressed differently and given precedence in most decisions. Age is also central to marriage compatibility assessments in traditional families, and to kundali matching where birth time is crucial.</p>
+    <p>From a legal standpoint, India has numerous age-specific provisions: the minimum marriage age (21 for males, 18 for females), juvenile justice age boundary (18 years), senior citizen benefits under income tax (60+), and very senior citizen benefits (80+). Government exam age limits vary by department and category.</p>
+
+    <h2>Fun Facts About Birthdays and Age</h2>
+    <ul>
+      <li>Approximately 21 million people share your birthday worldwide</li>
+      <li>The most common birthday in the world is September 9th</li>
+      <li>The least common is February 29th (leap year birthday)</li>
+      <li>The human heart beats approximately 100,000 times per day — over 2.5 billion times in a 70-year life</li>
+      <li>You blink approximately 15–20 times per minute — over 10,000 times a day</li>
+      <li>By age 80, the average person will have spent 26 years sleeping</li>
+      <li>Your birthday is shared with roughly 20 million other living people globally</li>
+      <li>People born in autumn (September–November) statistically live slightly longer on average</li>
+      <li>The world's longest-verified human lifespan was 122 years 164 days — Jeanne Calment of France</li>
+    </ul>
+
+    <h2>Importance of Knowing Your Exact Age for Documents in India</h2>
+    <p>In India, Aadhaar, PAN card, birth certificates, and school leaving certificates all carry date of birth information that must be consistent. Discrepancies in dates of birth across documents can cause serious issues with loan applications, property registration, visa applications, and government benefits. Always verify your age across all official documents and raise correction requests if any discrepancy is found.</p>
+
+  </article>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo" onclick="go('index.html')"><div class="logo-badge">TZ</div>Tools<span style="color:var(--cyan)">Zy</span></div>
+      <div class="footer-socials">
+        <a href="https://instagram.com/toolszy" target="_blank" rel="noopener" class="fs-btn">📸</a>
+        <a href="https://x.com/toolszy" target="_blank" rel="noopener" class="fs-btn">𝕏</a>
+        <a href="https://t.me/toolszy" target="_blank" rel="noopener" class="fs-btn">✈️</a>
+        <a href="https://buymeacoffee.com/toolszy" target="_blank" rel="noopener" class="fs-btn">☕</a>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy</a><a href="#">About</a>
+        <a href="#">Contact</a><a href="index.html">All Tools</a>
+      </div>
+      <div class="footer-copy">© 2026 <span>ToolsZy</span> · Free Forever · No Data Stored</div>
+    </div>
+  </footer>
 </div>
-
-<div class="error" id="err"></div>
-
-<div class="titleResult" id="t">
-Your Exact Age Is
-</div>
-
-<div class="result" id="res">
-
-<div class="box">
-<div class="num" id="yy">0</div>
-<div class="lab">Years</div>
-</div>
-
-<div class="box">
-<div class="num" id="mm">0</div>
-<div class="lab">Months</div>
-</div>
-
-<div class="box">
-<div class="num" id="dd">0</div>
-<div class="lab">Days</div>
-</div>
-
-</div>
-
-</div>
-
-<!-- SEO CONTENT -->
-
-<div class="article">
-
-<h2>Free Online Age Calculator</h2>
-<p>
-ToolsZy age calculator helps you instantly calculate your exact age in years,
-months and days. This tool is completely free, requires no sign-up and works
-smoothly on mobile and desktop devices.
-</p>
-
-<h2>Why Use This Age Calculator?</h2>
-<p>
-You can use this calculator for job forms, school admission, financial planning,
-loan eligibility checks and personal birthday tracking. It provides fast and
-accurate results with a modern and easy interface.
-</p>
-
-<h2>Safe & Easy To Use Tool</h2>
-<p>
-This calculator is designed with a friendly interface and optimized performance.
-There are no annoying ads or complicated steps. Simply select your birth date
-and calculate your real age within seconds.
-</p>
-
-</div>
-
-</div>
-
-<footer class="foot">
-© ToolsZy 2026
-</footer>
 
 <script>
+/* ================================================================
+   MENU
+================================================================ */
+document.getElementById('hamburger').addEventListener('click', () => document.body.classList.toggle('open'));
+document.getElementById('overlay').addEventListener('click',   () => document.body.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.body.classList.remove('open'); });
+function go(p) { window.location.href = p; }
 
-let input=document.getElementById("dob");
-let today=new Date();
+/* ================================================================
+   SCROLL REVEAL
+================================================================ */
+const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } }), { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-input.min="1900-01-01";
-input.max=today.toISOString().split("T")[0];
+/* ================================================================
+   INIT DEFAULTS
+================================================================ */
+const today = new Date();
+const todayStr = today.toISOString().split('T')[0];
+document.getElementById('calc-on').value = todayStr;
+document.getElementById('calc-on').max = todayStr;
+document.getElementById('dob').max = todayStr;
+document.getElementById('cmp-dob1').max = todayStr;
+document.getElementById('cmp-dob2').max = todayStr;
 
-input.addEventListener("keypress",e=>{
-if(e.key==="Enter") calc();
+function setToday() { document.getElementById('calc-on').value = todayStr; }
+function resetCalc() {
+  document.getElementById('dob').value = '';
+  document.getElementById('calc-on').value = todayStr;
+  document.getElementById('tob').value = '00:00';
+  document.getElementById('gender').value = '';
+  document.getElementById('country').value = 'IN';
+  document.getElementById('result-section').classList.remove('visible');
+  document.getElementById('result-section').style.display = 'none';
+}
+
+/* ================================================================
+   UTILITIES
+================================================================ */
+const MONTHS  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS    = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const SEASONS = ['Winter','Spring','Summer','Monsoon/Autumn','Autumn/Fall','Winter'];
+function pad(n) { return String(n).padStart(2,'0'); }
+function addCommas(n) { return Math.round(n).toLocaleString('en-IN'); }
+function isLeap(y) { return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0; }
+
+/* ================================================================
+   AGE CALCULATION
+================================================================ */
+function calculateAge() {
+  const dobVal = document.getElementById('dob').value;
+  if (!dobVal) { alert('Please enter your date of birth.'); return; }
+
+  const dob    = new Date(dobVal + 'T00:00:00');
+  const calcOn = document.getElementById('calc-on').value ? new Date(document.getElementById('calc-on').value + 'T23:59:59') : new Date();
+
+  if (dob > calcOn) { alert('Date of birth cannot be after the calculation date.'); return; }
+
+  // Exact years, months, days
+  let y = calcOn.getFullYear() - dob.getFullYear();
+  let m = calcOn.getMonth()    - dob.getMonth();
+  let d = calcOn.getDate()     - dob.getDate();
+
+  if (d < 0) {
+    m--;
+    const prevM = new Date(calcOn.getFullYear(), calcOn.getMonth(), 0);
+    d += prevM.getDate();
+  }
+  if (m < 0) { y--; m += 12; }
+
+  // Total units
+  const diffMs  = calcOn - dob;
+  const totDays = Math.floor(diffMs / 86400000);
+  const totWks  = Math.floor(totDays / 7);
+  const totMo   = y * 12 + m;
+  const totHrs  = Math.floor(diffMs / 3600000);
+  const totMins = Math.floor(diffMs / 60000);
+  const totSecs = Math.floor(diffMs / 1000);
+
+  // Render main
+  animCount('r-years',  0, y,    900, '');
+  animCount('r-months', 0, m,    700, '');
+  animCount('r-days',   0, d,    600, '');
+  animCount('r-tot-months', 0, totMo,   1000, addCommas);
+  animCount('r-tot-weeks',  0, totWks,  1000, addCommas);
+  animCount('r-tot-days',   0, totDays, 1000, addCommas);
+  animCount('r-tot-hours',  0, totHrs,  1100, addCommas);
+  animCount('r-tot-mins',   0, totMins, 1100, addCommas);
+  animCount('r-tot-secs',   0, totSecs, 1200, addCommas);
+
+  document.getElementById('r-dob-note').textContent = `Born: ${DAYS[dob.getDay()]}, ${dob.getDate()} ${MONTHS[dob.getMonth()]} ${dob.getFullYear()} · Calculated on: ${DAYS[calcOn.getDay()]}, ${calcOn.getDate()} ${MONTHS[calcOn.getMonth()]} ${calcOn.getFullYear()}`;
+
+  // Next birthday
+  const nextBday = nextBirthday(dob, calcOn);
+  const bdDiffMs = nextBday - calcOn;
+  const bdDays   = Math.ceil(bdDiffMs / 86400000);
+  const bdWks    = Math.ceil(bdDays / 7);
+  const bdMos    = Math.ceil(bdDays / 30);
+  document.getElementById('bd-days').textContent   = bdDays;
+  document.getElementById('bd-weeks').textContent  = bdWks;
+  document.getElementById('bd-months').textContent = bdMos;
+  document.getElementById('bd-date').textContent   = `${nextBday.getDate()} ${MONTHS[nextBday.getMonth()].slice(0,3)}`;
+
+  // Advanced cards
+  renderAdvancedCards(dob, calcOn, y, totDays);
+  // Planets
+  renderPlanets(totDays);
+  // Insights
+  renderInsights(y, totDays, totMins, dob);
+  // Milestones
+  renderMilestones(dob, y, totDays);
+  // Pet ages
+  renderPetAges(y);
+  // Birthday facts
+  renderBdayFacts(dob);
+  // Share links
+  setupShare(y, m, d, dob);
+  // Pre-fill compare
+  document.getElementById('cmp-dob1').value = dobVal;
+
+  // Show section
+  const rs = document.getElementById('result-section');
+  rs.style.display = 'block';
+  rs.classList.add('visible');
+  setTimeout(() => rs.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+
+  // Confetti
+  launchConfetti();
+}
+
+/* ================================================================
+   NEXT BIRTHDAY
+================================================================ */
+function nextBirthday(dob, now) {
+  let next = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+  if (next <= now) next.setFullYear(now.getFullYear() + 1);
+  return next;
+}
+
+/* ================================================================
+   ANIMATED COUNT-UP
+================================================================ */
+function animCount(id, from, to, dur, fmt) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const steps = 20;
+  const step  = (to - from) / steps;
+  let c = 0;
+  const t = setInterval(() => {
+    c++;
+    const v = from + step * c;
+    el.textContent = typeof fmt === 'function' ? fmt(v) : Math.round(v);
+    if (c >= steps) { clearInterval(t); el.textContent = typeof fmt === 'function' ? fmt(to) : Math.round(to); }
+  }, dur / steps);
+}
+
+/* ================================================================
+   ZODIAC
+================================================================ */
+function getZodiac(dob) {
+  const m = dob.getMonth() + 1, d = dob.getDate();
+  const signs = [
+    {sign:'Capricorn',  emoji:'♑', end:[1,19]}, {sign:'Aquarius',   emoji:'♒', end:[2,18]},
+    {sign:'Pisces',     emoji:'♓', end:[3,20]}, {sign:'Aries',      emoji:'♈', end:[4,19]},
+    {sign:'Taurus',     emoji:'♉', end:[5,20]}, {sign:'Gemini',     emoji:'♊', end:[6,20]},
+    {sign:'Cancer',     emoji:'♋', end:[7,22]}, {sign:'Leo',        emoji:'♌', end:[8,22]},
+    {sign:'Virgo',      emoji:'♍', end:[9,22]}, {sign:'Libra',      emoji:'♎', end:[10,22]},
+    {sign:'Scorpio',    emoji:'♏', end:[11,21]},{sign:'Sagittarius', emoji:'♐', end:[12,21]},
+    {sign:'Capricorn',  emoji:'♑', end:[12,31]},
+  ];
+  for (const s of signs) {
+    if (m < s.end[0] || (m === s.end[0] && d <= s.end[1])) return s;
+  }
+  return signs[0];
+}
+
+function getChineseZodiac(year) {
+  const animals = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
+  const emojis  = ['🐀','🐂','🐅','🐇','🐉','🐍','🐴','🐑','🐒','🐓','🐕','🐖'];
+  const idx = (year - 1900) % 12;
+  return { animal: animals[idx], emoji: emojis[idx] };
+}
+
+function getBirthstone(m) {
+  const stones = ['Garnet','Amethyst','Aquamarine','Diamond','Emerald','Pearl','Ruby','Peridot','Sapphire','Opal','Topaz','Turquoise'];
+  const emojis = ['💎','🔮','💙','💍','💚','🦪','❤️','💛','🔵','🟠','💛','🩵'];
+  return { stone: stones[m], emoji: emojis[m] };
+}
+
+function getGeneration(year) {
+  if (year <= 1927) return 'Greatest Generation';
+  if (year <= 1945) return 'Silent Generation';
+  if (year <= 1964) return 'Baby Boomer';
+  if (year <= 1980) return 'Generation X';
+  if (year <= 1996) return 'Millennial';
+  if (year <= 2012) return 'Generation Z';
+  return 'Generation Alpha';
+}
+
+function getSeason(m, country) {
+  const isSouth = ['AU','NZ'].includes(country);
+  const seasons = isSouth
+    ? ['Summer','Summer','Autumn','Autumn','Autumn','Winter','Winter','Winter','Spring','Spring','Spring','Summer']
+    : ['Winter','Winter','Spring','Spring','Spring','Summer','Summer','Monsoon','Autumn','Autumn','Winter','Winter'];
+  return seasons[m];
+}
+
+/* ================================================================
+   RENDER ADVANCED CARDS
+================================================================ */
+function renderAdvancedCards(dob, calcOn, years, totDays) {
+  const zodiac  = getZodiac(dob);
+  const chinese = getChineseZodiac(dob.getFullYear());
+  const stone   = getBirthstone(dob.getMonth());
+  const gen     = getGeneration(dob.getFullYear());
+  const season  = getSeason(dob.getMonth(), document.getElementById('country').value);
+  const leap    = isLeap(dob.getFullYear());
+  const dayName = DAYS[dob.getDay()];
+
+  // Half birthday
+  const halfBday = new Date(dob);
+  halfBday.setMonth(halfBday.getMonth() + 6);
+  const halfStr = `${halfBday.getDate()} ${MONTHS[halfBday.getMonth()].slice(0,3)}`;
+
+  // 10K days date
+  const tenK = new Date(dob.getTime() + 10000 * 86400000);
+  const tenKStr = `${tenK.getDate()} ${MONTHS[tenK.getMonth()].slice(0,3)} ${tenK.getFullYear()}`;
+
+  // Retirement estimate (India: 60)
+  const retireDate = new Date(dob.getFullYear() + 60, dob.getMonth(), dob.getDate());
+  const retireYears = Math.max(0, retireDate.getFullYear() - calcOn.getFullYear());
+  const retireStr = retireYears > 0 ? `In ~${retireYears} years (${retireDate.getFullYear()})` : 'Retirement age reached';
+
+  // Sleep estimate (8hrs/day = 1/3 of life)
+  const sleepDays = Math.round(totDays / 3);
+
+  // Heartbeats (avg 70/min)
+  const heartBeats = Math.round(totDays * 24 * 60 * 70);
+
+  // Breaths (avg 16/min)
+  const breaths = Math.round(totDays * 24 * 60 * 16);
+
+  // Blinks (avg 17/min, awake ~16hrs)
+  const blinks = Math.round(totDays * 16 * 60 * 17);
+
+  const cards = [
+    { icon:'♊', label:'Zodiac Sign',       val:`${zodiac.emoji} ${zodiac.sign}`, sub:'Western astrology' },
+    { icon:'🐉', label:'Chinese Zodiac',    val:`${chinese.emoji} ${chinese.animal}`, sub:`Year of the ${chinese.animal}` },
+    { icon:'💎', label:'Birthstone',        val:`${stone.emoji} ${stone.stone}`, sub:`${MONTHS[dob.getMonth()]} gem` },
+    { icon:'👥', label:'Generation',        val:gen, sub:'Your peer group' },
+    { icon:'📅', label:'Day of Birth',      val:dayName, sub:`${dob.getDate()} ${MONTHS[dob.getMonth()]} ${dob.getFullYear()}` },
+    { icon:'🌤️', label:'Season Born',       val:season, sub:`in ${document.getElementById('country').value === 'AU' ? 'Southern Hemisphere' : 'your region'}` },
+    { icon:'🔄', label:'Leap Year Born',    val:leap ? '✅ Yes!' : '❌ No', sub:leap ? `${dob.getFullYear()} was a leap year` : `${dob.getFullYear()} had 365 days` },
+    { icon:'🎂', label:'Half Birthday',     val:halfStr, sub:'Your 6-month milestone' },
+    { icon:'⚡', label:'10,000th Day',      val:tenKStr, sub:`${totDays >= 10000 ? '✅ Already passed' : 'Your power milestone'}` },
+    { icon:'🏖️', label:'Retirement Est.',   val:retireStr, sub:'Based on age 60 (India)' },
+    { icon:'😴', label:'Days Sleeping',     val:addCommas(sleepDays), sub:'At avg 8 hrs/day' },
+    { icon:'❤️', label:'Heartbeats',        val:addCommas(heartBeats), sub:'Est. at 70 beats/min' },
+    { icon:'🌬️', label:'Breaths Taken',     val:addCommas(breaths), sub:'Est. at 16 breaths/min' },
+    { icon:'👁️', label:'Blinks (est.)',     val:addCommas(blinks), sub:'~17 blinks/min awake' },
+  ];
+
+  document.getElementById('adv-grid').innerHTML = cards.map(c => `
+    <div class="adv-card">
+      <span class="adv-card-icon">${c.icon}</span>
+      <div class="adv-card-label">${c.label}</div>
+      <div class="adv-card-val">${c.val}</div>
+      <div class="adv-card-sub">${c.sub}</div>
+    </div>
+  `).join('');
+}
+
+/* ================================================================
+   PLANET AGES
+================================================================ */
+function renderPlanets(totDays) {
+  // Orbital periods in Earth days
+  const planets = [
+    { name:'Mercury', emoji:'☿', period:87.97,  color:'var(--muted)' },
+    { name:'Venus',   emoji:'♀', period:224.70, color:'var(--amber)' },
+    { name:'Mars',    emoji:'♂', period:686.97, color:'var(--red)' },
+    { name:'Jupiter', emoji:'♃', period:4332.6, color:'var(--gold)' },
+    { name:'Saturn',  emoji:'♄', period:10759,  color:'var(--cyan)' },
+    { name:'Uranus',  emoji:'⛢', period:30687,  color:'var(--cyan)' },
+    { name:'Neptune', emoji:'♆', period:60190,  color:'var(--violet)' },
+  ];
+  document.getElementById('planet-grid').innerHTML = planets.map(p => {
+    const age = (totDays / p.period).toFixed(1);
+    return `<div class="planet-card"><span class="planet-icon">${p.emoji}</span><div class="planet-name">${p.name}</div><div class="planet-age" style="color:${p.color}">${age}</div><div class="planet-unit">planet years</div></div>`;
+  }).join('');
+}
+
+/* ================================================================
+   FUN INSIGHTS
+================================================================ */
+function renderInsights(years, totDays, totMins, dob) {
+  const sunrises   = addCommas(totDays);
+  const sleepDays  = addCommas(Math.round(totDays / 3));
+  const blinks     = addCommas(Math.round(totDays * 16 * 60 * 17));
+  const nextMilestone = [18,21,25,30,40,50,60,75,100].find(m => m > years) || 100;
+  const yearsToNext = nextMilestone - years;
+  const famous = getFamousBirthday(dob.getMonth(), dob.getDate());
+  const birthYear = dob.getFullYear();
+  const histEvent = getHistoricalEvent(birthYear);
+
+  const items = [
+    { emoji:'🌅', text:`You have witnessed approximately <strong>${sunrises} sunrises</strong> in your lifetime so far.` },
+    { emoji:'😴', text:`You have spent roughly <strong>${sleepDays} days sleeping</strong> — that's a third of your life dedicated to rest and recovery.` },
+    { emoji:'👁️', text:`Your eyes have blinked around <strong>${blinks} times</strong> since you were born.` },
+    { emoji:'🎯', text:`Your next major birthday milestone is <strong>${nextMilestone} years old</strong> — just ${yearsToNext} year${yearsToNext !== 1 ? 's' : ''} away.` },
+    { emoji:'🌟', text:`Famous people also born in <strong>${MONTHS[dob.getMonth()]}: ${famous}</strong>` },
+    { emoji:'📜', text:`The year <strong>${birthYear}</strong>: ${histEvent}` },
+    { emoji:'💡', text:`You have accumulated <strong>~${addCommas(totDays * 8)} waking hours</strong> of experience, learning and living.` },
+  ];
+
+  document.getElementById('insights-body').innerHTML = items.map(i =>
+    `<div class="insight-item"><span class="ii-emoji">${i.emoji}</span><div class="ii-text">${i.text}</div></div>`
+  ).join('');
+}
+
+function getFamousBirthday(m, d) {
+  // Small curated map for popular dates
+  const map = {
+    '0-15':'Martin Luther King Jr', '1-12':'Charles Darwin','1-14':'Valentines Day lore',
+    '2-14':'Albert Einstein','2-15':'Rihanna','3-23':'Shakespeare (Apr 23)','4-13':'Robert Pattinson',
+    '5-18':'Paul McCartney','6-31':'J.K. Rowling','7-4':'Barack Obama','8-5':'Freddie Mercury',
+    '9-9':'John Lennon','10-7':'Marie Curie','11-25':'Isaac Newton',
+  };
+  const key = `${m}-${d}`;
+  return map[key] || 'many great thinkers and achievers';
+}
+
+function getHistoricalEvent(year) {
+  const events = {
+    1990:'Economic liberalisation began shaping modern India',
+    1991:'India opened its economy — a turning point for a generation',
+    1995:'The internet age was just beginning globally',
+    2000:'The Y2K milestone and a new millennium began',
+    2001:'A year the world would never forget',
+    2005:'Social media was on the horizon — YouTube launched',
+    2008:'The global financial crisis reshaped economies worldwide',
+    2010:'The smartphone revolution was accelerating rapidly',
+    2016:'India experienced historic demonetisation',
+    2020:'The world paused for COVID-19 — a defining generation moment',
+  };
+  // Find closest
+  const keys = Object.keys(events).map(Number);
+  const closest = keys.reduce((a,b) => Math.abs(b-year) < Math.abs(a-year) ? b : a);
+  return events[closest] || `the world was changing in remarkable ways`;
+}
+
+/* ================================================================
+   MILESTONES
+================================================================ */
+function renderMilestones(dob, currentYears, totDays) {
+  const calcDate = new Date(document.getElementById('calc-on').value || new Date());
+  const milestones = [
+    { name:'1,000 Days Old',  days:1000,  icon:'🌱' },
+    { name:'5,000 Days Old',  days:5000,  icon:'⭐' },
+    { name:'10,000 Days Old', days:10000, icon:'🔟' },
+    { name:'18 Years Old',    days:18*365,icon:'🗳️' },
+    { name:'21 Years Old',    days:21*365,icon:'🎓' },
+    { name:'25 Years Old',    days:25*365,icon:'🚀' },
+    { name:'30 Years Old',    days:30*365,icon:'💼' },
+    { name:'50 Years Old',    days:50*365,icon:'🏆' },
+    { name:'60 Years Old',    days:60*365,icon:'👴' },
+  ];
+
+  document.getElementById('milestone-list').innerHTML = milestones.map(m => {
+    const milestoneDate = new Date(dob.getTime() + m.days * 86400000);
+    const reached = totDays >= m.days;
+    const diff = Math.abs(totDays - m.days);
+    const badge = reached ? 'done' : diff < 365 ? 'soon' : 'future';
+    const badgeText = reached ? '✅ Reached' : diff < 365 ? `~${Math.ceil(diff)} days away` : `${milestoneDate.getFullYear()}`;
+    return `<div class="milestone-item ${reached ? 'reached' : 'upcoming'}">
+      <span class="mi-icon">${m.icon}</span>
+      <span class="mi-name">${m.name}</span>
+      <span class="mi-date">${milestoneDate.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</span>
+      <span class="mi-badge ${badge}">${badgeText}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ================================================================
+   PET AGES
+================================================================ */
+function renderPetAges(humanYears) {
+  // Dog: first 2 yrs = 21 human, then +4/yr
+  let dogAge = humanYears <= 2 ? humanYears * 10.5 : 21 + (humanYears - 2) * 4;
+  // Cat: first yr = 15, second = 24, then +4/yr
+  let catAge = humanYears <= 1 ? 15 : humanYears <= 2 ? 24 : 24 + (humanYears - 2) * 4;
+  document.getElementById('dog-age').textContent = Math.round(dogAge) + ' yrs';
+  document.getElementById('cat-age').textContent = Math.round(catAge) + ' yrs';
+}
+
+/* ================================================================
+   BIRTHDAY FACTS
+================================================================ */
+function renderBdayFacts(dob) {
+  const zodiac  = getZodiac(dob);
+  const dayName = DAYS[dob.getDay()];
+  const season  = getSeason(dob.getMonth(), document.getElementById('country').value);
+  // Lucky number (numerology: sum of digits of full date reduced to 1-9)
+  const dobDigits = (dob.getFullYear() + dob.getMonth() + 1 + dob.getDate()).toString().split('').reduce((a,c) => a + parseInt(c), 0);
+  let lucky = dobDigits;
+  while (lucky > 9) { lucky = lucky.toString().split('').reduce((a,c) => a + parseInt(c), 0); }
+  const colors = ['Red','Orange','Yellow','Green','Blue','Indigo','Violet','Gold','Silver'];
+  const luckyColor = colors[(dob.getDate() + dob.getMonth()) % colors.length];
+
+  const facts = [
+    { icon:'📅', label:'Day of Week', val:dayName },
+    { icon:'🌤️', label:'Season Born', val:season },
+    { icon:'🔢', label:'Lucky Number', val:lucky },
+    { icon:'🎨', label:'Lucky Colour', val:luckyColor },
+  ];
+  document.getElementById('bday-facts').innerHTML = facts.map(f =>
+    `<div class="fact-card"><span class="fc-icon">${f.icon}</span><div class="fc-label">${f.label}</div><div class="fc-val">${f.val}</div></div>`
+  ).join('');
+}
+
+/* ================================================================
+   COMPARE AGES
+================================================================ */
+function compareAges() {
+  const d1 = new Date(document.getElementById('cmp-dob1').value + 'T00:00:00');
+  const d2 = new Date(document.getElementById('cmp-dob2').value + 'T00:00:00');
+  if (!document.getElementById('cmp-dob1').value || !document.getElementById('cmp-dob2').value) { alert('Please enter both dates of birth.'); return; }
+
+  const diffMs  = Math.abs(d1 - d2);
+  const totDays = Math.floor(diffMs / 86400000);
+  const years   = Math.floor(totDays / 365);
+  const months  = Math.floor((totDays % 365) / 30);
+  const days    = totDays % 30;
+  const older   = d1 < d2 ? 'Person 1 is older' : d1 > d2 ? 'Person 2 is older' : 'Same age!';
+
+  const result = document.getElementById('cmp-result');
+  document.getElementById('cmp-diff').textContent = `${years}y ${months}m ${days}d`;
+  document.getElementById('cmp-note').textContent = `${older} · Total difference: ${addCommas(totDays)} days`;
+  result.style.display = 'block';
+}
+
+/* ================================================================
+   SHARE
+================================================================ */
+function setupShare(y, m, d, dob) {
+  const text = `🎂 My exact age is ${y} years, ${m} months & ${d} days!\nBorn: ${DAYS[dob.getDay()]}, ${dob.getDate()} ${MONTHS[dob.getMonth()]} ${dob.getFullYear()}\nCalculated with ToolsZy Age Calculator 🚀`;
+  const encoded = encodeURIComponent(text);
+  document.getElementById('btn-wa').href = `https://wa.me/?text=${encoded}`;
+  document.getElementById('btn-tg').href = `https://t.me/share/url?url=https://toolszy.com&text=${encoded}`;
+}
+
+function copyResult() {
+  const y = document.getElementById('r-years').textContent;
+  const m = document.getElementById('r-months').textContent;
+  const d = document.getElementById('r-days').textContent;
+  const dob = document.getElementById('dob').value;
+  const text = `My exact age: ${y} years, ${m} months, ${d} days\nDate of birth: ${dob}\nCalculated with ToolsZy Age Calculator — https://toolszy.com`;
+  navigator.clipboard?.writeText(text).then(() => {
+    const btn = document.getElementById('btn-copy');
+    btn.textContent = '✅ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = '📋 Copy Result'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function printResult() { window.print(); }
+
+/* ================================================================
+   CONFETTI BURST
+================================================================ */
+function launchConfetti() {
+  const colors = ['#00eaff','#f5a623','#f472b6','#22c55e','#7c3aed','#fb923c','#fbbf24'];
+  for (let i = 0; i < 40; i++) {
+    setTimeout(() => {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      const size = 6 + Math.random() * 8;
+      el.style.cssText = `
+        left:${Math.random()*100}%;
+        top:${Math.random()*30}%;
+        width:${size}px;height:${size + 6}px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        border-radius:${Math.random()>.5?'50%':'2px'};
+        animation-duration:${1.5+Math.random()*2}s;
+        animation-delay:${Math.random()*.5}s;
+      `;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3500);
+    }, i * 30);
+  }
+}
+
+/* ================================================================
+   INIT
+================================================================ */
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => document.body.classList.add('loaded'));
+  // Try loading from URL param
+  const params = new URLSearchParams(window.location.search);
+  const dob = params.get('dob');
+  if (dob) {
+    document.getElementById('dob').value = dob;
+    calculateAge();
+  }
 });
-
-function calc(){
-
-let val=input.value;
-let err=document.getElementById("err");
-let res=document.getElementById("res");
-let load=document.getElementById("load");
-let title=document.getElementById("t");
-
-err.innerHTML="";
-res.classList.remove("show");
-title.style.display="none";
-
-if(!val){
-err.innerHTML="Select your date of birth";
-return;
-}
-
-let dob=new Date(val);
-
-if(dob>today){
-err.innerHTML="Future date not allowed";
-return;
-}
-
-load.style.display="block";
-
-setTimeout(()=>{
-
-let y=today.getFullYear()-dob.getFullYear();
-let m=today.getMonth()-dob.getMonth();
-let d=today.getDate()-dob.getDate();
-
-if(d<0){
-m--;
-d+=new Date(today.getFullYear(),today.getMonth(),0).getDate();
-}
-
-if(m<0){
-y--;
-m+=12;
-}
-
-yy.innerHTML=y;
-mm.innerHTML=m;
-dd.innerHTML=d;
-
-load.style.display="none";
-title.style.display="block";
-res.classList.add("show");
-
-},900);
-
-}
-
 </script>
-
 </body>
 </html>
